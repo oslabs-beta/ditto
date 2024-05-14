@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"module": "es6",
+		"target": "es2019",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"strict": true
+	},
+	"include": ["src/**/*"]
+}
