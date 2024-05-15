@@ -4,12 +4,13 @@
 		"target": "es2019",
 		"outDir": "./dist",
 		"rootDir": "./src",
-		"strict": true
+		"strict": true,
+		"types": ["jest", "@types/jest", "node"]
 	},
 	"include": ["src/**/*"],
 	"exclude": [
-		"node_modules", // Exclude the node_modules directory
-		"../tests/server" // Exclude test files
+		"../node_modules", // Exclude the node_modules directory
+		"../tests/backend"
 	]
 }
 
