@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
 	mode: 'development',
-	entry: './client/src/index.ts', // Pointing to the entry TypeScript file
+	entry: './client/src/index.tsx', // Pointing to the entry TypeScript file
 	module: {
 		rules: [
 			{
@@ -15,6 +15,15 @@ module.exports = {
 				test: /\.css$/,
 				use: ['style-loader', 'css-loader'],
 				exclude: /node_modules/,
+			},
+			{
+				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				// use: ['file-loader'],
+				// type: 'asset/resource',
+				type: 'asset/resource',
+				generator: {
+					filename: 'assets/images/[name][ext]', // Correct path for image files
+				},
 			},
 		],
 	},
@@ -32,6 +41,8 @@ module.exports = {
 		}),
 	],
 	devServer: {
+		compress: true,
+		port: 3000, //sets up frontend localhost:port
 		historyApiFallback: true,
 		static: [
 			{
@@ -42,7 +53,7 @@ module.exports = {
 		proxy: [
 			{
 				context: ['/'],
-				target: 'http://localhost:3000',
+				target: 'http://localhost:3001',
 			},
 		],
 	},
