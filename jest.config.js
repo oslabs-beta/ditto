@@ -3,9 +3,6 @@ module.exports = {
 	testEnvironment: 'node',
 	testMatch: ['<rootDir>/tests/**/*.[jt]s?(x)'],
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-	// moduleNameMapper: {
-	// 	'^@engine/(.*)$': '<rootDir>/server/src/$1'
-	// },
 	transform: {
 		'^.+\\.tsx?$': 'ts-jest'
 	},

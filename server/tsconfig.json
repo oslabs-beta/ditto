@@ -8,15 +8,11 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"moduleResolution": "node",
-		// "baseUrl": "./",
-		// "paths": { 
-		// 	"@engine/*": ["server/src/*"]
-		// }
 	},
 	"include": ["src/**/*"],
 	"exclude": [
-		"node_modules", // Exclude the node_modules directory
-		"../tests/backend" // Exclude test files
+		"node_modules",
+		// "../tests/backend" 
 	]
 }
 
