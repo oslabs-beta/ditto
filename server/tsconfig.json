@@ -5,7 +5,9 @@
 		"outDir": "./dist",
 		"rootDir": "./src",
 		"strict": true,
-		"types": ["jest", "@types/jest", "node"]
+		"types": ["jest", "@types/jest", "node"],
+		"esModuleInterop": true,
+		"moduleResolution": "node"
 	},
 	"include": ["src/**/*"],
 	"exclude": [
