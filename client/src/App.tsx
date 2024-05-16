@@ -2,8 +2,12 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import NavBarComponent from './components/NavBar';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Route as Route } from 'react-router-dom';
+import { Routes as Routes } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import LoginPage from './components/LoginPage';
+import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -15,11 +19,13 @@ const App: React.FC = () => {
 	return (
 		<Router>
 			<div>
-				<NavBarComponent
-					links={navLinks}
-					logo="./assets/osp-ditto-circle.png"
-				/>
+				<NavBar links={navLinks} logo={logoImage} />
+				<LoginPage />
 			</div>
+			<Routes>
+				<Route path="/login" element={<LoginPage />} />
+				{/* Add other routes here if necessary */}
+			</Routes>
 		</Router>
 	);
 };

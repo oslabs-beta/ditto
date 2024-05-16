@@ -5,13 +5,13 @@
 		"outDir": "./dist",
 		"rootDir": "./src",
 		"strict": true,
-		"jsx": "react",
-		"types": ["@testing-library/jest-dom"]
-		// "moduleResolution": "node",
-		// "esModuleInterop": true,
-		// "allowSyntheticDefaultImports": true, // Add this line
-		// "skipLibCheck": true,
-		// "forceConsistentCasingInFileNames": true
+		"jsx": "react-jsx",
+		"types": ["@testing-library/jest-dom", "@types/node"],
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true, // Add this line
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src/**/*"]
+	"include": ["src/**/*", "types/custom.d.ts"]
 }

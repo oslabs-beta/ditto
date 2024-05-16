@@ -2,9 +2,12 @@ import path from 'path';
 import express, { Express, Request, Response, NextFunction } from 'express';
 import migrationRoutes from './routes/migrationRoutes';
 import auditRoutes from './routes/auditRoutes';
+import cors from 'cors';
 
 const app: Express = express();
-const port: number = 3000;
+const port: number = 3001;
+
+app.use(cors()); // Enable CORS for all routes
 
 app.use(express.json());
 

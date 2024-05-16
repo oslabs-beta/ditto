@@ -35,6 +35,7 @@
 # Webpack
 
 - proxy: allows us to not have write the whole localhost: 3000
+- fileloader: helps server static files but also renames our file when running webpack making it not possible for the component to find the file
 
 # Tests
 
@@ -55,3 +56,7 @@
 # ESM vs CJS
 
 - Q. what's the difference?
+
+# TroubleShoot"
+
+- if you're getting react error messages, try uninstalling and re-installing npm.
