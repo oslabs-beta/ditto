@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { Express, Request, Response, NextFunction } from 'express';
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/', (req: Request, res: Response) => {
 	res.status(201);
 });
 

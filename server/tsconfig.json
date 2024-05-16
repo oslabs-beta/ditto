@@ -5,16 +5,15 @@
 		"outDir": "./dist",
 		"rootDir": "./src",
 		"strict": true,
-		"types": ["jest", "@types/jest", "node"],
 		"esModuleInterop": true,
-		"moduleResolution": "node"
+		"skipLibCheck": true,
+		"moduleResolution": "node",
 	},
 	"include": ["src/**/*"],
 	"exclude": [
-		"../node_modules", // Exclude the node_modules directory
-		"../tests/backend"
+		"node_modules",
+		// "../tests/backend" 
 	]
 }
 
 
-// watch is something we set up in json.pkg, but it essentially recompiles the js files as we make changes to the typescript code.
