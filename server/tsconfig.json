@@ -4,14 +4,20 @@
 		"target": "es2019",
 		"outDir": "./dist",
 		"rootDir": "./src",
-		"strict": true
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"moduleResolution": "node",
+		// "baseUrl": "./",
+		// "paths": { 
+		// 	"@engine/*": ["server/src/*"]
+		// }
 	},
 	"include": ["src/**/*"],
 	"exclude": [
 		"node_modules", // Exclude the node_modules directory
-		"../tests/server" // Exclude test files
+		"../tests/backend" // Exclude test files
 	]
 }
 
 
-// watch is something we set up in json.pkg, but it essentially recompiles the js files as we make changes to the typescript code.

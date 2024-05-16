@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "jest",
+		"test": "jest --verbose",
 		"build:client": "webpack --config ./client/webpack.config.js",
 		"build:server": "tsc --project ./server/tsconfig.json",
 		"build": "npm run build:client && npm run build:server",
@@ -16,6 +16,7 @@
 	"dependencies": {
 		"express": "^4.19.2",
 		"lodash": "^4.17.21",
+		"pg": "^8.11.5",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"typescript": "^5.4.5"
@@ -24,6 +25,8 @@
 		"@babel/core": "^7.24.5",
 		"@babel/preset-env": "^7.24.5",
 		"@babel/preset-react": "^7.24.1",
+		"@babel/preset-typescript": "^7.24.1",
+		"@jest/globals": "^29.7.0",
 		"@types/jest": "^29.5.12",
 		"@types/supertest": "^6.0.2",
 		"babel-loader": "^9.1.3",

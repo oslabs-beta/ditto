@@ -1,8 +1,14 @@
 module.exports = {
 	preset: 'ts-jest',
 	testEnvironment: 'node',
-	testMatch: ['/tests/**/*.[jt]s?(x)'],
+	testMatch: ['<rootDir>/tests/**/*.[jt]s?(x)'],
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+	// moduleNameMapper: {
+	// 	'^@engine/(.*)$': '<rootDir>/server/src/$1'
+	// },
+	transform: {
+		'^.+\\.tsx?$': 'ts-jest'
+	},
 	projects: [
 		{
 			displayName: 'client',
@@ -15,10 +21,10 @@ module.exports = {
 		},
 		{
 			displayName: 'server',
-			testMatch: ['tests/server/**/*.[jt]s?(x)'],
+			testMatch: ['<rootDir>/tests/backend/**/*.[jt]s?(x)'],
 			globals: {
 				'ts-jest': {
-					tsconfig: '/server/tsconfig.json',
+					tsconfig: '<rootDir>/server/tsconfig.json',
 				},
 			},
 		},
