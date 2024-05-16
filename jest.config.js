@@ -1,26 +1,16 @@
 module.exports = {
-	preset: 'ts-jest',
-	testEnvironment: 'node',
-	testMatch: ['/tests/**/*.[jt]s?(x)'],
+	roots: ['<rootDir>/client', '<rootDir>/tests/client'], // scans where jest should look for tests and modules
+	testEnvironment: 'jsdom',
+	transform: {
+		'^.+\\.tsx?$': 'ts-jest',
+	},
+	testRegex: '(/tests/client/.*|(\\.|/)(test|spec))\\.tsx?$',
+	testPathIgnorePatterns: ['/node_modules/', '/client/setupTests.ts'],
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-	projects: [
-		{
-			displayName: 'client',
-			testMatch: ['/tests/client/**/*.[jt]s?(x)'],
-			globals: {
-				'ts-jest': {
-					tsconfig: '/client/tsconfig.json',
-				},
-			},
+	setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
+	globals: {
+		'ts-jest': {
+			tsconfig: '<rootDir>/client/tsconfig.json',
 		},
-		{
-			displayName: 'server',
-			testMatch: ['tests/server/**/*.[jt]s?(x)'],
-			globals: {
-				'ts-jest': {
-					tsconfig: '/server/tsconfig.json',
-				},
-			},
-		},
-	],
+	},
 };
