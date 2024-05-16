@@ -4,6 +4,10 @@ import { Pool } from 'pg'
 
 const router = express.Router();
 
+router.post('/', (req: Request, res: Response) => {
+	res.sendStatus(201);  
+  
+  
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
 	const { script } = req.body;
 	const { connectionString } = req.body; //depends on how we request the string like req.user or req.authuser???
@@ -21,8 +25,8 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
-router.patch('/', (req, res) => {
-	res.status(200);
+router.patch('/:logId', (req: Request, res: Response) => {
+	res.sendStatus(200);
 });
 
 export default router;

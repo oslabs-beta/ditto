@@ -1,8 +1,11 @@
+import db from './db';
+
 const { Pool } = require('pg');
 
 const pool = new Pool ({
   connectionString: process.env.TEMP_URL,
 });
+
 
 
 export const migrationController = {

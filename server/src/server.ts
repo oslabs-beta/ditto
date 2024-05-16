@@ -2,12 +2,10 @@ import path from 'path';
 import express, { Express, Request, Response, NextFunction } from 'express';
 import migrationRoutes from './routes/migrationRoutes';
 import auditRoutes from './routes/auditRoutes';
-import db from './db';
 
 const app: Express = express();
 const port: number = 3000;
 
-db.connect();
 app.use(express.json());
 
 app.use('/migration', migrationRoutes);
