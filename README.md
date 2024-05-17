@@ -60,3 +60,7 @@
 # TroubleShoot"
 
 - if you're getting react error messages, try uninstalling and re-installing npm.
+
+# Tracking Connection String
+
+- in the state
