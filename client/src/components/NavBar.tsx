@@ -30,13 +30,7 @@ const NavBar: React.FC<NavBarProps> = ({ links, logo }) => {
 						<Link to={link.path}>{link.label}</Link>
 					</li>
 				))}
-				<li style={{ marginLeft: 'auto' }}>
-					<Link to="/login" style={{ textDecoration: 'none' }}>
-						<button style={{ padding: '10px 20px', cursor: 'pointer' }}>
-							Login
-						</button>
-					</Link>
-				</li>
+				<li style={{ marginLeft: 'auto' }}></li>
 			</ul>
 		</nav>
 	);

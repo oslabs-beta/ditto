@@ -37,11 +37,11 @@ const LoginPage: React.FC = () => {
 				},
 				body: JSON.stringify(formData),
 			});
-
+			console.log(response);
 			if (response.ok) {
 				// Check if the HTTP status code is 2xx
 				// Assuming your login is successful and you need to redirect
-				navigate('/MigrationPage'); // Redirect to MigrationPage on success
+				navigate('/migration'); // Redirect to MigrationPage on success
 			} else {
 				console.error('Login failed:', await response.json()); // Logging the error response
 			}

@@ -8,26 +8,31 @@ import { Routes as Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import LoginPage from './components/LoginPage';
 import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
+import MigrationPage from './components/MigrationPage';
+import SignUpPage from './components/SignUp';
 
 const App: React.FC = () => {
 	const navLinks = [
 		{ path: '/documentation', label: 'Documentation' },
 		{ path: '/faq', label: 'FAQ' },
 		{ path: '/community', label: 'Community' },
+		{ path: '/migration', label: 'Migration' },
+		{ path: '/login', label: 'Login' },
+		{ path: '/signup', label: 'SignUp' },
 	];
 
 	return (
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
-				<LoginPage />
+				<Routes>
+					<Route path="/login" element={<LoginPage />} />
+					<Route path="/migration" element={<MigrationPage />} />
+					<Route path="/signup" element={<SignUpPage />} />
+					{/* Define more routes as necessary */}
+				</Routes>
 			</div>
-			<Routes>
-				<Route path="/login" element={<LoginPage />} />
-				{/* Add other routes here if necessary */}
-			</Routes>
 		</Router>
 	);
 };
-
 export default App;
