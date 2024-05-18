@@ -16,6 +16,7 @@ const LoginPage: React.FC = () => {
 	const navigate = useNavigate(); // Use the useHistory hook for redirection
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		4;
 		setFormData({
 			...formData,
 			[e.target.name]: e.target.value,

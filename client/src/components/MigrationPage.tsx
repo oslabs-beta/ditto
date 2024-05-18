@@ -9,9 +9,22 @@ import {
 	orders,
 	suppliers,
 } from './mockData';
+import CodeEditor from './CodeEditor'; // CodeEditor
 
 const MigrationPage: React.FC = () => {
 	const [selectedTable, setSelectedTable] = useState<string>('');
+	const [code, setCode] = useState('-- Write your PostgreSQL script here'); // CodeEditor
+
+	// CodeEditor
+	const handleCodeChange = (newCode: string) => {
+		setCode(newCode);
+	};
+
+	// CodeEditor
+	const handleRunScript = () => {
+		// Logic to execute the PostgreSQL script goes here
+		console.log('Running script:', code);
+	};
 
 	// Function to render table data dynamically based on the selected table
 	const renderTableData = () => {
@@ -122,6 +135,14 @@ const MigrationPage: React.FC = () => {
 	return (
 		<div className="App">
 			<header className="App-header">
+				{/* CodeEditor */}
+				<div>
+					<h1>PostgreSQL Script Editor</h1>
+					<CodeEditor initialCode={code} onCodeChange={handleCodeChange} />
+
+					<button onClick={handleRunScript}>Run Script</button>
+				</div>
+				{/* Code Editor */}
 				<label>
 					Select a Table:
 					<select
