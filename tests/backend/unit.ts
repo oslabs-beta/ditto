@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { describe, expect, beforeEach, afterEach, it, } from '@jest/globals';
-import { migrationController } from '../../server/src/engineController';
+import { migrationController } from '../../server/src/controllers/engineController';
 
 jest.mock('pg', () => {
     const mClient = {

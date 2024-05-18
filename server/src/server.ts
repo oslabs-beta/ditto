@@ -2,10 +2,17 @@ import path from 'path';
 import express, { Express, Request, Response, NextFunction } from 'express';
 import migrationRoutes from './routes/migrationRoutes';
 import auditRoutes from './routes/auditRoutes';
+import authRoutes from './routes/authRoutes';
+import dbRoutes from './routes/dbRoutes'; 
 import cors from 'cors';
+import db from './db'
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app: Express = express();
 const port: number = 3001;
+
+db.connect();
 
 app.use(cors()); // Enable CORS for all routes
 
@@ -14,6 +21,10 @@ app.use(express.json());
 app.use('/migration', migrationRoutes);
 
 app.use('/audit', auditRoutes);
+
+app.use('/auth', authRoutes);
+
+app.use('/db', dbRoutes);
 
 // catch all route handler
 app.use('*', (req: Request, res: Response) => {

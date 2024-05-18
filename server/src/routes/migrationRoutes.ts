@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { migrationController } from '../engineController';
-import { Pool } from 'pg';
+import { executeMigration, createPool } from '../controllers/engineController';
+import { validateJWT } from '../controllers/authController';
+import { getDBConnectionByUserId } from '../models/userDB';
 
 const router = express.Router();
 
@@ -8,22 +9,30 @@ router.post('/', (req: Request, res: Response) => {
 	res.sendStatus(201);
 });
 
-router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-	const { script } = req.body;
-	const { connectionString } = req.body; //depends on how we request the string like req.user or req.authuser???
+router.post('/', validateJWT, async (req: Request, res: Response, next: NextFunction) => {
+	const { script, dbId } = req.body;
+	const userId = req.user?.id; //depends on how we request the string like req.user or req.authuser???
 
-	if (!script || !connectionString) {
+	if (!script || !dbId || !userId ) {
 		return res
 			.status(400)
-			.json({ error: 'script or connection string required. ' });
+			.json({ error: 'script, database ID, user ID required. ' });
 	}
 
 	try {
-		const pool = new Pool({ connectionString });
-		await migrationController.executeMigration(script, pool);
-		res.status(201).json({ message: 'Migration executed successfully.' });
-	} catch (error: any) {
-		next(error);
+	  const connectionStrings = await getDBConnectionByUserId(userId);
+      const connectionString = connectionStrings.find(db => db.db_id === dbId)?.connection_string;
+
+      if (!connectionString) {
+        return res.status(404).json({ error: 'Connection string not found.' });
+      }
+
+      const pool = createPool(connectionString);
+      await executeMigration(script, pool);
+
+	  res.status(201).json({ message: 'Migration executed successfully' });
+	} catch (error) {
+	  next(error);
 	}
 });
 
