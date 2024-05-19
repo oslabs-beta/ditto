@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from 'react';
+// SidePanel.tsx
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
-	Product,
-	Customer,
-	Order,
-	Supplier,
-	products,
-	customers,
-	orders,
-	suppliers,
-} from './mockData';
+	setSelectedTable,
+	setSelectedDatabase,
+	setSelectedMigration,
+	setShowInput,
+	setDbName,
+	setConnectionString,
+	setDatabases,
+} from '../store';
 
 const SidePanel: React.FC = () => {
-	const [selectedTable, setSelectedTable] = useState<string>('');
-	const [selectedDatabase, setSelectedDatabase] = useState<string>(''); // database
-	const [selectedMigration, setSelectedMigration] = useState<string>(''); // migration
-	const [showInput, setShowInput] = useState(false); // connection string
-	const [dbName, setdbName] = useState(''); // dbName
-	const [connectionString, setConnectionString] = useState(''); // connection string
-	const [databases, setDatabases] = useState<string[]>([]); // state for databases belonged to user
+	const dispatch = useDispatch();
+	const selectedTable = useSelector((state: any) => state.selectedTable);
+	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
+	const selectedMigration = useSelector(
+		(state: any) => state.selectedMigration
+	);
+	const showInput = useSelector((state: any) => state.showInput);
+	const dbName = useSelector((state: any) => state.dbName);
+	const connectionString = useSelector((state: any) => state.connectionString);
+	const databases = useSelector((state: any) => state.databases);
 
-	// databases belonged to user //
 	useEffect(() => {
 		const fetchDatabases = async () => {
 			try {
@@ -36,29 +39,27 @@ const SidePanel: React.FC = () => {
 				}
 
 				const result = await response.json();
-				setDatabases(result.databases);
+				dispatch(setDatabases(result.databases));
 			} catch (error) {
 				console.error('Error fetching databases:', error);
 			}
 		};
-		// databases belonged to user //
 
 		fetchDatabases();
-	}, []);
+	}, [dispatch]);
 
-	// connection string //
 	const handleButtonClick = () => {
-		setShowInput(true);
+		dispatch(setShowInput(true));
 	};
 
 	const handleConnectionStringInputChange = (
 		e: React.ChangeEvent<HTMLInputElement>
 	) => {
-		setConnectionString(e.target.value);
+		dispatch(setConnectionString(e.target.value));
 	};
 
 	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setdbName(e.target.value);
+		dispatch(setDbName(e.target.value));
 	};
 
 	const handleFormSubmit = async (e: React.FormEvent) => {
@@ -77,7 +78,6 @@ const SidePanel: React.FC = () => {
 			console.error('Error:', error);
 		}
 	};
-	// connection string //
 
 	return (
 		<div>
@@ -86,10 +86,10 @@ const SidePanel: React.FC = () => {
 				Choose Database:
 				<select
 					value={selectedDatabase}
-					onChange={e => setSelectedDatabase(e.target.value)}
+					onChange={e => dispatch(setSelectedDatabase(e.target.value))}
 				>
 					<option value="">--Select a database--</option>
-					{databases.map(db => (
+					{databases.map((db: string) => (
 						<option key={db} value={db}>
 							{db}
 						</option>
@@ -123,7 +123,7 @@ const SidePanel: React.FC = () => {
 				Choose Migration:
 				<select
 					value={selectedMigration}
-					onChange={e => setSelectedMigration(e.target.value)}
+					onChange={e => dispatch(setSelectedMigration(e.target.value))}
 				>
 					<option value="">--Select a migration--</option>
 					<option value="migration1">Migration 1</option>
@@ -134,7 +134,7 @@ const SidePanel: React.FC = () => {
 				Choose Table:
 				<select
 					value={selectedTable}
-					onChange={e => setSelectedTable(e.target.value)}
+					onChange={e => dispatch(setSelectedTable(e.target.value))}
 				>
 					<option value="">--Select a table--</option>
 					<option value="products">Products</option>
@@ -142,7 +142,6 @@ const SidePanel: React.FC = () => {
 					<option value="orders">Orders</option>
 					<option value="suppliers">Suppliers</option>
 				</select>
-				{/* {renderTableData()} // uncomment if you re-add the mock data */}
 			</header>
 		</div>
 	);
