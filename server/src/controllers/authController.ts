@@ -15,7 +15,6 @@ export const validateJWT = (
 	next: NextFunction
 ) => {
 	const header = req.headers.authorization;
-
 	if (header) {
 		const token = header.split(' ')[1];
 
