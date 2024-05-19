@@ -101,3 +101,15 @@
   "dbId": 1
   }
   Response: 201 created
+
+# Q. Why is there a getConnectionStringById and getConnectionString?
+
+# A. The latter shows all the databases, and the second one is the specific database for the user.
+
+# MigraitonLog
+
+- contains the script
+
+# AuditLog
+
+- the user who added script
