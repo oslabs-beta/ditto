@@ -1,11 +1,27 @@
-
-import express from 'express';
-import { addDBConnectionString, getConnectionString } from '../controllers/dbController';
+import express, { Request, Response, NextFunction } from 'express';
+import {
+	addDBConnectionString,
+	getConnectionString,
+} from '../controllers/dbController';
 import { validateJWT } from '../controllers/authController';
 
 const router = express.Router();
 
-router.post('/addConnectionString', validateJWT, addDBConnectionString);
-router.get('/connectionStrings', validateJWT, getConnectionString);
+router.post(
+	'/addConnectionString',
+	validateJWT,
+	addDBConnectionString,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(201).json(res.locals.message);
+	}
+);
+router.get(
+	'/connectionStrings',
+	validateJWT,
+	getConnectionString,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.connectionStrings);
+	}
+);
 
 export default router;

@@ -42,20 +42,7 @@ const db = {
 		}
 	},
 
-	async query(queryString: string): Promise<any> {
-		try {
-			const result = await pool.query(queryString);
-			return result.rows; // should return rows for SELECT
-		} catch (err: unknown) {
-			if (err instanceof Error) {
-				console.error('Query error:', err.stack);
-			} else {
-				console.error('An unknown error occurred:', err);
-			}
-		}
-	},
-
-	async parameterizedQuery(queryString: string, values: any[]): Promise<any> {
+	async query(queryString: string, values?: (string | number)[]): Promise<any> {
 		try {
 			const result = await pool.query(queryString, values);
 			return result.rows; // should return rows for SELECT
