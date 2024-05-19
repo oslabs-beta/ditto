@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 interface SignUpFormData {
 	username: string;
 	password: string;
-	email: string;
+	// email: string;
 	confirmPassword: string;
 }
 
@@ -13,7 +13,7 @@ const SignUpPage: React.FC = () => {
 	const [formData, setFormData] = useState<SignUpFormData>({
 		username: '',
 		password: '',
-		email: '',
+		// email: '',
 		confirmPassword: '',
 	});
 
@@ -83,14 +83,14 @@ const SignUpPage: React.FC = () => {
 					placeholder="Username"
 					style={{ marginBottom: '10px', padding: '10px' }}
 				/>
-				<input
+				{/* <input
 					type="email"
 					name="email"
 					value={formData.email}
 					onChange={handleInputChange}
 					placeholder="Email"
 					style={{ marginBottom: '10px', padding: '10px' }}
-				/>
+				/> */}
 				<input
 					type="password"
 					name="password"

@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
 			console.log('Login with:', formData);
 			// Here you would handle the login logic, e.g., making an API request to your backend
 
-			const response = await fetch('/migration', {
+			const response = await fetch('/auth/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
