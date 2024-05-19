@@ -14,6 +14,34 @@ const SidePanel: React.FC = () => {
 	const [selectedTable, setSelectedTable] = useState<string>('');
 	const [selectedDatabase, setSelectedDatabase] = useState<string>(''); // database
 	const [selectedMigration, setSelectedMigration] = useState<string>(''); // migration
+	const [showInput, setShowInput] = useState(false); // connection string
+	const [connectionString, setConnectionString] = useState(''); // connection string
+	// connection string //
+	const handleButtonClick = () => {
+		setShowInput(true);
+	};
+
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setConnectionString(e.target.value);
+	};
+
+	const handleFormSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		try {
+			const response = await fetch('YOUR_BACKEND_URL', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ connectionString }),
+			});
+			const result = await response.json();
+			console.log('Success:', result);
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	};
+	// connection string //
 
 	// Function to render table data dynamically based on the selected table
 	const renderTableData = () => {
@@ -135,7 +163,22 @@ const SidePanel: React.FC = () => {
 					<option value="db2">Database 2</option>
 				</select>
 				{/* database */}
-				<button>+</button>
+				{/* connection string form */}
+				<div>
+					<button onClick={handleButtonClick}>+</button>
+					{showInput && (
+						<form onSubmit={handleFormSubmit}>
+							<input
+								type="text"
+								value={connectionString}
+								onChange={handleInputChange}
+								placeholder="Enter connection string"
+							/>
+							<button type="submit">Submit</button>
+						</form>
+					)}
+				</div>
+				{/* connection string form */}
 				{/* migration */}
 				<br />
 				Choose Migration:
