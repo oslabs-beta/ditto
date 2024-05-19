@@ -13,7 +13,7 @@ TODO:
 describe('Database testing', () => {
 	// clear out the test DB before each test
 	beforeEach(async () => {
-		await db.query('TRUNCATE TABLE table_name RESTART IDENTITY CASCADE;');
+		await db.query('DELETE FROM table;');
 	});
 
 	describe('Adding migration logs to database', () => {

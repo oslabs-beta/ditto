@@ -8,8 +8,9 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"moduleResolution": "node",
+		"typeRoots": ["./types", "./node_modules/@types"]
 	},
-	"include": ["src/**/*"],
+	"include": ["src/**/*", "types/**/*"],
 	"exclude": [
 		"node_modules",
 		// "../tests/backend" 

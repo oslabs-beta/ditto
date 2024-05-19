@@ -64,3 +64,40 @@
 # Tracking Connection String
 
 - in the state
+
+# POSTMAN
+
+- Registration
+  POST
+  URL: /auth/register
+  Body: { "username": "boo", "password": "hoo123" }
+  Response: id, username, created_at
+
+- Login
+  POST
+  URL: /auth/login
+  Body: { "username": "boo", "password": "hoo123" }
+  Response: 200ok and a jwt token
+
+- Add DB Connect String
+  POST
+  URL: /db/addConnectionString
+  Header: Authorization Bearer <login jwt token>
+  Body: { "db_name": "mydatabase", "connection_string": "postgresql://username:password@host:port/database"}
+  Response: status 201 created, db_id, name, string, date
+
+- Get DB String for User
+  GET
+  URL: /db/connectionStrings
+  Headers: Auth Bearer <jwt token>
+  Response: 200 ok, db_id, name, string, created_at
+
+- Execute Migration
+  POST
+  URL: /migration
+  Hedaers: Auth Bearer <jwt>
+  Body: {
+  "script": "CREATE TABLE test_table (id SERIAL PRIMARY KEY, name VARCHAR(100));",
+  "dbId": 1
+  }
+  Response: 201 created

@@ -1,8 +1,15 @@
-import path from 'path';
 import express, { Express, Request, Response, NextFunction } from 'express';
 import migrationRoutes from './routes/migrationRoutes';
 import auditRoutes from './routes/auditRoutes';
+import authRoutes from './routes/authRoutes';
+import dbRoutes from './routes/dbRoutes';
+import migrationLogRoutes from './routes/migrationLogRoutes';
+import scriptRoutes from './routes/scriptRoutes';
+import githubAuthRoutes from './routes/githubAuthRoutes';
 import cors from 'cors';
+import session from 'express-session';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app: Express = express();
 const port: number = 3001;
@@ -10,10 +17,27 @@ const port: number = 3001;
 app.use(cors()); // Enable CORS for all routes
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+
+app.use(session({
+	secret: process.env.SESSION_SECRET as string,
+	resave: false,
+	saveUninitialized: false,
+}))
 
 app.use('/migration', migrationRoutes);
 
 app.use('/audit', auditRoutes);
+
+app.use('/migrationlog', migrationLogRoutes);
+
+app.use('/script', scriptRoutes);
+
+app.use('/auth', authRoutes);
+
+app.use('/db', dbRoutes);
+
+app.use('/github', githubAuthRoutes);
 
 // catch all route handler
 app.use('*', (req: Request, res: Response) => {
