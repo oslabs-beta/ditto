@@ -31,3 +31,15 @@ export const findUser = async (username: string): Promise<User | null> => {
 	const result = await db.query(queryString, [username]);
 	return result.length > 0 ? (result[0] as User) : null;
 };
+
+export const createOAuthUser = async (
+  username: string
+): Promise<User> => {
+  const queryString = `
+    INSERT INTO users (username, password)
+    VALUES ($1, $2)
+    RETURNING *;
+  `;
+  const result = await db.query(queryString, [username, '']);
+  return result[0] as User;
+}
