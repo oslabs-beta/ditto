@@ -69,3 +69,110 @@ export const suppliers: Supplier[] = [
 	},
 	{ id: 3, name: 'SmartElectro', contactInfo: 'support@smartelectro.com' },
 ];
+
+// add this function to sidepanel component if you want to use the mock data
+// // Function to render table data dynamically based on the selected table
+// const renderTableData = () => {
+// 	let tableData: JSX.Element | null = null;
+
+// 	switch (selectedTable) {
+// 		case 'products':
+// 			tableData = (
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>ID</th>
+// 							<th>Name</th>
+// 							<th>Price</th>
+// 							<th>Category</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{products.map((product: Product) => (
+// 							<tr key={product.id}>
+// 								<td>{product.id}</td>
+// 								<td>{product.name}</td>
+// 								<td>${product.price.toFixed(2)}</td>
+// 								<td>{product.category}</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 			);
+// 			break;
+// 		case 'customers':
+// 			tableData = (
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>ID</th>
+// 							<th>First Name</th>
+// 							<th>Last Name</th>
+// 							<th>Email</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{customers.map((customer: Customer) => (
+// 							<tr key={customer.id}>
+// 								<td>{customer.id}</td>
+// 								<td>{customer.firstName}</td>
+// 								<td>{customer.lastName}</td>
+// 								<td>{customer.email}</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 			);
+// 			break;
+// 		case 'orders':
+// 			tableData = (
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>ID</th>
+// 							<th>Customer ID</th>
+// 							<th>Product ID</th>
+// 							<th>Order Date</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{orders.map((order: Order) => (
+// 							<tr key={order.id}>
+// 								<td>{order.id}</td>
+// 								<td>{order.customerId}</td>
+// 								<td>{order.productId}</td>
+// 								<td>{order.orderDate}</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 			);
+// 			break;
+// 		case 'suppliers':
+// 			tableData = (
+// 				<table>
+// 					<thead>
+// 						<tr>
+// 							<th>ID</th>
+// 							<th>Name</th>
+// 							<th>Contact Info</th>
+// 						</tr>
+// 					</thead>
+// 					<tbody>
+// 						{suppliers.map((supplier: Supplier) => (
+// 							<tr key={supplier.id}>
+// 								<td>{supplier.id}</td>
+// 								<td>{supplier.name}</td>
+// 								<td>{supplier.contactInfo}</td>
+// 							</tr>
+// 						))}
+// 					</tbody>
+// 				</table>
+// 			);
+// 			break;
+// 		default:
+// 			tableData = <p>Please select a table.</p>;
+// 	}
+
+// 	return tableData;
+// };

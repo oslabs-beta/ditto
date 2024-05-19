@@ -1,6 +1,9 @@
+// LoginPage.tsx
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store';
 
 interface LoginFormData {
 	username: string;
@@ -13,7 +16,8 @@ const LoginPage: React.FC = () => {
 		password: '',
 	});
 
-	const navigate = useNavigate(); // Use the useHistory hook for redirection
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		setFormData({
@@ -28,44 +32,38 @@ const LoginPage: React.FC = () => {
 		try {
 			e.preventDefault();
 			console.log('Login with:', formData);
-			// Here you would handle the login logic, e.g., making an API request to your backend
 
-			const response = await fetch('/migration', {
+			const response = await fetch('/auth/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(formData),
 			});
-			console.log(response);
+
 			if (response.ok) {
-				// Check if the HTTP status code is 2xx
-				// Assuming your login is successful and you need to redirect
-				navigate('/migration'); // Redirect to MigrationPage on success
+				const data = await response.json();
+				dispatch(setUser(data.username));
+				navigate('/migration');
 			} else {
-				console.error('Login failed:', await response.json()); // Logging the error response
+				console.error('Login failed:', await response.json());
 			}
 		} catch (error) {
 			console.error('An error occurred during login:', error);
 		}
 	};
 
-	// component declaration const name: React.FC (type stands for function component)
 	const handleLoginWithGitHub = (): void => {
-		// handles login, and :void shows that it takes no parameters and returns nothing
-		// Ensuring the client_id is present
-		const clientId: string | undefined = process.env.REACT_APP_GITHUB_CLIENT_ID; // retrieves github client ID from environment variable, can be string or undefined // had to add node in ts.config for process to work
+		const clientId: string | undefined = process.env.REACT_APP_GITHUB_CLIENT_ID;
 		if (!clientId) {
-			// if no client id, returns console log and ends execution
 			console.error('GitHub client ID not found');
 			return;
 		}
 
 		const redirectUri: string = encodeURIComponent(
-			// encodes URI
 			'http://localhost:3000/auth/callback'
 		);
-		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`; // sends to github's Oauth page
+		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
 	};
 
 	return (
