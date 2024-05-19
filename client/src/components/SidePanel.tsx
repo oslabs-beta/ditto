@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Product,
 	Customer,
@@ -17,6 +17,35 @@ const SidePanel: React.FC = () => {
 	const [showInput, setShowInput] = useState(false); // connection string
 	const [dbName, setdbName] = useState(''); // dbName
 	const [connectionString, setConnectionString] = useState(''); // connection string
+	const [databases, setDatabases] = useState<string[]>([]); // state for databases belonged to user
+
+	// databases belonged to user //
+	useEffect(() => {
+		const fetchDatabases = async () => {
+			try {
+				const response = await fetch('/api/user/databases', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with your JWT token logic
+					},
+				});
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+
+				const result = await response.json();
+				setDatabases(result.databases);
+			} catch (error) {
+				console.error('Error fetching databases:', error);
+			}
+		};
+		// databases belonged to user //
+
+		fetchDatabases();
+	}, []);
+
 	// connection string //
 	const handleButtonClick = () => {
 		setShowInput(true);
@@ -50,112 +79,6 @@ const SidePanel: React.FC = () => {
 	};
 	// connection string //
 
-	// Function to render table data dynamically based on the selected table
-	const renderTableData = () => {
-		let tableData: JSX.Element | null = null;
-
-		switch (selectedTable) {
-			case 'products':
-				tableData = (
-					<table>
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Price</th>
-								<th>Category</th>
-							</tr>
-						</thead>
-						<tbody>
-							{products.map((product: Product) => (
-								<tr key={product.id}>
-									<td>{product.id}</td>
-									<td>{product.name}</td>
-									<td>${product.price.toFixed(2)}</td>
-									<td>{product.category}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				);
-				break;
-			case 'customers':
-				tableData = (
-					<table>
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>First Name</th>
-								<th>Last Name</th>
-								<th>Email</th>
-							</tr>
-						</thead>
-						<tbody>
-							{customers.map((customer: Customer) => (
-								<tr key={customer.id}>
-									<td>{customer.id}</td>
-									<td>{customer.firstName}</td>
-									<td>{customer.lastName}</td>
-									<td>{customer.email}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				);
-				break;
-			case 'orders':
-				tableData = (
-					<table>
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Customer ID</th>
-								<th>Product ID</th>
-								<th>Order Date</th>
-							</tr>
-						</thead>
-						<tbody>
-							{orders.map((order: Order) => (
-								<tr key={order.id}>
-									<td>{order.id}</td>
-									<td>{order.customerId}</td>
-									<td>{order.productId}</td>
-									<td>{order.orderDate}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				);
-				break;
-			case 'suppliers':
-				tableData = (
-					<table>
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Name</th>
-								<th>Contact Info</th>
-							</tr>
-						</thead>
-						<tbody>
-							{suppliers.map((supplier: Supplier) => (
-								<tr key={supplier.id}>
-									<td>{supplier.id}</td>
-									<td>{supplier.name}</td>
-									<td>{supplier.contactInfo}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				);
-				break;
-			default:
-				tableData = <p>Please select a table.</p>;
-		}
-
-		return tableData;
-	};
-
 	return (
 		<div>
 			<header>
@@ -166,8 +89,11 @@ const SidePanel: React.FC = () => {
 					onChange={e => setSelectedDatabase(e.target.value)}
 				>
 					<option value="">--Select a database--</option>
-					<option value="db1">Database 1</option>
-					<option value="db2">Database 2</option>
+					{databases.map(db => (
+						<option key={db} value={db}>
+							{db}
+						</option>
+					))}
 				</select>
 				{/* database */}
 				{/* connection string form */}
@@ -216,7 +142,7 @@ const SidePanel: React.FC = () => {
 					<option value="orders">Orders</option>
 					<option value="suppliers">Suppliers</option>
 				</select>
-				{renderTableData()}
+				{/* {renderTableData()} // uncomment if you re-add the mock data */}
 			</header>
 		</div>
 	);
