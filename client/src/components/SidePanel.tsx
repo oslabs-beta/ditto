@@ -126,8 +126,8 @@ const SidePanel: React.FC = () => {
 					onChange={e => dispatch(setSelectedMigration(e.target.value))}
 				>
 					<option value="">--Select a migration--</option>
-					<option value="migration1">Migration 1</option>
-					<option value="migration2">Migration 2</option>
+					{/* <option value="migration1">Migration 1</option>
+					<option value="migration2">Migration 2</option> */}
 				</select>
 				{/* migration */}
 				<br />
@@ -137,10 +137,10 @@ const SidePanel: React.FC = () => {
 					onChange={e => dispatch(setSelectedTable(e.target.value))}
 				>
 					<option value="">--Select a table--</option>
-					<option value="products">Products</option>
+					{/* <option value="products">Products</option>
 					<option value="customers">Customers</option>
 					<option value="orders">Orders</option>
-					<option value="suppliers">Suppliers</option>
+					<option value="suppliers">Suppliers</option> */}
 				</select>
 			</header>
 		</div>
