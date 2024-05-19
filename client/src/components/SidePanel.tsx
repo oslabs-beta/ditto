@@ -121,65 +121,45 @@ const SidePanel: React.FC = () => {
 		return tableData;
 	};
 
-	// const sidePanelStyle: React.CSSProperties = {
-	// 	width: '25%',
-	// 	padding: '10px',
-	// 	backgroundColor: '#f1f1f1',
-	// 	borderRight: '1px solid #ccc',
-	// 	overflowY: 'auto',
-	// 	display: 'flex',
-	// 	flexDirection: 'column',
-	// };
-
-	const labelStyle: React.CSSProperties = {
-		marginBottom: '20px',
-	};
-
 	return (
 		<div>
 			<header>
 				{/* database */}
-				<label style={labelStyle}>
-					Choose Database:
-					<select
-						value={selectedDatabase}
-						onChange={e => setSelectedDatabase(e.target.value)}
-					>
-						<option value="">--Select a database--</option>
-						<option value="db1">Database 1</option>
-						<option value="db2">Database 2</option>
-					</select>
-				</label>
+				Choose Database:
+				<select
+					value={selectedDatabase}
+					onChange={e => setSelectedDatabase(e.target.value)}
+				>
+					<option value="">--Select a database--</option>
+					<option value="db1">Database 1</option>
+					<option value="db2">Database 2</option>
+				</select>
 				{/* database */}
-
+				<button>+</button>
 				{/* migration */}
-				<label style={labelStyle}>
-					Choose Migration:
-					<select
-						value={selectedMigration}
-						onChange={e => setSelectedMigration(e.target.value)}
-					>
-						<option value="">--Select a migration--</option>
-						<option value="migration1">Migration 1</option>
-						<option value="migration2">Migration 2</option>
-					</select>
-				</label>
+				<br />
+				Choose Migration:
+				<select
+					value={selectedMigration}
+					onChange={e => setSelectedMigration(e.target.value)}
+				>
+					<option value="">--Select a migration--</option>
+					<option value="migration1">Migration 1</option>
+					<option value="migration2">Migration 2</option>
+				</select>
 				{/* migration */}
-
-				<label style={labelStyle}>
-					Choose Table:
-					<select
-						value={selectedTable}
-						onChange={e => setSelectedTable(e.target.value)}
-					>
-						<option value="">--Select a table--</option>
-						<option value="products">Products</option>
-						<option value="customers">Customers</option>
-						<option value="orders">Orders</option>
-						<option value="suppliers">Suppliers</option>
-					</select>
-				</label>
-
+				<br />
+				Choose Table:
+				<select
+					value={selectedTable}
+					onChange={e => setSelectedTable(e.target.value)}
+				>
+					<option value="">--Select a table--</option>
+					<option value="products">Products</option>
+					<option value="customers">Customers</option>
+					<option value="orders">Orders</option>
+					<option value="suppliers">Suppliers</option>
+				</select>
 				{renderTableData()}
 			</header>
 		</div>

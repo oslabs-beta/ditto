@@ -28,11 +28,11 @@ const MigrationPage: React.FC = () => {
 
 	const migrationPageStyle: React.CSSProperties = {
 		display: 'flex',
-		height: '90vh',
+		height: '88vh',
 	};
 
 	const sidePanelStyle: React.CSSProperties = {
-		width: '25%',
+		width: '15%',
 		padding: '10px',
 		backgroundColor: '#f1f1f1',
 		borderRight: '1px solid #ccc',
