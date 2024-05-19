@@ -8,9 +8,9 @@ import {
 	customers,
 	orders,
 	suppliers,
-} from './mockData';
-import CodeEditor from './CodeEditor'; // CodeEditor
-import SidePanel from './SidePanel';
+} from '../components/mockData';
+import CodeEditor from '../components/CodeEditor'; // CodeEditor
+import SidePanel from '../components/SidePanel';
 
 const MigrationPage: React.FC = () => {
 	const [code, setCode] = useState('-- Write your PostgreSQL script here'); // CodeEditor

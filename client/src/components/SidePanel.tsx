@@ -15,25 +15,32 @@ const SidePanel: React.FC = () => {
 	const [selectedDatabase, setSelectedDatabase] = useState<string>(''); // database
 	const [selectedMigration, setSelectedMigration] = useState<string>(''); // migration
 	const [showInput, setShowInput] = useState(false); // connection string
+	const [dbName, setdbName] = useState(''); // dbName
 	const [connectionString, setConnectionString] = useState(''); // connection string
 	// connection string //
 	const handleButtonClick = () => {
 		setShowInput(true);
 	};
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleConnectionStringInputChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		setConnectionString(e.target.value);
+	};
+
+	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setdbName(e.target.value);
 	};
 
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const response = await fetch('YOUR_BACKEND_URL', {
+			const response = await fetch('/db/addConnectionString', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ connectionString }),
+				body: JSON.stringify({ dbName, connectionString }),
 			});
 			const result = await response.json();
 			console.log('Success:', result);
@@ -170,8 +177,14 @@ const SidePanel: React.FC = () => {
 						<form onSubmit={handleFormSubmit}>
 							<input
 								type="text"
+								value={dbName}
+								onChange={handledbNameInputChange}
+								placeholder="Enter database name"
+							/>
+							<input
+								type="text"
 								value={connectionString}
-								onChange={handleInputChange}
+								onChange={handleConnectionStringInputChange}
 								placeholder="Enter connection string"
 							/>
 							<button type="submit">Submit</button>

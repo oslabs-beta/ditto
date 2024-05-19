@@ -6,9 +6,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Route as Route } from 'react-router-dom';
 import { Routes as Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import LoginPage from './components/LoginPage';
+import LoginPage from './Pages/LoginPage';
 import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
-import MigrationPage from './components/MigrationPage';
+import MigrationPage from './Pages/MigrationPage';
 import SignUpPage from './components/SignUp';
 
 const App: React.FC = () => {

@@ -36,8 +36,9 @@ const LoginPage: React.FC = () => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(formData),
+				body: JSON.stringify(formData), // { action: , user, pw }
 			});
+
 			console.log(response);
 			if (response.ok) {
 				// Check if the HTTP status code is 2xx
