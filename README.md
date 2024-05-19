@@ -61,10 +61,13 @@
 
 - if you're getting react error messages, try uninstalling and re-installing npm.
 
+# Tracking Connection String
+
+- in the state
 
 # POSTMAN
 
-- Registration 
+- Registration
   POST
   URL: /auth/register
   Body: { "username": "boo", "password": "hoo123" }
@@ -97,4 +100,16 @@
   "script": "CREATE TABLE test_table (id SERIAL PRIMARY KEY, name VARCHAR(100));",
   "dbId": 1
   }
-  Response: 201 created 
+  Response: 201 created
+
+# Q. Why is there a getConnectionStringById and getConnectionString?
+
+# A. The latter shows all the databases, and the second one is the specific database for the user.
+
+# MigraitonLog
+
+- contains the script
+
+# AuditLog
+
+- the user who added script
