@@ -10,12 +10,14 @@ if (!clientId || !clientSecret) {
     throw new Error('GitHub Client ID and Secret are not defined');
 }
 
+//redirect to github ouath url
 export const githubLogin = (req: Request, res: Response) => {
     const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
     res.redirect(githubAuthUrl);
 };
 
 export const githubCallback = async (req: Request, res: Response, next: NextFunction) => {
+    //get auth code from query 
     const code = req.query.code as string;
 
     if (!code) {
@@ -23,6 +25,7 @@ export const githubCallback = async (req: Request, res: Response, next: NextFunc
     }
 
     try {
+        //exchange code for access token
         const tokenResponse = await axios.post(
             'https://github.com/login/oauth/access_token',
             {
@@ -38,26 +41,26 @@ export const githubCallback = async (req: Request, res: Response, next: NextFunc
                 },
             }
         );
-
+            //get token from response
         const accessToken = tokenResponse.data.access_token;
 
         if (!accessToken) {
             return res.status(400).json({ error: 'No access token received' });
         }
-
+        //get users data from github
         const userResponse = await axios.get('https://api.github.com/user', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
         });
-
+        //get data from response and store in userData
         const userData = userResponse.data;
         
         let user = await findUser(userData.login);
         if (!user) {
             user = await createOAuthUser(userData.login);
         }
-
+        //save users session data
         req.session.user = { id: user.user_id, username: user.username };
         return next();
     } catch (error) {

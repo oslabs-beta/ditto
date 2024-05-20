@@ -7,6 +7,7 @@ export const addDBConnectionString = async (
 	next: NextFunction
 ) => {
 	const { db_name, connection_string } = req.body;
+	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -67,6 +68,7 @@ export const getConnectionStringById = async (
     res: Response, 
     next: NextFunction
 ) => {
+	//get DB ID from req params
     const { dbId } = req.params;
     const userId = req.user?.id;
 
