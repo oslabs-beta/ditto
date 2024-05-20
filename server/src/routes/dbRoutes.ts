@@ -2,7 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import {
 	addDBConnectionString,
 	getConnectionString,
-    getConnectionStringById,
+	getConnectionStringById,
+	deleteConnectionStringById,
 } from '../controllers/dbController';
 import { validateJWT } from '../controllers/authController';
 
@@ -25,12 +26,21 @@ router.get(
 	}
 );
 router.get(
-    `/getConnectionString/:dbId`,
-    validateJWT,
-    getConnectionStringById,
-    (_req: Request, res: Response, _next: NextFunction) => {
-        res.status(200).json(res.locals.connectionString);
-    }
-)
+	`/getConnectionString/:dbId`,
+	validateJWT,
+	getConnectionStringById,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.connectionString);
+	}
+);
+
+router.delete(
+	`/deleteConnectionString/:dbId`,
+	validateJWT,
+	deleteConnectionStringById,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.message);
+	}
+);
 
 export default router;

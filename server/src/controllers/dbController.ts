@@ -3,6 +3,8 @@ import {
 	addDBConnection,
 	getDBConnectionByUserId,
 	getDBConnectionById,
+	deleteDBConnectionById,
+	addDBConnectionToUser,
 } from '../models/userDB';
 
 export const addDBConnectionString = async (
@@ -11,6 +13,7 @@ export const addDBConnectionString = async (
 	next: NextFunction
 ) => {
 	const { db_name, connection_string } = req.body;
+	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -32,8 +35,9 @@ export const addDBConnectionString = async (
 			});
 		}
 
-		const newDB = await addDBConnection(userId, db_name, connection_string);
-		res.locals.message = `Connection string added successfully ${newDB}`;
+		const newDB = await addDBConnection(connection_string);
+		const newDBUser = await addDBConnectionToUser(db_name, newDB.db_id);
+		res.locals.message = `Connection string added successfully ${newDBUser.db_name}`;
 		return next();
 	} catch (error) {
 		return next({
@@ -58,7 +62,7 @@ export const getConnectionString = async (
 	}
 	try {
 		const connectionStrings = await getDBConnectionByUserId(userId);
-		res.locals.connectionStrings = { connectionStrings };
+		res.locals.connectionStrings = connectionStrings; // { connection_string, db_name }
 		return next();
 	} catch (error) {
 		return next({
@@ -73,8 +77,9 @@ export const getConnectionStringById = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { dbId } = req.params;
-	const userId = req.user?.id;
+	//get DB ID from req params
+    const { dbId } = req.params;
+    const userId = req.user?.id;
 
 	if (!userId) {
 		return next({
@@ -90,7 +95,40 @@ export const getConnectionStringById = async (
 				message: 'Connection string not found',
 			});
 		}
-		res.locals.connectionString = connectionString;
+		res.locals.connectionString = connectionString; // { connection_string, migration_id (array) }
+		return next();
+	} catch (error) {
+		return next({
+			status: 400,
+			message: `Error in dbController getConnectionStringbyId: ${error}`,
+		});
+	}
+};
+
+export const deleteConnectionStringById = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { dbId } = req.params;
+	const userId = req.user?.id;
+
+	if (!userId) {
+		return next({
+			status: 401,
+			message: 'Unauthorized',
+		});
+	}
+	try {
+		const databaseName = await deleteDBConnectionById(userId, Number(dbId));
+		console.log(databaseName);
+		if (!databaseName) {
+			return next({
+				status: 404,
+				message: 'Connection string not found',
+			});
+		}
+		res.locals.message = `Successfully deleted database ${databaseName}`;
 		return next();
 	} catch (error) {
 		next({

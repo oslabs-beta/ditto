@@ -12,6 +12,10 @@ import SignUpPage from './pages/SignUpPage';
 import UsersList from './pages/UsersList';
 import GitHubCallBack from './components/GitHubCallBack';
 import GitHubLogin from './components/GitHubLogin';
+import DocumentationPage from './pages/DocumentationPage';
+import CommunityPage from './pages/CommunityPage';
+import FAQPage from './pages/FAQPage';
+import MainPage from './pages/MainPage';
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -20,7 +24,7 @@ const App: React.FC = () => {
 		{ path: '/community', label: 'Community' },
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
-		{ path: '/signup', label: 'SignUp' },
+		{ path: '/signup', label: 'Signup' },
 	];
 
 	return (
@@ -29,16 +33,21 @@ const App: React.FC = () => {
 				<NavBar links={navLinks} logo={logoImage} />
 				<UsersList />
 				<Routes>
+					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/" element={<GitHubLogin />} />
 					<Route path="/github/callback" element={<MigrationPage />} />
 
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
+					<Route path="/documentation" element={<DocumentationPage />} />
+					<Route path="/community" element={<CommunityPage />} />
+					<Route path="/faq" element={<FAQPage />} />
 					{/* Define more routes as necessary */}
 				</Routes>
 			</div>
 		</Router>
 	);
 };
+
 export default App;

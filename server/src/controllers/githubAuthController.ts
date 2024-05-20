@@ -6,10 +6,11 @@ const clientId = process.env.GITHUB_CLIENT_ID as string;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET as string;
 const redirectUri = 'http://localhost:3001/github/callback'; // This should match the registered URL
 
-if (!clientId || !clientSecret) {
-	throw new Error('GitHub Client ID and Secret are not defined');
-}
+// if (!clientId || !clientSecret) {
+//     throw new Error('GitHub Client ID and Secret are not defined');
+// }
 
+//redirect to github ouath url
 export const githubLogin = (req: Request, res: Response) => {
 	const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
 	res.redirect(githubAuthUrl);
@@ -27,6 +28,7 @@ export const githubCallback = async (
 	}
 
 	try {
+		//exchange code for access token
 		const tokenResponse = await axios.post(
 			'https://github.com/login/oauth/access_token',
 			{
@@ -42,7 +44,7 @@ export const githubCallback = async (
 				},
 			}
 		);
-
+		//get token from response
 		const accessToken = tokenResponse.data.access_token;
 
 		if (!accessToken) {
@@ -65,7 +67,9 @@ export const githubCallback = async (
 		req.session.user = { id: user.user_id, username: user.username };
 		return next();
 	} catch (error) {
-		next(error);
+		return next({
+			message: `Error in githubAuthController githubCallback ${error}`,
+		});
 	}
 };
 

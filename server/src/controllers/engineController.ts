@@ -1,4 +1,9 @@
-import { getDBConnectionByUserId } from '../models/userDB';
+import {
+	getDBConnectionByUserId,
+	getPendingMigrations,
+	updateMigrationStatus,
+	validateChecksum,
+} from '../models/userDB';
 import { Pool } from 'pg';
 import { Request, Response, NextFunction } from 'express';
 
@@ -31,21 +36,21 @@ export const executeMigration = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { script, dbId } = req.body;
-	const userId = req.user?.id; // depends on how we request the string like req.user or req.authuser???
+	const { dbId } = req.body;
+	const userId = req.user?.id;
 
-	if (!script || !dbId || !userId) {
+	if (!dbId || !userId) {
 		return next({
 			status: 400,
-			message: { err: 'Script, databaseID, userID required.' },
+			message: { err: 'DatabaseID and userID required.' },
 		});
 	}
 
 	try {
-		const connectionStrings = await getDBConnectionByUserId(userId);
+		const connectionStrings = await getDBConnectionByUserId(userId); // get db connections from user
 		const connectionString = connectionStrings.find(
 			db => db.db_id === dbId
-		)?.connection_string;
+		)?.connection_string; // get specific string by specific db id
 
 		if (!connectionString) {
 			return next({
@@ -55,10 +60,38 @@ export const executeMigration = async (
 		}
 
 		const pool = createPool(connectionString);
-		await migrationScript(script, pool);
+		const pendingMigrations = await getPendingMigrations(userId, dbId); // get all pending status migrations for user/dbid
+
+		for (const migration of pendingMigrations) {
+			//iterate through all the migrations
+			const validChecksum = await validateChecksum(
+				migration.migration_id,
+				migration.checksum
+			); //valdiate checksum for each migration
+			if (!validChecksum) {
+				await updateMigrationStatus(migration.migration_id, 'failed'); // if checksum is invalid, then update status to failed
+				return next({
+					status: 400,
+					message: `Invalid checksum for migration ${migration.version}`,
+				});
+			}
+
+			try {
+				await migrationScript(migration.script, pool); //still iterating so execute each migration script
+				await updateMigrationStatus(migration.migration_id, 'success'); // update status to success if execution is successful
+			} catch (error) {
+				await updateMigrationStatus(migration.migration_id, 'failed'); // update status to failed if execution is not successful
+				return next({
+					status: 500,
+					message: `Error executing migration ${migration.version}`,
+				});
+			}
+		}
+		res.locals.message = 'Migrations executed successfully';
 		return next();
 	} catch (error) {
-		next({
+		return next({
+			status: 500,
 			message: `$Error in engineController.executeMigration ${error}.`,
 		});
 	}
