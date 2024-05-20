@@ -1,4 +1,9 @@
-import { getDBConnectionByUserId, getPendingMigrations, updateMigrationStatus, validateChecksum } from '../models/userDB';
+import {
+	getDBConnectionByUserId,
+	getPendingMigrations,
+	updateMigrationStatus,
+	validateChecksum,
+} from '../models/userDB';
 import { Pool } from 'pg';
 import { Request, Response, NextFunction } from 'express';
 
@@ -32,7 +37,7 @@ export const executeMigration = async (
 	next: NextFunction
 ) => {
 	const { dbId } = req.body;
-	const userId = req.user?.id; 
+	const userId = req.user?.id;
 
 	if (!dbId || !userId) {
 		return next({
@@ -57,29 +62,33 @@ export const executeMigration = async (
 		const pool = createPool(connectionString);
 		const pendingMigrations = await getPendingMigrations(userId, dbId); // get all pending status migrations for user/dbid
 
-		for (const migration of pendingMigrations) { //iterate through all the migrations 
-			const validChecksum = await validateChecksum(migration.migration_id, migration.checksum); //valdiate checksum for each migration
-			if(!validChecksum) {
+		for (const migration of pendingMigrations) {
+			//iterate through all the migrations
+			const validChecksum = await validateChecksum(
+				migration.migration_id,
+				migration.checksum
+			); //valdiate checksum for each migration
+			if (!validChecksum) {
 				await updateMigrationStatus(migration.migration_id, 'failed'); // if checksum is invalid, then update status to failed
 				return next({
 					status: 400,
 					message: `Invalid checksum for migration ${migration.version}`,
 				});
 			}
-			
-			try{
+
+			try {
 				await migrationScript(migration.script, pool); //still iterating so execute each migration script
 				await updateMigrationStatus(migration.migration_id, 'success'); // update status to success if execution is successful
-			} catch(error) {
-			await updateMigrationStatus(migration.migration_id, 'failed'); // update status to failed if execution is not successful
-			return next({
-				status: 500,
-				message: `Error executing migration ${migration.version}`,
-			});
+			} catch (error) {
+				await updateMigrationStatus(migration.migration_id, 'failed'); // update status to failed if execution is not successful
+				return next({
+					status: 500,
+					message: `Error executing migration ${migration.version}`,
+				});
+			}
 		}
-	}
-	res.locals.message = 'Migrations executed successfully';
-	return next();
+		res.locals.message = 'Migrations executed successfully';
+		return next();
 	} catch (error) {
 		return next({
 			status: 500,
