@@ -5,7 +5,7 @@ interface Migration {
 	description: string;
 	date_migrated: string;
 	state: string;
-	execution_time: string;
+	// execution_time: string; (query is giving me an object)
 }
 
 const MigrationScripts: React.FC = () => {
@@ -55,7 +55,7 @@ const MigrationScripts: React.FC = () => {
 					<th>Description</th>
 					<th>Date Migrated</th>
 					<th>State</th>
-					<th>Execution Time</th>
+					{/* <th>Execution Time</th> */}
 				</tr>
 			</thead>
 			<tbody>
@@ -65,7 +65,8 @@ const MigrationScripts: React.FC = () => {
 						<td>{migration.description}</td>
 						<td>{migration.date_migrated}</td>
 						<td>{migration.state}</td>
-						<td>{migration.execution_time}</td>
+						{/* <td>{migration.execution_time}</td> the query is giving me
+						an object */}
 					</tr>
 				))}
 			</tbody>
