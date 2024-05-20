@@ -24,6 +24,19 @@ export interface DBbyDBId {
 	migration_id: number[];
 }
 
+export interface Migration {
+	migration_id: number;
+	user_id: number
+	date_created: number;
+	database_id: number
+	description: string;
+	status: string;
+	version: string;
+	script: string;
+	checksum: number;
+
+}
+
 export const addDBConnection = async (
 	connectionString: string
 ): Promise<DB> => {
@@ -88,3 +101,38 @@ export const deleteDBConnectionById = async (
 	const result = await db.query(queryString, [userId, dbId]);
 	return result[0] as string;
 };
+
+export const getPendingMigrations = async (userId: number, dbId: number): Promise<Migration[]> => {
+	const queryString = `
+	SELECT * FROM migration_logs
+	WHERE user_id = $1 AND database_id = $2 AND status = 'pending'
+	ORDER BY version ASC; 
+	`;
+	
+	const result = await db.query(queryString, [userId, dbId]);
+	return result as Migration[]; // return result as an array of migrations 
+};
+
+export const updateMigrationStatus = async (migrationId: number, status: string): Promise<Migration> => {
+	const queryString = `
+	UPDATE migration_logs
+	SET status = $1, executed_at = NOW()
+	WHERE migration_id = $2
+	RETURNING *;
+	`;
+	const result = await db.query(queryString, [status, migrationId]);
+	return result[0] as Migration; // return updated migration
+};
+
+export const validateChecksum = async (migrationId: number, checksum: number): Promise<boolean> => {
+	const queryString = `
+	SELECT checksum FROM migration_logs
+	WHERE migration_id = $1;
+	`;
+	const result = await db.query(queryString, [migrationId]);
+	if (result.length > 0) {
+		const storedChecksum = result[0].checksum;
+		return checksum === storedChecksum; // compare provided checksum with stored checksum
+	}
+	return false;
+}
