@@ -10,6 +10,7 @@ interface LoginFormData {
 }
 
 const LoginPage: React.FC = () => {
+	//regular login//
 	const [formData, setFormData] = useState<LoginFormData>({
 		username: '',
 		password: '',
@@ -33,7 +34,7 @@ const LoginPage: React.FC = () => {
 			console.log('Login with:', formData);
 
 			const response = await fetch('http://localhost:3001/login', {
-				// prod: /auth/login
+				// /auth/login
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -46,7 +47,6 @@ const LoginPage: React.FC = () => {
 				console.log('data: ', data);
 				console.log('formData.username: ', formData.username);
 				dispatch(setUser(formData.username));
-
 				dispatch(setToken(data.token)); //test
 				dispatch(setDatabases(data.databases)); //test
 				navigate('/migration');
@@ -57,19 +57,23 @@ const LoginPage: React.FC = () => {
 			console.error('An error occurred during login:', error);
 		}
 	};
+	/* Regular Login */
 
+	/* GitHub Login */
 	const handleLoginWithGitHub = (): void => {
-		const clientId: string | undefined = process.env.REACT_APP_GITHUB_CLIENT_ID;
+		const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
 		if (!clientId) {
 			console.error('GitHub client ID not found');
-			return;
+			// return;
 		}
 
 		const redirectUri: string = encodeURIComponent(
-			'http://localhost:3000/auth/callback'
+			'http://localhost:3000/github/callback'
 		);
-		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+		// window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
 	};
+	/* GitHub Login */
 
 	return (
 		<div

@@ -75,8 +75,13 @@ const SidePanel: React.FC = () => {
 					connection_string: connectionString,
 				}),
 			});
-			const result = await response.json();
-			console.log('Success:', result);
+			// if response is ok we need backend to query for databases again so i can dispatch setdatabases here again
+			// Maybe backend can have a controller for querying for databases again. so fetch for getDBConnectionByUserId
+			// and set dispatch setDatabases here again
+			if (!response.ok) {
+				const result = await response.json();
+				console.log('Success:', result);
+			}
 		} catch (error) {
 			console.error('Error:', error);
 		}

@@ -10,6 +10,8 @@ import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can 
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
 import UsersList from './pages/UsersList';
+import GitHubCallBack from './components/GitHubCallBack';
+import GitHubLogin from './components/GitHubLogin';
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -28,6 +30,9 @@ const App: React.FC = () => {
 				<UsersList />
 				<Routes>
 					<Route path="/login" element={<LoginPage />} />
+					<Route path="/" element={<GitHubLogin />} />
+					<Route path="/github/callback" element={<MigrationPage />} />
+
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					{/* Define more routes as necessary */}

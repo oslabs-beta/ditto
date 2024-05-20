@@ -15,10 +15,39 @@ const MigrationScripts: React.FC = () => {
 	console.log('current database:', selectedDatabase);
 	const [migrations, setMigrations] = useState<Migration[]>([]);
 
+	// this is going to need muiltiple fields depending on body *** Add Scripts ***
+	// const handleSubmit = async (
+	// 	e: React.FormEvent<HTMLFormElement>
+	// ): Promise<void> => {
+	// 	try {
+	// 		e.preventDefault();
+
+	// 		const response = await fetch('http://localhost:3001/migration', { // endpoint that leads to addMigration
+	// 			// /auth/login
+	// 			method: 'POST',
+	// 			headers: {
+	// 				'Content-Type': 'application/json',
+	// 			},
+	// 			body: JSON.stringify(/* whatever data we need to send*/ ),
+	// 		});
+
+	// 		if (response.ok) {
+	// 			const data = await response.json();
+	// 			// we want to fetch for the migration scripts again and dispatch migrations again here
+	// 			navigate('/migration');
+	// 		} else {
+	// 			console.error('Login failed:', await response.json());
+	// 		}
+	// 	} catch (error) {
+	// 		console.error('An error occurred during login:', error);
+	// 	}
+	// };
+
 	useEffect(() => {
 		const fetchMigrations = async () => {
 			try {
 				const response = await fetch('/databases', {
+					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
