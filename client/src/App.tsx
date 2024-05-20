@@ -1,15 +1,14 @@
 // App.tsx (or any other component where you want to use the NavBarComponent)
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route as Route } from 'react-router-dom';
 import { Routes as Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import LoginPage from './Pages/LoginPage';
+import LoginPage from './pages/LoginPage';
 import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
-import MigrationPage from './Pages/MigrationPage';
-import SignUpPage from './Pages/SignUpPage';
+import MigrationPage from './pages/MigrationPage';
+import SignUpPage from './pages/SignUpPage';
 
 const App: React.FC = () => {
 	const navLinks = [

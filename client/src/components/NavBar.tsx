@@ -1,6 +1,4 @@
-// NavBarComponent.tsx
 import * as React from 'react'; // imports al;l exports from reacct pkg and bundles them as React
-import * as ReactDOM from 'react-dom'; // same but for React-Dom
 import { Link } from 'react-router-dom'; // Link used to navigate btwn routes w/in app without page refresh
 
 interface NavLink {

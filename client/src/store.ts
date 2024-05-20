@@ -48,7 +48,7 @@ export const setConnectionString = (connectionString: string) => ({
 // Define initial state
 const initialState = {
 	user: '',
-	databases: [],
+	databases: ['pokemon', 'dragons', 'digimon'],
 	selectedTable: '',
 	selectedDatabase: '',
 	selectedMigration: '',

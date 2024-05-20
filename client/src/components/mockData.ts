@@ -1,4 +1,4 @@
-// Define interfaces for your data to ensure type safety.
+// mockData if you needed to visualize what the interface might've looked like
 export interface Product {
 	id: number;
 	name: string;

@@ -89,9 +89,9 @@ const SidePanel: React.FC = () => {
 					onChange={e => dispatch(setSelectedDatabase(e.target.value))}
 				>
 					<option value="">--Select a database--</option>
-					{databases.map((db: string) => (
-						<option key={db} value={db}>
-							{db}
+					{databases.map((db_Name: string) => (
+						<option key={db_Name} value={db_Name}>
+							{db_Name}
 						</option>
 					))}
 				</select>
