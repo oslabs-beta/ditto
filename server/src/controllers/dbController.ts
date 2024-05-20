@@ -121,6 +121,8 @@ export const deleteConnectionStringById = async (
 		const databaseName = await deleteDBConnectionById(userId, Number(dbId));
 		console.log(databaseName);
 		if (!databaseName) {
+		const connectionString = await getDBConnectionById(userId, Number(dbId));
+		if (!connectionString) {
 			return next({
 				status: 404,
 				message: 'Connection string not found',
@@ -130,6 +132,10 @@ export const deleteConnectionStringById = async (
 		return next();
 	} catch (error) {
 		return next({
+		res.locals.connectionString = connectionString;
+		return next();
+	} catch (error) {
+		next({
 			status: 400,
 			message: `Error in dbController getConnectionStringbyId: ${error}`,
 		});
