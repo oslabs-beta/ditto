@@ -1,3 +1,4 @@
+// SignUpPage.tsx
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -5,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 interface SignUpFormData {
 	username: string;
 	password: string;
-	email: string;
 	confirmPassword: string;
 }
 
@@ -13,7 +13,6 @@ const SignUpPage: React.FC = () => {
 	const [formData, setFormData] = useState<SignUpFormData>({
 		username: '',
 		password: '',
-		email: '',
 		confirmPassword: '',
 	});
 
@@ -36,7 +35,6 @@ const SignUpPage: React.FC = () => {
 		}
 
 		try {
-			// Here you would handle the signup logic, e.g., making an API request to your backend
 			const response = await fetch('/api/signup', {
 				method: 'POST',
 				headers: {
@@ -46,10 +44,9 @@ const SignUpPage: React.FC = () => {
 			});
 
 			if (response.ok) {
-				// Assuming signup is successful and you need to redirect
-				navigate('/login'); // Redirect to LoginPage on successful signup
+				navigate('/login');
 			} else {
-				console.error('Signup failed:', await response.json()); // Logging the error response
+				console.error('Signup failed:', await response.json());
 			}
 		} catch (error) {
 			console.error('An error occurred during signup:', error);
@@ -81,14 +78,6 @@ const SignUpPage: React.FC = () => {
 					value={formData.username}
 					onChange={handleInputChange}
 					placeholder="Username"
-					style={{ marginBottom: '10px', padding: '10px' }}
-				/>
-				<input
-					type="email"
-					name="email"
-					value={formData.email}
-					onChange={handleInputChange}
-					placeholder="Email"
 					style={{ marginBottom: '10px', padding: '10px' }}
 				/>
 				<input

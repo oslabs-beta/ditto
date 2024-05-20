@@ -6,23 +6,26 @@ const clientId = process.env.GITHUB_CLIENT_ID as string;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET as string;
 const redirectUri = 'http://localhost:3001/github/callback'; // This should match the registered URL
 
-if (!clientId || !clientSecret) {
-    throw new Error('GitHub Client ID and Secret are not defined');
-}
+// if (!clientId || !clientSecret) {
+//     throw new Error('GitHub Client ID and Secret are not defined');
+// }
 
 //redirect to github ouath url
 export const githubLogin = (req: Request, res: Response) => {
-    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
-    res.redirect(githubAuthUrl);
+	const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+	res.redirect(githubAuthUrl);
 };
 
-export const githubCallback = async (req: Request, res: Response, next: NextFunction) => {
-    //get auth code from query 
-    const code = req.query.code as string;
+export const githubCallback = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const code = req.query.code as string;
 
-    if (!code) {
-        return res.status(400).json({ error: 'No code provided' });
-    }
+	if (!code) {
+		return res.status(400).json({ error: 'No code provided' });
+	}
 
     try {
         //exchange code for access token
@@ -44,35 +47,37 @@ export const githubCallback = async (req: Request, res: Response, next: NextFunc
             //get token from response
         const accessToken = tokenResponse.data.access_token;
 
-        if (!accessToken) {
-            return res.status(400).json({ error: 'No access token received' });
-        }
-        //get users data from github
-        const userResponse = await axios.get('https://api.github.com/user', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        //get data from response and store in userData
-        const userData = userResponse.data;
-        
-        let user = await findUser(userData.login);
-        if (!user) {
-            user = await createOAuthUser(userData.login);
-        }
-        //save users session data
-        req.session.user = { id: user.user_id, username: user.username };
-        return next();
-    } catch (error) {
-        next(error);
-    }
+		if (!accessToken) {
+			return res.status(400).json({ error: 'No access token received' });
+		}
+
+		const userResponse = await axios.get('https://api.github.com/user', {
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+
+		const userData = userResponse.data;
+
+		let user = await findUser(userData.login);
+		if (!user) {
+			user = await createOAuthUser(userData.login);
+		}
+
+		req.session.user = { id: user.user_id, username: user.username };
+		return next();
+	} catch (error) {
+		return next({
+			message: `Error in githubAuthController githubCallback ${error}`,
+		});
+	}
 };
 
 export const logout = (req: Request, res: Response) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to log out' });
-        }
-        res.redirect('/');
-    });
+	req.session.destroy(err => {
+		if (err) {
+			return res.status(500).json({ error: 'Failed to log out' });
+		}
+		res.redirect('/');
+	});
 };
