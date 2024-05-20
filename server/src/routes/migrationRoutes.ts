@@ -13,7 +13,7 @@ router.post(
 	validateJWT,
 	executeMigration,
 	(req: Request, res: Response) => {
-		res.status(201).json({ message: 'Migration executed successfully' });
+		res.status(201).json({ message: res.locals.message });
 	}
 );
 
