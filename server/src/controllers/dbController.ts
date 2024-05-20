@@ -12,6 +12,7 @@ export const addDBConnectionString = async (
 	next: NextFunction
 ) => {
 	const { db_name, connection_string } = req.body;
+	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -75,8 +76,9 @@ export const getConnectionStringById = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { dbId } = req.params;
-	const userId = req.user?.id;
+	//get DB ID from req params
+    const { dbId } = req.params;
+    const userId = req.user?.id;
 
 	if (!userId) {
 		return next({
@@ -120,18 +122,12 @@ export const deleteConnectionStringById = async (
 		const databaseName = await deleteDBConnectionById(userId, Number(dbId));
 		console.log(databaseName);
 		if (!databaseName) {
-		const connectionString = await getDBConnectionById(userId, Number(dbId));
-		if (!connectionString) {
 			return next({
 				status: 404,
 				message: 'Connection string not found',
 			});
 		}
 		res.locals.message = `Successfully deleted database ${databaseName.db_name}`;
-		return next();
-	} catch (error) {
-		return next({
-		res.locals.connectionString = connectionString;
 		return next();
 	} catch (error) {
 		next({
