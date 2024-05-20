@@ -1,6 +1,11 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setMigrationVersions } from '../store';
 
 const MigrationScripts: React.FC = () => {
+	const migrationversions = useSelector(
+		(state: any) => state.migrationversions
+	);
 	return (
 		<div className="migrationTableContainer">
 			<div className="title">Migration Table</div>

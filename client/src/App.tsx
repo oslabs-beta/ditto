@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
+import UsersList from './pages/UsersList';
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -24,6 +25,7 @@ const App: React.FC = () => {
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
+				<UsersList />
 				<Routes>
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/migration" element={<MigrationPage />} />

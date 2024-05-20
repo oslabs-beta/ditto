@@ -34,12 +34,15 @@ const SignUpPage: React.FC = () => {
 		}
 
 		try {
-			const response = await fetch('/api/signup', {
+			const response = await fetch('http://localhost:3001/signup', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(formData),
+				body: JSON.stringify({
+					username: formData.username,
+					password: formData.password,
+				}),
 			});
 
 			if (response.ok) {

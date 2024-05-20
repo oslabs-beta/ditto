@@ -7,12 +7,14 @@ import ReactDOM from 'react-dom';
 // Define action types
 const SET_USER = 'SET_USER';
 const SET_DATABASES = 'SET_DATABASES';
+const SET_MIGRATION_VERSIONS = 'SET_MIGRATION_VERSIONS';
 const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
 const SET_SELECTED_DATABASE = 'SET_SELECTED_DATABASE';
 const SET_SELECTED_MIGRATION = 'SET_SELECTED_MIGRATION';
 const SET_SHOW_INPUT = 'SET_SHOW_INPUT';
 const SET_DB_NAME = 'SET_DB_NAME';
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
+const SET_TOKEN = 'SET_TOKEN'; // test
 
 // Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
@@ -20,6 +22,12 @@ export const setDatabases = (databases: string[]) => ({
 	type: SET_DATABASES,
 	payload: databases,
 });
+
+export const setMigrationVersions = (databases: string[]) => ({
+	type: SET_MIGRATION_VERSIONS,
+	payload: databases,
+});
+
 export const setSelectedTable = (table: string) => ({
 	type: SET_SELECTED_TABLE,
 	payload: table,
@@ -45,10 +53,17 @@ export const setConnectionString = (connectionString: string) => ({
 	payload: connectionString,
 });
 
+//test
+export const setToken = (token: string) => ({
+	type: SET_TOKEN,
+	payload: token,
+});
+
 // Define initial state
 const initialState = {
 	user: '',
-	databases: ['pokemon', 'dragons', 'digimon'],
+	databases: [],
+	migrationversions: [],
 	selectedTable: '',
 	selectedDatabase: '',
 	selectedMigration: '',
@@ -62,8 +77,13 @@ const rootReducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case SET_USER:
 			return { ...state, user: action.payload };
+		//test
+		case SET_TOKEN:
+			return { ...state, token: action.payload };
 		case SET_DATABASES:
 			return { ...state, databases: action.payload };
+		case SET_MIGRATION_VERSIONS:
+			return { ...state, migrationversions: action.payload };
 		case SET_SELECTED_TABLE:
 			return { ...state, selectedTable: action.payload };
 		case SET_SELECTED_DATABASE:

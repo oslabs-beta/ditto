@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../store';
+import { setUser, setDatabases, setToken } from '../store';
 
 interface LoginFormData {
 	username: string;
@@ -32,7 +32,8 @@ const LoginPage: React.FC = () => {
 			e.preventDefault();
 			console.log('Login with:', formData);
 
-			const response = await fetch('/auth/login', {
+			const response = await fetch('http://localhost:3001/login', {
+				// prod: /auth/login
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -42,7 +43,10 @@ const LoginPage: React.FC = () => {
 
 			if (response.ok) {
 				const data = await response.json();
+				console.log('data: ', data);
 				dispatch(setUser(data.username));
+				dispatch(setToken(data.token)); //test
+				dispatch(setDatabases(data.databases)); //test
 				navigate('/migration');
 			} else {
 				console.error('Login failed:', await response.json());
