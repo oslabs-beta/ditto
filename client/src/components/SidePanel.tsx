@@ -70,7 +70,10 @@ const SidePanel: React.FC = () => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ dbName, connectionString }),
+				body: JSON.stringify({
+					db_name: dbName,
+					connection_string: connectionString,
+				}),
 			});
 			const result = await response.json();
 			console.log('Success:', result);
