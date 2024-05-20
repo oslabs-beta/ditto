@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-
 interface Migration {
 	version: string;
 	description: string;
@@ -13,6 +12,7 @@ const MigrationScripts: React.FC = () => {
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
 	console.log('current user:', username);
+	console.log('current database:', selectedDatabase);
 	const [migrations, setMigrations] = useState<Migration[]>([]);
 
 	useEffect(() => {
@@ -45,7 +45,7 @@ const MigrationScripts: React.FC = () => {
 		if (selectedDatabase) {
 			fetchMigrations();
 		}
-	}, [selectedDatabase]);
+	}, [selectedDatabase, username]);
 
 	return (
 		<table>

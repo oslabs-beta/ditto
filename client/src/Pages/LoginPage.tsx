@@ -44,7 +44,9 @@ const LoginPage: React.FC = () => {
 			if (response.ok) {
 				const data = await response.json();
 				console.log('data: ', data);
-				dispatch(setUser(data.username));
+				console.log('formData.username: ', formData.username);
+				dispatch(setUser(formData.username));
+
 				dispatch(setToken(data.token)); //test
 				dispatch(setDatabases(data.databases)); //test
 				navigate('/migration');
