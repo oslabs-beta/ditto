@@ -1,0 +1,15 @@
+                          List of databases
+    Name    | Owner  | Encoding | Collate | Ctype | Access privileges 
+------------+--------+----------+---------+-------+-------------------
+ mydatabase | Coding | UTF8     | C       | C     | =Tc/Coding       +
+            |        |          |         |       | Coding=CTc/Coding+
+            |        |          |         |       | jeff=CTc/Coding
+ postgres   | Coding | UTF8     | C       | C     | 
+ source_db  | Coding | UTF8     | C       | C     | 
+ target_db  | Coding | UTF8     | C       | C     | 
+ template0  | Coding | UTF8     | C       | C     | =c/Coding        +
+            |        |          |         |       | Coding=CTc/Coding
+ template1  | Coding | UTF8     | C       | C     | =c/Coding        +
+            |        |          |         |       | Coding=CTc/Coding
+(6 rows)
+

@@ -23,30 +23,30 @@ const SidePanel: React.FC = () => {
 	const connectionString = useSelector((state: any) => state.connectionString);
 	const databases = useSelector((state: any) => state.databases);
 
-	useEffect(() => {
-		const fetchDatabases = async () => {
-			try {
-				const response = await fetch('/api/user/databases', {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with your JWT token logic
-					},
-				});
+	// useEffect(() => {
+	// 	const fetchDatabases = async () => {
+	// 		try {
+	// 			const response = await fetch('/api/user/databases', {
+	// 				method: 'GET',
+	// 				headers: {
+	// 					'Content-Type': 'application/json',
+	// 					Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with your JWT token logic
+	// 				},
+	// 			});
 
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
+	// 			if (!response.ok) {
+	// 				throw new Error(`HTTP error! status: ${response.status}`);
+	// 			}
 
-				const result = await response.json();
-				dispatch(setDatabases(result.databases));
-			} catch (error) {
-				console.error('Error fetching databases:', error);
-			}
-		};
+	// 			const result = await response.json();
+	// 			dispatch(setDatabases(result.databases));
+	// 		} catch (error) {
+	// 			console.error('Error fetching databases:', error);
+	// 		}
+	// // 	};
 
-		fetchDatabases();
-	}, [dispatch]);
+	// 	fetchDatabases();
+	// }, [dispatch]);
 
 	const handleButtonClick = () => {
 		dispatch(setShowInput(true));
@@ -70,10 +70,18 @@ const SidePanel: React.FC = () => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ dbName, connectionString }),
+				body: JSON.stringify({
+					db_name: dbName,
+					connection_string: connectionString,
+				}),
 			});
-			const result = await response.json();
-			console.log('Success:', result);
+			// if response is ok we need backend to query for databases again so i can dispatch setdatabases here again
+			// Maybe backend can have a controller for querying for databases again. so fetch for getDBConnectionByUserId
+			// and set dispatch setDatabases here again
+			if (!response.ok) {
+				const result = await response.json();
+				console.log('Success:', result);
+			}
 		} catch (error) {
 			console.error('Error:', error);
 		}
@@ -83,18 +91,18 @@ const SidePanel: React.FC = () => {
 		<div>
 			<header>
 				{/* database */}
-				Choose Database:
+				{/* Choose Database:
 				<select
 					value={selectedDatabase}
 					onChange={e => dispatch(setSelectedDatabase(e.target.value))}
 				>
 					<option value="">--Select a database--</option>
-					{databases.map((db: string) => (
-						<option key={db} value={db}>
-							{db}
+					{databases.map((db_Name: string) => (
+						<option key={db_Name} value={db_Name}>
+							{db_Name}
 						</option>
 					))}
-				</select>
+				</select> */}
 				{/* database */}
 				{/* connection string form */}
 				<div>
