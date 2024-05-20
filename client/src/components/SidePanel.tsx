@@ -23,30 +23,30 @@ const SidePanel: React.FC = () => {
 	const connectionString = useSelector((state: any) => state.connectionString);
 	const databases = useSelector((state: any) => state.databases);
 
-	useEffect(() => {
-		const fetchDatabases = async () => {
-			try {
-				const response = await fetch('/api/user/databases', {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with your JWT token logic
-					},
-				});
+	// useEffect(() => {
+	// 	const fetchDatabases = async () => {
+	// 		try {
+	// 			const response = await fetch('/api/user/databases', {
+	// 				method: 'GET',
+	// 				headers: {
+	// 					'Content-Type': 'application/json',
+	// 					Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with your JWT token logic
+	// 				},
+	// 			});
 
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
+	// 			if (!response.ok) {
+	// 				throw new Error(`HTTP error! status: ${response.status}`);
+	// 			}
 
-				const result = await response.json();
-				dispatch(setDatabases(result.databases));
-			} catch (error) {
-				console.error('Error fetching databases:', error);
-			}
-		};
+	// 			const result = await response.json();
+	// 			dispatch(setDatabases(result.databases));
+	// 		} catch (error) {
+	// 			console.error('Error fetching databases:', error);
+	// 		}
+	// // 	};
 
-		fetchDatabases();
-	}, [dispatch]);
+	// 	fetchDatabases();
+	// }, [dispatch]);
 
 	const handleButtonClick = () => {
 		dispatch(setShowInput(true));
@@ -91,7 +91,7 @@ const SidePanel: React.FC = () => {
 		<div>
 			<header>
 				{/* database */}
-				Choose Database:
+				{/* Choose Database:
 				<select
 					value={selectedDatabase}
 					onChange={e => dispatch(setSelectedDatabase(e.target.value))}
@@ -102,7 +102,7 @@ const SidePanel: React.FC = () => {
 							{db_Name}
 						</option>
 					))}
-				</select>
+				</select> */}
 				{/* database */}
 				{/* connection string form */}
 				<div>

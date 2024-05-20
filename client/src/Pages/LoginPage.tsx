@@ -33,7 +33,7 @@ const LoginPage: React.FC = () => {
 			e.preventDefault();
 			console.log('Login with:', formData);
 
-			const response = await fetch('http://localhost:3001/login', {
+			const response = await fetch('http://localhost:3001/auth/login', {
 				// /auth/login
 				method: 'POST',
 				headers: {
