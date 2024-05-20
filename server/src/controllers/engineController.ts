@@ -31,10 +31,10 @@ export const executeMigration = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { script, dbId } = req.body;
+	const { script, dbName } = req.body;
 	const userId = req.user?.id; // depends on how we request the string like req.user or req.authuser???
 
-	if (!script || !dbId || !userId) {
+	if (!script || !dbName || !userId) {
 		return next({
 			status: 400,
 			message: { err: 'Script, databaseID, userID required.' },
@@ -44,7 +44,7 @@ export const executeMigration = async (
 	try {
 		const connectionStrings = await getDBConnectionByUserId(userId);
 		const connectionString = connectionStrings.find(
-			db => db.db_id === dbId
+			db => db.db_name === dbName
 		)?.connection_string;
 
 		if (!connectionString) {

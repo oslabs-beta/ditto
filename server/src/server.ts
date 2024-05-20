@@ -4,7 +4,6 @@ import auditRoutes from './routes/auditRoutes';
 import authRoutes from './routes/authRoutes';
 import dbRoutes from './routes/dbRoutes';
 import migrationLogRoutes from './routes/migrationLogRoutes';
-import scriptRoutes from './routes/scriptRoutes';
 import githubAuthRoutes from './routes/githubAuthRoutes';
 import cors from 'cors';
 import session from 'express-session';
@@ -32,8 +31,6 @@ app.use('/migration', migrationRoutes);
 app.use('/audit', auditRoutes);
 
 app.use('/migrationlog', migrationLogRoutes);
-
-app.use('/script', scriptRoutes);
 
 app.use('/auth', authRoutes);
 
