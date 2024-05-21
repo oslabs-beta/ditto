@@ -6,7 +6,8 @@ import { Route as Route } from 'react-router-dom';
 import { Routes as Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import LoginPage from './pages/LoginPage';
-import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
+import favicon from '/client/src/public/favicon.ico';
+import logoImage from './assets/logo.png'; // imports logo img, can be used with react components
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
 // import UsersList from './pages/UsersList';
