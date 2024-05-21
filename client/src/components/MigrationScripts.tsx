@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { setdbId } from '../store';
+import { useNavigate } from 'react-router-dom';
 interface Migration {
 	version: string;
 	description: string;
@@ -10,6 +11,7 @@ interface Migration {
 }
 
 const MigrationScripts: React.FC = () => {
+	const navigate = useNavigate();
 	const dbId = useSelector((state: any) => state.dbId);
 	console.log('dbId: ', dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
@@ -76,27 +78,49 @@ const MigrationScripts: React.FC = () => {
 		}
 	}, [selectedDatabase, username]);
 
+	/* Add Migrations Button */
+	const handleFormSubmit = (data: {
+		version: string;
+		description: string;
+		script: string;
+	}) => {
+		console.log('Form Data:', data);
+	};
+	/* Add Migrations Button */
+
+	const handleSubmit = () => {
+		console.log('went into handleSubmit');
+		navigate('/addMigrations');
+	};
+	/* Add Migrations Button */
 	return (
-		<table>
-			<thead>
-				<tr>
-					<th>Version</th>
-					<th>Description</th>
-					<th>Status</th>
-					<th>Date Migrated</th>
-				</tr>
-			</thead>
-			<tbody>
-				{migrations.map((migration, index) => (
-					<tr key={index}>
-						<td>{migration.version}</td>
-						<td>{migration.description}</td>
-						<td>{migration.status}</td>
-						<td>{migration.executed_at}</td>
+		<div className="MigrationScriptsContainer">
+			<div className="addMigrationsButton">
+				{/* Add Migrations Button */}
+				<button type="button">Add Migration</button>
+			</div>
+			{/* Add Migrations Button */}
+			<table>
+				<thead>
+					<tr>
+						<th>Version</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Date Migrated</th>
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{migrations.map((migration, index) => (
+						<tr key={index}>
+							<td>{migration.version}</td>
+							<td>{migration.description}</td>
+							<td>{migration.status}</td>
+							<td>{migration.executed_at}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
 	);
 };
 

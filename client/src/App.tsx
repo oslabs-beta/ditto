@@ -32,7 +32,6 @@ const App: React.FC = () => {
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
-				{/* <UsersList /> */}
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
@@ -44,7 +43,6 @@ const App: React.FC = () => {
 					<Route path="/documentation" element={<DocumentationPage />} />
 					<Route path="/community" element={<CommunityPage />} />
 					<Route path="/faq" element={<FAQPage />} />
-					{/* Define more routes as necessary */}
 				</Routes>
 			</div>
 		</Router>

@@ -33,11 +33,6 @@
 	justify-content: flex-end;
 }
 
-.migrationTableContainer {
-	flex: 1;
-	margin-bottom: 20px;
-}
-
 .table {
 	width: 100%;
 	border-collapse: collapse;
@@ -59,4 +54,8 @@
 	text-align: left;
 	margin-bottom: 10px;
 	font-size: 1.2em;
+}
+
+.addMigrationsButton {
+	width: 15%;
 }
