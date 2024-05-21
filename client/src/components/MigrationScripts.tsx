@@ -4,13 +4,14 @@ import { setdbId } from '../store';
 interface Migration {
 	version: string;
 	description: string;
-	date_migrated: string;
-	state: string;
+	executed_at: string;
+	status: string;
 	// execution_time: string; (query is giving me an object)
 }
 
 const MigrationScripts: React.FC = () => {
 	const dbId = useSelector((state: any) => state.dbId);
+	console.log('dbId: ', dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
 	// console.log('current user:', username);
@@ -64,8 +65,7 @@ const MigrationScripts: React.FC = () => {
 
 				const result = await response.json();
 				console.log('result: ', result);
-				setMigrations(result.migrations);
-				console.log('migrations: ', migrations);
+				setMigrations(result);
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
 			}
@@ -82,9 +82,8 @@ const MigrationScripts: React.FC = () => {
 				<tr>
 					<th>Version</th>
 					<th>Description</th>
+					<th>Status</th>
 					<th>Date Migrated</th>
-					<th>State</th>
-					{/* <th>Execution Time</th> */}
 				</tr>
 			</thead>
 			<tbody>
@@ -92,10 +91,8 @@ const MigrationScripts: React.FC = () => {
 					<tr key={index}>
 						<td>{migration.version}</td>
 						<td>{migration.description}</td>
-						<td>{migration.date_migrated}</td>
-						<td>{migration.state}</td>
-						{/* <td>{migration.execution_time}</td> the query is giving me
-						an object */}
+						<td>{migration.status}</td>
+						<td>{migration.executed_at}</td>
 					</tr>
 				))}
 			</tbody>
