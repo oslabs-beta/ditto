@@ -41,41 +41,44 @@ const AddMigrationsPage: React.FC = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<div>
-				<label>
-					Version:
-					<input
-						type="text"
-						value={version}
-						onChange={e => setVersion(e.target.value)}
-						required
-					/>
-				</label>
-			</div>
-			<div>
-				<label>
-					Description:
-					<input
-						type="text"
-						value={description}
-						onChange={e => setDescription(e.target.value)}
-						required
-					/>
-				</label>
-			</div>
-			<div>
-				<label>
-					Script:
-					<textarea
-						value={script}
-						onChange={e => setScript(e.target.value)}
-						required
-					/>
-				</label>
-			</div>
-			<button type="submit">Submit</button>
-		</form>
+		<div className="addMigrationsPage">
+			<h1>Add Migrations</h1>
+			<form onSubmit={handleSubmit}>
+				<div>
+					<label>
+						Version:
+						<input
+							type="text"
+							value={version}
+							onChange={e => setVersion(e.target.value)}
+							required
+						/>
+					</label>
+				</div>
+				<div>
+					<label>
+						Description:
+						<input
+							type="text"
+							value={description}
+							onChange={e => setDescription(e.target.value)}
+							required
+						/>
+					</label>
+				</div>
+				<div>
+					<label>
+						Script:
+						<textarea
+							value={script}
+							onChange={e => setScript(e.target.value)}
+							required
+						/>
+					</label>
+				</div>
+				<button type="submit">Submit</button>
+			</form>
+		</div>
 	);
 };
 

@@ -51,14 +51,6 @@ const MigrationScripts: React.FC = () => {
 	}, [selectedDatabase, username]);
 
 	/* Add Migrations Button */
-	const handleFormSubmit = (data: {
-		version: string;
-		description: string;
-		script: string;
-	}) => {
-		console.log('Form Data:', data);
-	};
-	/* Add Migrations Button */
 	const handleSubmit = () => {
 		console.log('went into handleSubmit');
 		navigate('/addMigrations');
@@ -68,14 +60,25 @@ const MigrationScripts: React.FC = () => {
 	/* Handles Update Button */
 	const handleUpdateSubmit = () => {
 		console.log('went into handleSubmit');
-		navigate('/addMigrations');
+		navigate('/updateMigrations');
 	};
 	/* Handles Update Button */
 
 	/* Handles Delete Button */
 	const handleDeleteSubmit = () => {
-		console.log('went into handleSubmit');
-		navigate('/addMigrations');
+		console.log('into handleDeleteSubmit');
+		// might want to add an are you sure prompt
+
+		const token = sessionStorage.getItem('token');
+		const response = fetch(`./migrationlog?=${dbId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				AUTHORIZATION: `Bearer ${token}`,
+			},
+		});
+		// are we expecting response? we would have to json pars and confirm deletion or error
+		// dispatch migrationlog logic
 	};
 	/* Handles Delete Button */
 
@@ -87,11 +90,12 @@ const MigrationScripts: React.FC = () => {
 	};
 
 	const handleRunScript = () => {
+		const token = sessionStorage.getItem('token');
 		const response = fetch('./', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer {token}`,
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({}),
 		});
@@ -100,9 +104,11 @@ const MigrationScripts: React.FC = () => {
 
 	return (
 		<div className="MigrationScriptsContainer">
-			<div className="addMigrationsButton" onClick={handleSubmit}>
+			<div className="addMigrationsButton">
 				{/* Add Migrations Button */}
-				<button type="button">Add Migration</button>
+				<button type="button" onClick={handleSubmit}>
+					Add Migration
+				</button>
 			</div>
 			{/* Add Migrations Button */}
 			<table>

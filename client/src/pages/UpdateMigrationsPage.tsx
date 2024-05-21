@@ -9,10 +9,6 @@ interface FormData {
 	script: string;
 }
 
-// interface FormProps {
-// 	onSubmit: (data: FormData) => void;
-// }
-
 const UpdateMigrationsPage: React.FC = () => {
 	const [version, setVersion] = useState('');
 	const [description, setDescription] = useState('');
