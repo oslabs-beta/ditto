@@ -1,3 +1,4 @@
+// This was a practice component for the front-end unit-tests
 import * as React from 'react';
 
 interface HelloProps {

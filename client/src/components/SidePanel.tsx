@@ -9,6 +9,8 @@ import {
 	setDbName,
 	setConnectionString,
 	setDatabases,
+	setMigrationVersions,
+	setdbId,
 } from '../store';
 
 const SidePanel: React.FC = () => {
@@ -22,15 +24,20 @@ const SidePanel: React.FC = () => {
 	const dbName = useSelector((state: any) => state.dbName);
 	const connectionString = useSelector((state: any) => state.connectionString);
 	const databases = useSelector((state: any) => state.databases);
+	const migrationVersions = useSelector(
+		(state: any) => state.migrationVersions
+	);
 
 	useEffect(() => {
 		const fetchDatabases = async () => {
+			const token = localStorage.getItem('token');
+			console.log(token);
 			try {
-				const response = await fetch('/api/user/databases', {
+				const response = await fetch('/db/connectionStrings', {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with your JWT token logic
+						Authorization: `Bearer ${token}`, // Replace with your JWT token logic
 					},
 				});
 
@@ -39,14 +46,24 @@ const SidePanel: React.FC = () => {
 				}
 
 				const result = await response.json();
-				dispatch(setDatabases(result.databases));
+				console.log(result);
+				// const dbNames: string[] = result.map(
+				// 	(obj: { db_name: string }) => obj.db_name
+				// );
+				// console.log('databases: ', dbNames);
+				//
+				// const dbId: string[] = result.map(
+				// 	(obj: { db_id: string }) => obj.db_id
+				// );
+				// console.log('dbid: ', dbIds);
+
+				dispatch(setDatabases(result));
 			} catch (error) {
 				console.error('Error fetching databases:', error);
 			}
 		};
-
 		fetchDatabases();
-	}, [dispatch]);
+	}, []);
 
 	const handleButtonClick = () => {
 		dispatch(setShowInput(true));
@@ -61,19 +78,31 @@ const SidePanel: React.FC = () => {
 	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(setDbName(e.target.value));
 	};
-
+	/* For Adding Database */
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
+			const token = localStorage.getItem('token');
 			const response = await fetch('/db/addConnectionString', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
 				},
-				body: JSON.stringify({ dbName, connectionString }),
+				body: JSON.stringify({
+					db_name: dbName,
+					connection_string: connectionString,
+				}),
 			});
-			const result = await response.json();
-			console.log('Success:', result);
+			// if response is ok we need backend to query for databases again so i can dispatch setdatabases here again
+			// Maybe backend can have a controller for querying for databases again. so fetch for getDBConnectionByUserId
+			// and set dispatch setDatabases here again
+			if (response.ok) {
+				const result = await response.json();
+				const databaseCopy = JSON.parse(JSON.stringify(databases));
+				databaseCopy.push(result);
+				dispatch(setDatabases(databaseCopy));
+			}
 		} catch (error) {
 			console.error('Error:', error);
 		}
@@ -86,12 +115,17 @@ const SidePanel: React.FC = () => {
 				Choose Database:
 				<select
 					value={selectedDatabase}
-					onChange={e => dispatch(setSelectedDatabase(e.target.value))}
+					onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+						const [dbName, dbId] = e.target.value.split(',');
+						dispatch(setdbId(dbId));
+						dispatch(setSelectedDatabase(dbName));
+					}}
 				>
+					{/* [ { db1: 30}, {db2: 40}] */}
 					<option value="">--Select a database--</option>
-					{databases.map((db: string) => (
-						<option key={db} value={db}>
-							{db}
+					{databases.map((db: { db_id: string; db_name: string }) => (
+						<option key={db.db_id} value={`${db.db_name},${db.db_id}`}>
+							{db.db_name}
 						</option>
 					))}
 				</select>

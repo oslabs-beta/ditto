@@ -1,4 +1,3 @@
-// MigrationPage.tsx
 import React, { useState } from 'react';
 import CodeEditor from '../components/CodeEditor';
 import SidePanel from '../components/SidePanel';

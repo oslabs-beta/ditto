@@ -4,7 +4,6 @@ import auditRoutes from './routes/auditRoutes';
 import authRoutes from './routes/authRoutes';
 import dbRoutes from './routes/dbRoutes';
 import migrationLogRoutes from './routes/migrationLogRoutes';
-import scriptRoutes from './routes/scriptRoutes';
 import githubAuthRoutes from './routes/githubAuthRoutes';
 import cors from 'cors';
 import session from 'express-session';
@@ -17,21 +16,21 @@ const port: number = 3001;
 app.use(cors()); // Enable CORS for all routes
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
-app.use(session({
-	secret: process.env.SESSION_SECRET as string,
-	resave: false,
-	saveUninitialized: false,
-}))
+// app.use(
+// 	session({
+// 		secret: process.env.SESSION_SECRET as string,
+// 		resave: false,
+// 		saveUninitialized: false,
+// 	})
+// );
 
 app.use('/migration', migrationRoutes);
 
 app.use('/audit', auditRoutes);
 
 app.use('/migrationlog', migrationLogRoutes);
-
-app.use('/script', scriptRoutes);
 
 app.use('/auth', authRoutes);
 
