@@ -15,10 +15,13 @@ const SET_SHOW_INPUT = 'SET_SHOW_INPUT';
 const SET_DB_NAME = 'SET_DB_NAME';
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
 const SET_TOKEN = 'SET_TOKEN'; // test
+const SET_DB_ID = 'SET_DB_ID';
 
 // Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
-export const setDatabases = (databases: string[]) => ({
+export const setDatabases = (
+	databases: { connection_string: string; db_name: string; db_id: string }[]
+) => ({
 	type: SET_DATABASES,
 	payload: databases,
 });
@@ -26,6 +29,11 @@ export const setDatabases = (databases: string[]) => ({
 export const setMigrationVersions = (databases: string[]) => ({
 	type: SET_MIGRATION_VERSIONS,
 	payload: databases,
+});
+
+export const setdbId = (dbId: string | null) => ({
+	type: SET_DB_ID,
+	payload: dbId,
 });
 
 export const setSelectedTable = (table: string) => ({
@@ -63,13 +71,14 @@ export const setToken = (token: string) => ({
 const initialState = {
 	user: '',
 	databases: [],
-	migrationversions: [],
+	migrationVersions: [],
 	selectedTable: '',
 	selectedDatabase: '',
 	selectedMigration: '',
 	showInput: false,
 	dbName: '',
 	connectionString: '',
+	dbId: '',
 };
 
 // Define reducers
@@ -83,7 +92,7 @@ const rootReducer = (state = initialState, action: any) => {
 		case SET_DATABASES:
 			return { ...state, databases: action.payload };
 		case SET_MIGRATION_VERSIONS:
-			return { ...state, migrationversions: action.payload };
+			return { ...state, migrationVersions: action.payload };
 		case SET_SELECTED_TABLE:
 			return { ...state, selectedTable: action.payload };
 		case SET_SELECTED_DATABASE:
@@ -96,6 +105,8 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, dbName: action.payload };
 		case SET_CONNECTION_STRING:
 			return { ...state, connectionString: action.payload };
+		case SET_DB_ID:
+			return { ...state, dbId: action.payload };
 		default:
 			return state;
 	}

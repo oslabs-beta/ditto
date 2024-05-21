@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser, setDatabases, setToken } from '../store';
+import { setUser, setDatabases } from '../store';
 
 interface LoginFormData {
 	username: string;
@@ -26,6 +26,7 @@ const LoginPage: React.FC = () => {
 		});
 	};
 
+	/* Regular Login */
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>
 	): Promise<void> => {
@@ -47,8 +48,24 @@ const LoginPage: React.FC = () => {
 				console.log('data: ', data);
 				console.log('formData.username: ', formData.username);
 				dispatch(setUser(formData.username));
-				dispatch(setToken(data.token)); //test
-				dispatch(setDatabases(data.databases)); //test
+				// dispatch(setToken(data.token)); //test
+				const token = data; // session storage way
+				console.log('data.token: ', token);
+				// const dbResponse = await fetch('http://localhost:3001/db/')
+				localStorage.setItem('token', token); // session storage way
+				// dispatch(setDatabases(data.databases)); //test
+				/* if we dispatch in login */
+				// const responsedb = await fetch('/db/connectionStrings', {
+				// 	method: 'GET',
+				// 	headers: {
+				// 		'Content-Type': 'application/json',
+				// 		Authorization: `Bearer ${token}`, // Replace with your JWT token logic
+				// 	},
+				// });
+				// const result = await responsedb.json();
+				// console.log('databases: ', result);
+				// dispatch(setDatabases(result.databases));
+				/* if we dispatch in login */
 				navigate('/migration');
 			} else {
 				console.error('Login failed:', await response.json());

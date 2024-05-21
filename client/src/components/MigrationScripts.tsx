@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { setdbId } from '../store';
 interface Migration {
 	version: string;
 	description: string;
@@ -9,10 +10,11 @@ interface Migration {
 }
 
 const MigrationScripts: React.FC = () => {
+	const dbId = useSelector((state: any) => state.dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
-	console.log('current user:', username);
-	console.log('current database:', selectedDatabase);
+	// console.log('current user:', username);
+	// console.log('current database:', selectedDatabase);
 	const [migrations, setMigrations] = useState<Migration[]>([]);
 
 	// this is going to need muiltiple fields depending on body *** Add Scripts ***
@@ -45,18 +47,15 @@ const MigrationScripts: React.FC = () => {
 
 	useEffect(() => {
 		const fetchMigrations = async () => {
+			const token = localStorage.getItem('token');
 			try {
-				const response = await fetch('/databases', {
+				const response = await fetch(`/migrationlog/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
-					method: 'POST',
+					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						// Authorization: `Bearer YOUR_JWT_TOKEN`, // Replace with your JWT token logic
+						Authorization: `Bearer ${token}`, // Replace with your JWT token logic
 					},
-					body: JSON.stringify({
-						dbName: selectedDatabase,
-						username: username,
-					}),
 				});
 
 				if (!response.ok) {
@@ -66,6 +65,7 @@ const MigrationScripts: React.FC = () => {
 				const result = await response.json();
 				console.log('result: ', result);
 				setMigrations(result.migrations);
+				console.log('migrations: ', migrations);
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
 			}
