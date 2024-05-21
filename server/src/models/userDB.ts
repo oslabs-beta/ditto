@@ -17,6 +17,7 @@ export interface UserDB {
 export interface DBbyUserId {
 	connection_string: string;
 	db_name: string;
+	db_id: number;
 }
 
 export interface DBbyDBId {

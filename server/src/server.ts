@@ -18,13 +18,13 @@ app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET as string,
-		resave: false,
-		saveUninitialized: false,
-	})
-);
+// app.use(
+// 	session({
+// 		secret: process.env.SESSION_SECRET as string,
+// 		resave: false,
+// 		saveUninitialized: false,
+// 	})
+// );
 
 app.use('/migration', migrationRoutes);
 
