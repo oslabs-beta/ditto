@@ -10,13 +10,14 @@ import favicon from '/client/src/public/favicon.ico';
 import logoImage from './assets/logo.png';
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
-// import UsersList from './pages/UsersList';
+
 import GitHubCallBack from './components/GitHubCallBack';
 // import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
 import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
+import AddMigrationsPage from './pages/AddMigrationsPage';
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -32,7 +33,6 @@ const App: React.FC = () => {
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
-				{/* <UsersList /> */}
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
@@ -43,7 +43,6 @@ const App: React.FC = () => {
 					<Route path="/documentation" element={<DocumentationPage />} />
 					<Route path="/community" element={<CommunityPage />} />
 					<Route path="/faq" element={<FAQPage />} />
-					{/* Define more routes as necessary */}
 				</Routes>
 			</div>
 		</Router>
