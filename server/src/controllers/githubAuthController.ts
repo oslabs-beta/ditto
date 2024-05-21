@@ -1,9 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import { createOAuthUser, findUser } from '../models/user';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 
 const clientId = process.env.GITHUB_CLIENT_ID as string;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET as string;
+const jwtSecret = process.env.JWT_SECRET as string;
 const redirectUri = 'http://localhost:3001/github/callback'; // This should match the registered URL
 
 // if (!clientId || !clientSecret) {
@@ -64,8 +66,14 @@ export const githubCallback = async (
 			user = await createOAuthUser(userData.login);
 		}
 
-		req.session.user = { id: user.user_id, username: user.username };
-		return next();
+		const token = jwt.sign(
+			{ id: user.user_id, username: user.username },
+			jwtSecret as jwt.Secret,
+			{ expiresIn: '1h' }
+		);
+
+		const frontendUrl = `http://localhost:3000/migration?token=${token}`; //check endpoint for front end main page
+		res.redirect(frontendUrl);
 	} catch (error) {
 		return next({
 			message: `Error in githubAuthController githubCallback ${error}`,

@@ -11,7 +11,7 @@ import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
 // import UsersList from './pages/UsersList';
 import GitHubCallBack from './components/GitHubCallBack';
-import GitHubLogin from './components/GitHubLogin';
+// import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
 import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
@@ -35,8 +35,8 @@ const App: React.FC = () => {
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
-					<Route path="/" element={<GitHubLogin />} />
-					<Route path="/github/callback" element={<MigrationPage />} />
+					{/* <Route path="/github/login" element={<GitHubLogin />} /> */}
+					<Route path="/github/callback" element={<GitHubCallBack />} />
 
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />

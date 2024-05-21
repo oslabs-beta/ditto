@@ -77,19 +77,23 @@ const LoginPage: React.FC = () => {
 	/* Regular Login */
 
 	/* GitHub Login */
-	const handleLoginWithGitHub = (): void => {
-		const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
-		if (!clientId) {
-			console.error('GitHub client ID not found');
-			// return;
-		}
+	// const handleLoginWithGitHub = (): void => {
+	// 	const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
+	// 	if (!clientId) {
+	// 		console.error('GitHub client ID not found');
+	// 		return;
+	// 	}
 
-		const redirectUri: string = encodeURIComponent(
-			'http://localhost:3000/github/callback'
-		);
-		// window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
-		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
+	// 	const redirectUri: string = encodeURIComponent(
+	// 		'http://localhost:3000/github/callback'
+	// 	);
+	// 	window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+	// };
+
+	const handleLoginWithGitHub = (): void => {
+		window.location.href = 'http://localhost:3001/github/login'; 
 	};
+	
 	/* GitHub Login */
 
 	return (
