@@ -65,12 +65,19 @@ const MigrationScripts: React.FC = () => {
 	};
 	/* Add Migrations Button */
 
-	/* Add Migrations Button */
-	const handleSubmit = () => {
+	/* Handles Update Button */
+	const handleUpdateSubmit = () => {
 		console.log('went into handleSubmit');
 		navigate('/addMigrations');
 	};
-	/* Add Migrations Button */
+	/* Handles Update Button */
+
+	/* Handles Delete Button */
+	const handleDeleteSubmit = () => {
+		console.log('went into handleSubmit');
+		navigate('/addMigrations');
+	};
+	/* Handles Delete Button */
 
 	/* Code Editor */
 	const [code, setCode] = useState('-- Write your PostgreSQL script here');
@@ -116,8 +123,12 @@ const MigrationScripts: React.FC = () => {
 								<td>{migration.status}</td>
 								<td>{migration.executed_at}</td>
 							</tr>
-							<button type="button">Update</button>
-							<button type="button">Delete</button>
+							<button type="button" onClick={handleUpdateSubmit}>
+								Update
+							</button>
+							<button type="button" onClick={handleDeleteSubmit}>
+								Delete
+							</button>
 						</div>
 					))}
 				</tbody>

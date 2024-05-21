@@ -18,6 +18,7 @@ import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
 import AddMigrationsPage from './pages/AddMigrationsPage';
+import UpdateMigrationsPage from './pages/UpdateMigrationsPage';
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -36,7 +37,7 @@ const App: React.FC = () => {
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
-					{/* <Route path="/github/login" element={<GitHubLogin />} /> */}
+					<Route path="/updateMigrations" element={<UpdateMigrationsPage />} />
 					<Route path="/github/callback" element={<GitHubCallBack />} />
 					<Route path="/addMigrations" element={<AddMigrationsPage />} />
 					<Route path="/migration" element={<MigrationPage />} />
