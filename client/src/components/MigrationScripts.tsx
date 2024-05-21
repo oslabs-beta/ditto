@@ -15,7 +15,6 @@ interface Migration {
 const MigrationScripts: React.FC = () => {
 	const navigate = useNavigate();
 	const dbId = useSelector((state: any) => state.dbId);
-	console.log('dbId: ', dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
 
@@ -38,7 +37,6 @@ const MigrationScripts: React.FC = () => {
 				}
 
 				const result = await response.json();
-				console.log('result: ', result);
 				setMigrations(result);
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
