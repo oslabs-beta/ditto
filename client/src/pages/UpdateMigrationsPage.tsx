@@ -9,11 +9,7 @@ interface FormData {
 	script: string;
 }
 
-// interface FormProps {
-// 	onSubmit: (data: FormData) => void;
-// }
-
-const AddMigrationsPage: React.FC = () => {
+const UpdateMigrationsPage: React.FC = () => {
 	const [version, setVersion] = useState('');
 	const [description, setDescription] = useState('');
 	const [script, setScript] = useState('');
@@ -41,8 +37,8 @@ const AddMigrationsPage: React.FC = () => {
 	};
 
 	return (
-		<div className="addMigrationsPage">
-			<h1>Add Migrations</h1>
+		<div className="updateMigrationsPage">
+			<h1>Update Migrations</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label>
@@ -82,4 +78,4 @@ const AddMigrationsPage: React.FC = () => {
 	);
 };
 
-export default AddMigrationsPage;
+export default UpdateMigrationsPage;
