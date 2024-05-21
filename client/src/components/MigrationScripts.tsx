@@ -65,6 +65,13 @@ const MigrationScripts: React.FC = () => {
 	};
 	/* Add Migrations Button */
 
+	/* Add Migrations Button */
+	const handleSubmit = () => {
+		console.log('went into handleSubmit');
+		navigate('/addMigrations');
+	};
+	/* Add Migrations Button */
+
 	/* Code Editor */
 	const [code, setCode] = useState('-- Write your PostgreSQL script here');
 
@@ -102,12 +109,16 @@ const MigrationScripts: React.FC = () => {
 				</thead>
 				<tbody>
 					{migrations.map((migration, index) => (
-						<tr key={index}>
-							<td>{migration.version}</td>
-							<td>{migration.description}</td>
-							<td>{migration.status}</td>
-							<td>{migration.executed_at}</td>
-						</tr>
+						<div className="migrationversions">
+							<tr key={index}>
+								<td>{migration.version}</td>
+								<td>{migration.description}</td>
+								<td>{migration.status}</td>
+								<td>{migration.executed_at}</td>
+							</tr>
+							<button type="button">Update</button>
+							<button type="button">Delete</button>
+						</div>
 					))}
 				</tbody>
 			</table>
