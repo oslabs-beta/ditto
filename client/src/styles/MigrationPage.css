@@ -1,0 +1,60 @@
+.migrationPage {
+  display: flex;
+}
+
+.sidePanel {
+  border: solid;
+  border-style: dotted;
+  border-width: 1px; /* Adjust this value as needed */
+  display: flex;
+  opacity: 0.45; /* Use a value between 0 and 1 for opacity */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  padding: 10px;
+}
+
+.codeEditorContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.codeEditor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.migrationTableContainer {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+  background-color: #f2f2f2;
+}
+
+.td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.title {
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}

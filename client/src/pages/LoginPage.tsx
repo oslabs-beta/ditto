@@ -77,19 +77,23 @@ const LoginPage: React.FC = () => {
 	/* Regular Login */
 
 	/* GitHub Login */
-	const handleLoginWithGitHub = (): void => {
-		const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
-		if (!clientId) {
-			console.error('GitHub client ID not found');
-			// return;
-		}
+	// const handleLoginWithGitHub = (): void => {
+	// 	const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
+	// 	if (!clientId) {
+	// 		console.error('GitHub client ID not found');
+	// 		return;
+	// 	}
 
-		const redirectUri: string = encodeURIComponent(
-			'http://localhost:3000/github/callback'
-		);
-		// window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
-		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
-	};
+	// 	const redirectUri: string = encodeURIComponent(
+	// 		'http://localhost:3000/github/callback'
+	// 	);
+	// 	window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+	// };
+
+	const handleLoginWithGitHub = (): void => {
+		window.location.href = 'http://localhost:3001/github/login'; 
+	}; // user clicks button to invoke this and redirect to github/login
+	
 	/* GitHub Login */
 
 	return (
@@ -136,6 +140,10 @@ const LoginPage: React.FC = () => {
 				style={{ padding: '10px 20px', marginTop: '10px' }}
 			>
 				Login with GitHub
+			</button>
+			Don't have an account?
+			<button>
+			<a href='/signup'>Sign up here</a>
 			</button>
 		</div>
 	);

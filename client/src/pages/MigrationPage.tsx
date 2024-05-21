@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CodeEditor from '../components/CodeEditor';
 import SidePanel from '../components/SidePanel';
 import MigrationScripts from '../components/MigrationScripts';
-import '../styles.css';
+import '/client/src/styles/MigrationPage.css';
 
 const MigrationPage: React.FC = () => {
 	return (

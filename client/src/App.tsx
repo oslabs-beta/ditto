@@ -6,12 +6,13 @@ import { Route as Route } from 'react-router-dom';
 import { Routes as Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import LoginPage from './pages/LoginPage';
-import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
+import favicon from '/client/src/public/favicon.ico';
+import logoImage from './assets/logo.png'; // imports logo img, can be used with react components
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
 
 import GitHubCallBack from './components/GitHubCallBack';
-import GitHubLogin from './components/GitHubLogin';
+// import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
 import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
@@ -35,9 +36,9 @@ const App: React.FC = () => {
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
-					<Route path="/" element={<GitHubLogin />} />
-					<Route path="/github/callback" element={<MigrationPage />} />
-					<Route path="/addMigrations" element={<AddMigrationsPage />} />
+					{/* <Route path="/github/login" element={<GitHubLogin />} /> */}
+					<Route path="/github/callback" element={<GitHubCallBack />} />
+
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />

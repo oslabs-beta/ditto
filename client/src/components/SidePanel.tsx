@@ -99,10 +99,9 @@ const SidePanel: React.FC = () => {
 			// and set dispatch setDatabases here again
 			if (response.ok) {
 				const result = await response.json();
-				const databaseCopy = [...databases];
-				databaseCopy.push(result.db_name);
+				const databaseCopy = JSON.parse(JSON.stringify(databases));
+				databaseCopy.push(result);
 				dispatch(setDatabases(databaseCopy));
-				console.log('Success:', result);
 			}
 		} catch (error) {
 			console.error('Error:', error);
