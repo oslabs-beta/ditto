@@ -27,24 +27,29 @@ export interface DBbyDBId {
 
 export interface Migration {
 	migration_id: number;
-	user_id: number
+	user_id: number;
 	date_created: number;
-	database_id: number
+	database_id: number;
 	description: string;
 	status: string;
 	version: string;
 	script: string;
 	checksum: number;
-
 }
 
 export const addDBConnection = async (
 	connectionString: string
 ): Promise<DB> => {
 	const queryString = `
-    INSERT INTO databases (connection_string)
-    VALUES ($1)
-    RETURNING *;
+			WITH inserted_row AS (
+			INSERT INTO databases (connection_string)
+			VALUES ($1)
+			ON CONFLICT (connection_string) DO NOTHING
+			RETURNING db_id
+		)
+		SELECT db_id FROM inserted_row
+		UNION ALL
+		SELECT db_id FROM databases WHERE connection_string = $1;
     `;
 	const result = await db.query(queryString, [connectionString]);
 	return result[0] as DB;
@@ -52,14 +57,15 @@ export const addDBConnection = async (
 
 export const addDBConnectionToUser = async (
 	db_name: string,
-	db_id: number
+	db_id: number,
+	user_id: number
 ): Promise<UserDB> => {
 	const queryString = `
-    INSERT INTO user_db (db_name, db_id)
-    VALUES ($1, $2)
+    INSERT INTO user_db (db_name, db_id, user_id)
+    VALUES ($1, $2, $3)
     RETURNING *;
     `;
-	const result = await db.query(queryString, [db_name, db_id]);
+	const result = await db.query(queryString, [db_name, db_id, user_id]);
 	return result[0] as UserDB;
 };
 
@@ -67,13 +73,13 @@ export const getDBConnectionByUserId = async (
 	userId: number
 ): Promise<DBbyUserId[]> => {
 	const queryString = `
-    SELECT databases.connection_string, user_db.db_name
+    SELECT databases.connection_string, user_db.db_name, databases.db_id
 		FROM databases
 		JOIN user_db ON databases.db_id = user_db.db_id
 		WHERE user_db.user_id = $1;
     `;
 	const result = await db.query(queryString, [userId]);
-	return result[0] as DBbyUserId[];
+	return result as DBbyUserId[];
 };
 
 export const getDBConnectionById = async (
@@ -103,18 +109,24 @@ export const deleteDBConnectionById = async (
 	return result[0] as string;
 };
 
-export const getPendingMigrations = async (userId: number, dbId: number): Promise<Migration[]> => {
+export const getPendingMigrations = async (
+	userId: number,
+	dbId: number
+): Promise<Migration[]> => {
 	const queryString = `
 	SELECT * FROM migration_logs
 	WHERE user_id = $1 AND database_id = $2 AND status = 'pending'
 	ORDER BY version ASC; 
 	`;
-	
+
 	const result = await db.query(queryString, [userId, dbId]);
-	return result as Migration[]; // return result as an array of migrations 
+	return result as Migration[]; // return result as an array of migrations
 };
 
-export const updateMigrationStatus = async (migrationId: number, status: string): Promise<Migration> => {
+export const updateMigrationStatus = async (
+	migrationId: number,
+	status: string
+): Promise<Migration> => {
 	const queryString = `
 	UPDATE migration_logs
 	SET status = $1, executed_at = NOW()
@@ -125,7 +137,10 @@ export const updateMigrationStatus = async (migrationId: number, status: string)
 	return result[0] as Migration; // return updated migration
 };
 
-export const validateChecksum = async (migrationId: number, checksum: number): Promise<boolean> => {
+export const validateChecksum = async (
+	migrationId: number,
+	checksum: number
+): Promise<boolean> => {
 	const queryString = `
 	SELECT checksum FROM migration_logs
 	WHERE migration_id = $1;
@@ -136,4 +151,4 @@ export const validateChecksum = async (migrationId: number, checksum: number): P
 		return checksum === storedChecksum; // compare provided checksum with stored checksum
 	}
 	return false;
-}
+};

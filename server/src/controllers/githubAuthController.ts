@@ -27,25 +27,25 @@ export const githubCallback = async (
 		return res.status(400).json({ error: 'No code provided' });
 	}
 
-    try {
-        //exchange code for access token
-        const tokenResponse = await axios.post(
-            'https://github.com/login/oauth/access_token',
-            {
-                client_id: clientId,
-                client_secret: clientSecret,
-                code,
-                redirect_uri: redirectUri,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-            }
-        );
-            //get token from response
-        const accessToken = tokenResponse.data.access_token;
+	try {
+		//exchange code for access token
+		const tokenResponse = await axios.post(
+			'https://github.com/login/oauth/access_token',
+			{
+				client_id: clientId,
+				client_secret: clientSecret,
+				code,
+				redirect_uri: redirectUri,
+			},
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			}
+		);
+		//get token from response
+		const accessToken = tokenResponse.data.access_token;
 
 		if (!accessToken) {
 			return res.status(400).json({ error: 'No access token received' });

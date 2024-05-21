@@ -1,7 +1,6 @@
 // App.tsx (or any other component where you want to use the NavBarComponent)
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route as Route } from 'react-router-dom';
 import { Routes as Routes } from 'react-router-dom';
@@ -10,6 +9,9 @@ import LoginPage from './pages/LoginPage';
 import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
+// import UsersList from './pages/UsersList';
+import GitHubCallBack from './components/GitHubCallBack';
+import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
 import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
@@ -29,9 +31,13 @@ const App: React.FC = () => {
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
+				{/* <UsersList /> */}
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
+					<Route path="/" element={<GitHubLogin />} />
+					<Route path="/github/callback" element={<MigrationPage />} />
+
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />

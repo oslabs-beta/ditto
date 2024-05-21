@@ -24,19 +24,21 @@ export const addDBConnectionString = async (
 	}
 	try {
 		const existingConnections = await getDBConnectionByUserId(userId);
-		const duplicate = existingConnections.find(
-			db => db.connection_string === connection_string
-		);
+		if (existingConnections) {
+			const duplicate = existingConnections.find(
+				db => db.connection_string === connection_string
+			);
 
-		if (duplicate) {
-			return next({
-				status: 400,
-				message: 'Connection string already exists',
-			});
+			if (duplicate) {
+				return next({
+					status: 400,
+					message: 'Connection string already exists',
+				});
+			}
 		}
 
 		const newDB = await addDBConnection(connection_string);
-		const newDBUser = await addDBConnectionToUser(db_name, newDB.db_id);
+		const newDBUser = await addDBConnectionToUser(db_name, newDB.db_id, userId);
 		res.locals.message = `Connection string added successfully ${newDBUser.db_name}`;
 		return next();
 	} catch (error) {
@@ -53,7 +55,7 @@ export const getConnectionString = async (
 	next: NextFunction
 ) => {
 	const userId = req.user?.id;
-
+	console.log('userid', userId);
 	if (!userId) {
 		return next({
 			status: 401,
@@ -62,6 +64,7 @@ export const getConnectionString = async (
 	}
 	try {
 		const connectionStrings = await getDBConnectionByUserId(userId);
+		console.log(connectionStrings);
 		res.locals.connectionStrings = connectionStrings; // { connection_string, db_name }
 		return next();
 	} catch (error) {
@@ -78,8 +81,8 @@ export const getConnectionStringById = async (
 	next: NextFunction
 ) => {
 	//get DB ID from req params
-    const { dbId } = req.params;
-    const userId = req.user?.id;
+	const { dbId } = req.params;
+	const userId = req.user?.id;
 
 	if (!userId) {
 		return next({

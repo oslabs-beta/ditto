@@ -104,7 +104,7 @@
 
 # Q. Why is there a getConnectionStringById and getConnectionString?
 
-# A. The latter shows all the databases, and the second one is the specific database for the user.
+- A. The latter shows all the databases, and the second one is the specific database for the user.
 
 # MigraitonLog
 
@@ -113,3 +113,8 @@
 # AuditLog
 
 - the user who added script
+
+# Redux Review
+
+- useSelector gets access to global state
+- useDispatch, to dispatch actions

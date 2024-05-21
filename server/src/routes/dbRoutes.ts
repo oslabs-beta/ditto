@@ -25,14 +25,16 @@ router.get(
 		res.status(200).json(res.locals.connectionStrings);
 	}
 );
-router.get(
-	`/getConnectionString/:dbId`,
-	validateJWT,
-	getConnectionStringById,
-	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(200).json(res.locals.connectionString);
-	}
-);
+
+// router.get(
+// 	`/getConnectionString/:dbId`,
+// 	validateJWT,
+// 	getConnectionStringById,
+// 	(_req: Request, res: Response, _next: NextFunction) => {
+// 		res.status(200).json(res.locals.connectionString);
+// 	}
+// );
+// go see migrationLogRoutes
 
 router.delete(
 	`/deleteConnectionString/:dbId`,

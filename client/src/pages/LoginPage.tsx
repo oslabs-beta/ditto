@@ -1,9 +1,8 @@
-// LoginPage.tsx
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../store';
+import { setUser, setDatabases } from '../store';
 
 interface LoginFormData {
 	username: string;
@@ -11,6 +10,7 @@ interface LoginFormData {
 }
 
 const LoginPage: React.FC = () => {
+	//regular login//
 	const [formData, setFormData] = useState<LoginFormData>({
 		username: '',
 		password: '',
@@ -26,6 +26,7 @@ const LoginPage: React.FC = () => {
 		});
 	};
 
+	/* Regular Login */
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>
 	): Promise<void> => {
@@ -33,7 +34,8 @@ const LoginPage: React.FC = () => {
 			e.preventDefault();
 			console.log('Login with:', formData);
 
-			const response = await fetch('/auth/login', {
+			const response = await fetch('http://localhost:3001/auth/login', {
+				// /auth/login
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -43,7 +45,27 @@ const LoginPage: React.FC = () => {
 
 			if (response.ok) {
 				const data = await response.json();
-				dispatch(setUser(data.username));
+				console.log('data: ', data);
+				console.log('formData.username: ', formData.username);
+				dispatch(setUser(formData.username));
+				// dispatch(setToken(data.token)); //test
+				const token = data; // session storage way
+				console.log('data.token: ', token);
+				// const dbResponse = await fetch('http://localhost:3001/db/')
+				localStorage.setItem('token', token); // session storage way
+				// dispatch(setDatabases(data.databases)); //test
+				/* if we dispatch in login */
+				// const responsedb = await fetch('/db/connectionStrings', {
+				// 	method: 'GET',
+				// 	headers: {
+				// 		'Content-Type': 'application/json',
+				// 		Authorization: `Bearer ${token}`, // Replace with your JWT token logic
+				// 	},
+				// });
+				// const result = await responsedb.json();
+				// console.log('databases: ', result);
+				// dispatch(setDatabases(result.databases));
+				/* if we dispatch in login */
 				navigate('/migration');
 			} else {
 				console.error('Login failed:', await response.json());
@@ -52,19 +74,23 @@ const LoginPage: React.FC = () => {
 			console.error('An error occurred during login:', error);
 		}
 	};
+	/* Regular Login */
 
+	/* GitHub Login */
 	const handleLoginWithGitHub = (): void => {
-		const clientId: string | undefined = process.env.REACT_APP_GITHUB_CLIENT_ID;
+		const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
 		if (!clientId) {
 			console.error('GitHub client ID not found');
-			return;
+			// return;
 		}
 
 		const redirectUri: string = encodeURIComponent(
-			'http://localhost:3000/auth/callback'
+			'http://localhost:3000/github/callback'
 		);
-		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+		// window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
+		window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`;
 	};
+	/* GitHub Login */
 
 	return (
 		<div
