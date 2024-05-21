@@ -17,6 +17,8 @@ import DocumentationPage from './pages/DocumentationPage';
 import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
+import LogOut from './components/LogOutButton';
+import UserBubble from './components/UserBubble'; // Might be good to implement for user/guest?
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -25,7 +27,8 @@ const App: React.FC = () => {
 		{ path: '/community', label: 'Community' },
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
-		{ path: '/signup', label: 'Signup' }
+		{ path: '/signup', label: 'Signup' },
+		{ path: '/logout', label: 'Log Out'}
 	];
 
 	return (
@@ -43,6 +46,7 @@ const App: React.FC = () => {
 					<Route path="/documentation" element={<DocumentationPage />} />
 					<Route path="/community" element={<CommunityPage />} />
 					<Route path="/faq" element={<FAQPage />} />
+					<Route path="/logout" element={<LogOut />} />
 					{/* Define more routes as necessary */}
 				</Routes>
 			</div>
