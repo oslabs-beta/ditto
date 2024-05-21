@@ -30,7 +30,7 @@ const SidePanel: React.FC = () => {
 
 	useEffect(() => {
 		const fetchDatabases = async () => {
-			const token = localStorage.getItem('token');
+			const token = sessionStorage.getItem('token');
 			console.log(token);
 			try {
 				const response = await fetch('/db/connectionStrings', {
@@ -82,7 +82,7 @@ const SidePanel: React.FC = () => {
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const token = localStorage.getItem('token');
+			const token = sessionStorage.getItem('token');
 			const response = await fetch('/db/addConnectionString', {
 				method: 'POST',
 				headers: {

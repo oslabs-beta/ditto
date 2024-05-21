@@ -22,7 +22,7 @@ const AddMigrationsPage: React.FC = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
-			const token = localStorage.getItem('token');
+			const token = sessionStorage.getItem('token');
 			const response = await fetch(`/migrationlog/:${dbId}`, {
 				method: 'POST',
 				headers: {

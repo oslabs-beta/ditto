@@ -22,7 +22,7 @@ const MigrationScripts: React.FC = () => {
 	const [migrations, setMigrations] = useState<Migration[]>([]);
 	useEffect(() => {
 		const fetchMigrations = async () => {
-			const token = localStorage.getItem('token');
+			const token = sessionStorage.getItem('token');
 			try {
 				const response = await fetch(`/migrationlog/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
