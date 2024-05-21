@@ -38,6 +38,7 @@ const App: React.FC = () => {
 					<Route path="/login" element={<LoginPage />} />
 					{/* <Route path="/github/login" element={<GitHubLogin />} /> */}
 					<Route path="/github/callback" element={<GitHubCallBack />} />
+					<Route path="/addMigrations" element={<AddMigrationsPage />} />
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />
