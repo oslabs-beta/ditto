@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { setdbId } from '../store';
+import { useNavigate } from 'react-router-dom';
+import CodeEditor from './CodeEditor';
+
 interface Migration {
 	version: string;
 	description: string;
@@ -10,42 +13,13 @@ interface Migration {
 }
 
 const MigrationScripts: React.FC = () => {
+	const navigate = useNavigate();
 	const dbId = useSelector((state: any) => state.dbId);
 	console.log('dbId: ', dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
-	// console.log('current user:', username);
-	// console.log('current database:', selectedDatabase);
+
 	const [migrations, setMigrations] = useState<Migration[]>([]);
-
-	// this is going to need muiltiple fields depending on body *** Add Scripts ***
-	// const handleSubmit = async (
-	// 	e: React.FormEvent<HTMLFormElement>
-	// ): Promise<void> => {
-	// 	try {
-	// 		e.preventDefault();
-
-	// 		const response = await fetch('http://localhost:3001/migration', { // endpoint that leads to addMigration
-	// 			// /auth/login
-	// 			method: 'POST',
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 			},
-	// 			body: JSON.stringify(/* whatever data we need to send*/ ),
-	// 		});
-
-	// 		if (response.ok) {
-	// 			const data = await response.json();
-	// 			// we want to fetch for the migration scripts again and dispatch migrations again here
-	// 			navigate('/migration');
-	// 		} else {
-	// 			console.error('Login failed:', await response.json());
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('An error occurred during login:', error);
-	// 	}
-	// };
-
 	useEffect(() => {
 		const fetchMigrations = async () => {
 			const token = localStorage.getItem('token');
@@ -76,27 +50,74 @@ const MigrationScripts: React.FC = () => {
 		}
 	}, [selectedDatabase, username]);
 
+	/* Add Migrations Button */
+	const handleFormSubmit = (data: {
+		version: string;
+		description: string;
+		script: string;
+	}) => {
+		console.log('Form Data:', data);
+	};
+	/* Add Migrations Button */
+	const handleSubmit = () => {
+		console.log('went into handleSubmit');
+		navigate('/addMigrations');
+	};
+	/* Add Migrations Button */
+
+	/* Code Editor */
+	const [code, setCode] = useState('-- Write your PostgreSQL script here');
+
+	const handleCodeChange = (newCode: string) => {
+		setCode(newCode);
+	};
+
+	const handleRunScript = () => {
+		const response = fetch('./', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer {token}`,
+			},
+			body: JSON.stringify({}),
+		});
+	};
+	/* Code Editor */
+
 	return (
-		<table>
-			<thead>
-				<tr>
-					<th>Version</th>
-					<th>Description</th>
-					<th>Status</th>
-					<th>Date Migrated</th>
-				</tr>
-			</thead>
-			<tbody>
-				{migrations.map((migration, index) => (
-					<tr key={index}>
-						<td>{migration.version}</td>
-						<td>{migration.description}</td>
-						<td>{migration.status}</td>
-						<td>{migration.executed_at}</td>
+		<div className="MigrationScriptsContainer">
+			<div className="addMigrationsButton" onClick={handleSubmit}>
+				{/* Add Migrations Button */}
+				<button type="button">Add Migration</button>
+			</div>
+			{/* Add Migrations Button */}
+			<table>
+				<thead>
+					<tr>
+						<th>Version</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Date Migrated</th>
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{migrations.map((migration, index) => (
+						<tr key={index}>
+							<td>{migration.version}</td>
+							<td>{migration.description}</td>
+							<td>{migration.status}</td>
+							<td>{migration.executed_at}</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+			<div className="codeEditorContainer">
+				<div className="codeEditor">
+					<CodeEditor initialCode={code} onCodeChange={handleCodeChange} />
+					<button onClick={handleRunScript}>Run Script</button>
+				</div>
+			</div>
+		</div>
 	);
 };
 

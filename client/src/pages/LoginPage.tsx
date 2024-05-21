@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, setDatabases } from '../store';
+import signupImg from '/client/src/assets/img/signup.png';
+import githubIcon from '/client/src/assets/img/github-mark.png';
+import '/client/src/styles/LoginPage.css';
 
 interface LoginFormData {
 	username: string;
@@ -97,31 +100,16 @@ const LoginPage: React.FC = () => {
 	/* GitHub Login */
 
 	return (
-		<div
-			style={{
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				justifyContent: 'center',
-				height: '100vh',
-			}}
-		>
-			<form
-				onSubmit={handleSubmit}
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					margin: '20px',
-					width: '300px',
-				}}
-			>
+		<div className="container">
+			<h1>Login:</h1>
+			<form onSubmit={handleSubmit} className="form">
 				<input
 					type="text"
 					name="username"
 					value={formData.username}
 					onChange={handleInputChange}
 					placeholder="Username"
-					style={{ marginBottom: '10px', padding: '10px' }}
+					className="input"
 				/>
 				<input
 					type="password"
@@ -129,24 +117,27 @@ const LoginPage: React.FC = () => {
 					value={formData.password}
 					onChange={handleInputChange}
 					placeholder="Password"
-					style={{ marginBottom: '20px', padding: '10px' }}
+					className="input"
 				/>
-				<button type="submit" style={{ padding: '10px 20px' }}>
+				<button type="submit" className="button">
 					Login
 				</button>
 			</form>
-			<button
-				onClick={handleLoginWithGitHub}
-				style={{ padding: '10px 20px', marginTop: '10px' }}
-			>
-				Login with GitHub
-			</button>
 			Don't have an account?
-			<button>
-			<a href='/signup'>Sign up here</a>
+			<a href="/signup" className="signUpBtn">
+			<img src={signupImg} alt="signup" className='signUpImage' />
+				<span className='credit'></span>
+				</a>
+			Login with GitHub:
+			<button onClick={handleLoginWithGitHub} className="githubLoginBtn">
+				<img src={githubIcon} className='githubLoginIcon' />
 			</button>
+			<div className='credit'>
+				<a target="_blank" href="https://icons8.com/icon/8SXWOtdZLjo8/sign-up">Sign Up</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+				</div>
 		</div>
 	);
 };
+
 
 export default LoginPage;
