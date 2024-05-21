@@ -14,7 +14,7 @@ router.post(
 	validateJWT,
 	addDBConnectionString,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(201).json(res.locals.message);
+		res.status(201).json(res.locals.dbName);
 	}
 );
 router.get(

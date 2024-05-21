@@ -46,6 +46,7 @@ const SidePanel: React.FC = () => {
 				}
 
 				const result = await response.json();
+				console.log(result);
 				// const dbNames: string[] = result.map(
 				// 	(obj: { db_name: string }) => obj.db_name
 				// );
@@ -77,14 +78,16 @@ const SidePanel: React.FC = () => {
 	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(setDbName(e.target.value));
 	};
-
+	/* For Adding Database */
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
+			const token = localStorage.getItem('token');
 			const response = await fetch('/db/addConnectionString', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
 				},
 				body: JSON.stringify({
 					db_name: dbName,
@@ -94,8 +97,11 @@ const SidePanel: React.FC = () => {
 			// if response is ok we need backend to query for databases again so i can dispatch setdatabases here again
 			// Maybe backend can have a controller for querying for databases again. so fetch for getDBConnectionByUserId
 			// and set dispatch setDatabases here again
-			if (!response.ok) {
+			if (response.ok) {
 				const result = await response.json();
+				const databaseCopy = [...databases];
+				databaseCopy.push(result.db_name);
+				dispatch(setDatabases(databaseCopy));
 				console.log('Success:', result);
 			}
 		} catch (error) {
@@ -111,14 +117,15 @@ const SidePanel: React.FC = () => {
 				<select
 					value={selectedDatabase}
 					onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-						dispatch(setdbId(e.target.value[1]));
-						dispatch(setSelectedDatabase(e.target.value[0]));
+						const [dbName, dbId] = e.target.value.split(',');
+						dispatch(setdbId(dbId));
+						dispatch(setSelectedDatabase(dbName));
 					}}
 				>
 					{/* [ { db1: 30}, {db2: 40}] */}
 					<option value="">--Select a database--</option>
 					{databases.map((db: { db_id: string; db_name: string }) => (
-						<option key={db.db_id} value={[db.db_name, db.db_id]}>
+						<option key={db.db_id} value={`${db.db_name},${db.db_id}`}>
 							{db.db_name}
 						</option>
 					))}
