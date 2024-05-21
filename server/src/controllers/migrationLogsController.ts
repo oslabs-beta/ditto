@@ -126,7 +126,6 @@ export const getMigrationLogAll = async (
 ) => {
 	const userId = req.user?.id;
 	const { dbId } = req.params;
-	console.log('dbId: ', dbId);
 	if (!userId) {
 		return next({
 			status: 401,
@@ -136,7 +135,6 @@ export const getMigrationLogAll = async (
 
 	try {
 		const result = await getMigrationLogQueryAll(parseInt(dbId));
-		console.log('result:', result);
 		res.locals.migrationsArray = result;
 		return next();
 	} catch (error) {
