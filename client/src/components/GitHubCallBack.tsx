@@ -29,11 +29,11 @@ const GitHubCallback: React.FC = () => {
 			console.log("payload:", payload)
 			dispatch(setUser(payload.username)); //dispatch users username from JWT payload
 
-			navigate('/migrations');
+			navigate('/migration');
 		} else {
 			console.error('Access token not found')
 		}
-	}, [navigate, location, dispatch]);
+	}, []);
 
 	return <div>Loading...</div>;
 };
