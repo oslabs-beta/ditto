@@ -57,31 +57,16 @@ const SignUpPage: React.FC = () => {
 	};
 
 	return (
-		<div
-			style={{
-				display: 'flex',
-				flexDirection: 'column',
-				alignItems: 'center',
-				justifyContent: 'center',
-				height: '100vh',
-			}}
-		>
-			<form
-				onSubmit={handleSubmit}
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					margin: '20px',
-					width: '300px',
-				}}
-			>
+		<div className="container">
+			<h1>Sign up:</h1>
+			<form onSubmit={handleSubmit} className="form">
 				<input
 					type="text"
 					name="username"
 					value={formData.username}
 					onChange={handleInputChange}
 					placeholder="Username"
-					style={{ marginBottom: '10px', padding: '10px' }}
+					className="input"
 				/>
 				<input
 					type="password"
@@ -89,7 +74,7 @@ const SignUpPage: React.FC = () => {
 					value={formData.password}
 					onChange={handleInputChange}
 					placeholder="Password"
-					style={{ marginBottom: '10px', padding: '10px' }}
+					className="input"
 				/>
 				<input
 					type="password"
@@ -97,14 +82,14 @@ const SignUpPage: React.FC = () => {
 					value={formData.confirmPassword}
 					onChange={handleInputChange}
 					placeholder="Confirm Password"
-					style={{ marginBottom: '20px', padding: '10px' }}
+					className="input confirm-password"
 				/>
-				<button type="submit" style={{ padding: '10px 20px' }}>
+				<button type="submit" className="button">
 					Sign Up
 				</button>
 			</form>
 		</div>
-	);
-};
+		);
+	}	
 
 export default SignUpPage;
