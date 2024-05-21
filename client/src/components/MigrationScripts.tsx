@@ -55,19 +55,21 @@ const MigrationScripts: React.FC = () => {
 		console.log('went into handleSubmit');
 		navigate('/addMigrations');
 	};
-	/* Add Migrations Button */
 
 	/* Handles Update Button */
 	const handleUpdateSubmit = () => {
 		console.log('went into handleSubmit');
+		// We need to dispatch state here so we know which version we're working on
+
 		navigate('/updateMigrations');
 	};
-	/* Handles Update Button */
 
 	/* Handles Delete Button */
 	const handleDeleteSubmit = () => {
 		console.log('into handleDeleteSubmit');
 		// might want to add an are you sure prompt
+
+		// We need to dispatch state here so we know which version we're working on
 
 		const token = sessionStorage.getItem('token');
 		const response = fetch(`./migrationlog?=${dbId}`, {
@@ -80,7 +82,6 @@ const MigrationScripts: React.FC = () => {
 		// are we expecting response? we would have to json pars and confirm deletion or error
 		// dispatch migrationlog logic
 	};
-	/* Handles Delete Button */
 
 	/* Code Editor */
 	const [code, setCode] = useState('-- Write your PostgreSQL script here');

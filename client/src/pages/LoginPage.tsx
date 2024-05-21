@@ -56,19 +56,6 @@ const LoginPage: React.FC = () => {
 				console.log('data.token: ', token);
 				// const dbResponse = await fetch('http://localhost:3001/db/')
 				sessionStorage.setItem('token', token); // session storage way
-				// dispatch(setDatabases(data.databases)); //test
-				/* if we dispatch in login */
-				// const responsedb = await fetch('/db/connectionStrings', {
-				// 	method: 'GET',
-				// 	headers: {
-				// 		'Content-Type': 'application/json',
-				// 		Authorization: `Bearer ${token}`, // Replace with your JWT token logic
-				// 	},
-				// });
-				// const result = await responsedb.json();
-				// console.log('databases: ', result);
-				// dispatch(setDatabases(result.databases));
-				/* if we dispatch in login */
 				navigate('/migration');
 			} else {
 				console.error('Login failed:', await response.json());
@@ -78,20 +65,6 @@ const LoginPage: React.FC = () => {
 		}
 	};
 	/* Regular Login */
-
-	/* GitHub Login */
-	// const handleLoginWithGitHub = (): void => {
-	// 	const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
-	// 	if (!clientId) {
-	// 		console.error('GitHub client ID not found');
-	// 		return;
-	// 	}
-
-	// 	const redirectUri: string = encodeURIComponent(
-	// 		'http://localhost:3000/github/callback'
-	// 	);
-	// 	window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
-	// };
 
 	const handleLoginWithGitHub = (): void => {
 		window.location.href = 'http://localhost:3001/github/login';
