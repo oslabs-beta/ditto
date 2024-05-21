@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, setToken } from '../store'
-import { jwtDecode } from 'jwt-decode';
+
 
 interface DecodedToken {
 	id: number;
@@ -17,16 +17,19 @@ const GitHubCallback: React.FC = () => {
 
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
-		const access_token = params.get('token');
+		console.log("params:" , params)
+		const token = params.get('token');
+		console.log("token", token)
 
-		if (access_token) {
-			localStorage.setItem('token', access_token)
-			dispatch(setToken(access_token));
+		if (token) {
+			localStorage.setItem('token', token)
+			dispatch(setToken(token));
 
-			const decodedToken = jwtDecode<DecodedToken>(access_token);
-			dispatch(setUser(decodedToken.username));
-			
-			navigate('/migration');
+			const payload = JSON.parse(atob(token.split('.')[1])); //decode the JWT payload. Header. Payload. Signature. [1] gives us payload
+			console.log("payload:", payload)
+			dispatch(setUser(payload.username)); //dispatch users username from JWT payload
+
+			navigate('/migrations');
 		} else {
 			console.error('Access token not found')
 		}

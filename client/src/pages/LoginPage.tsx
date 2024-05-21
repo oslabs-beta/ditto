@@ -92,7 +92,7 @@ const LoginPage: React.FC = () => {
 
 	const handleLoginWithGitHub = (): void => {
 		window.location.href = 'http://localhost:3001/github/login'; 
-	};
+	}; // user clicks button to invoke this and redirect to github/login
 	
 	/* GitHub Login */
 
