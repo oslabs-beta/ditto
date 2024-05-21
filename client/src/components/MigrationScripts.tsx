@@ -111,6 +111,7 @@ const MigrationScripts: React.FC = () => {
 					))}
 				</tbody>
 			</table>
+
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
 					<CodeEditor initialCode={code} onCodeChange={handleCodeChange} />
