@@ -1,4 +1,4 @@
-/* MigrationPage.css */
+/* This CSS is set up for the whole project. Each class name corresponds with the class names for the component*/
 .migrationPage {
 	display: flex;
 	height: 88vh;
