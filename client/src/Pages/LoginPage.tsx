@@ -111,6 +111,10 @@ const LoginPage: React.FC = () => {
 			>
 				Login with GitHub
 			</button>
+			Don't have an account?
+			<button>
+			<a href='/signup'>Sign up here</a>
+			</button>
 		</div>
 	);
 };
