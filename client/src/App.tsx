@@ -7,7 +7,7 @@ import { Routes as Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import LoginPage from './pages/LoginPage';
 import favicon from '/client/src/public/favicon.ico';
-import logoImage from './assets/logo.png'; // imports logo img, can be used with react components
+import logoImage from './assets/logo.png';
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
 // import UsersList from './pages/UsersList';
@@ -25,7 +25,7 @@ const App: React.FC = () => {
 		{ path: '/community', label: 'Community' },
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
-		{ path: '/signup', label: 'Signup' },
+		{ path: '/signup', label: 'Signup' }
 	];
 
 	return (
@@ -38,7 +38,6 @@ const App: React.FC = () => {
 					<Route path="/login" element={<LoginPage />} />
 					{/* <Route path="/github/login" element={<GitHubLogin />} /> */}
 					<Route path="/github/callback" element={<GitHubCallBack />} />
-
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />
