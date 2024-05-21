@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginPage';
 import logoImage from './assets/osp-ditto-circle.png'; // imports logo img, can be used with react components
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
-import UsersList from './pages/UsersList';
+// import UsersList from './pages/UsersList';
 import GitHubCallBack from './components/GitHubCallBack';
 import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
@@ -31,7 +31,7 @@ const App: React.FC = () => {
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
-				<UsersList />
+				{/* <UsersList /> */}
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />

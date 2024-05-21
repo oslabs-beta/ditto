@@ -21,6 +21,7 @@ export const validateJWT = (
 
 		jwt.verify(token, jwtSecret as jwt.Secret, (err, user) => {
 			if (err) {
+				console.log('error in validateJWT');
 				return res.sendStatus(403);
 			}
 			//attach decoded user info to req object
@@ -88,7 +89,7 @@ export const login = async (
 			jwtSecret as jwt.Secret,
 			{ expiresIn: '1h' }
 		);
-		res.locals.message = `Login Successful ${token}`;
+		res.locals.token = token;
 		return next();
 	} catch (error) {
 		return next({

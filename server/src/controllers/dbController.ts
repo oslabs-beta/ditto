@@ -55,7 +55,7 @@ export const getConnectionString = async (
 	next: NextFunction
 ) => {
 	const userId = req.user?.id;
-
+	console.log('userid', userId);
 	if (!userId) {
 		return next({
 			status: 401,
@@ -64,6 +64,7 @@ export const getConnectionString = async (
 	}
 	try {
 		const connectionStrings = await getDBConnectionByUserId(userId);
+		console.log(connectionStrings);
 		res.locals.connectionStrings = connectionStrings; // { connection_string, db_name }
 		return next();
 	} catch (error) {
