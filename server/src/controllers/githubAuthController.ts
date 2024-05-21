@@ -1,9 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { createOAuthUser, findUser } from '../models/user';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
+import { access } from 'fs';
 
 const clientId = process.env.GITHUB_CLIENT_ID as string;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET as string;
+const jwtSecret = process.env.JWT_SECRET as string;
 const redirectUri = 'http://localhost:3001/github/callback'; // This should match the registered URL
 
 // if (!clientId || !clientSecret) {
@@ -22,7 +25,7 @@ export const githubCallback = async (
 	next: NextFunction
 ) => {
 	const code = req.query.code as string;
-
+	console.log('code:', code)
 	if (!code) {
 		return res.status(400).json({ error: 'No code provided' });
 	}
@@ -46,7 +49,7 @@ export const githubCallback = async (
 		);
 		//get token from response
 		const accessToken = tokenResponse.data.access_token;
-
+			console.log('accesstoken:' , accessToken)
 		if (!accessToken) {
 			return res.status(400).json({ error: 'No access token received' });
 		}
@@ -58,14 +61,20 @@ export const githubCallback = async (
 		});
 
 		const userData = userResponse.data;
-
+		console.log('userData:', userData)
 		let user = await findUser(userData.login);
 		if (!user) {
 			user = await createOAuthUser(userData.login);
 		}
 
-		req.session.user = { id: user.user_id, username: user.username };
-		return next();
+		const token = jwt.sign(
+			{ id: user.user_id, username: user.username },
+			jwtSecret as jwt.Secret,
+			{ expiresIn: '1h' }
+		);
+			console.log('token', token)
+		const frontendUrl = `http://localhost:3000/migration?token=${token}`; //check endpoint for front end main page
+		res.redirect(frontendUrl);
 	} catch (error) {
 		return next({
 			message: `Error in githubAuthController githubCallback ${error}`,
@@ -80,4 +89,4 @@ export const logout = (req: Request, res: Response) => {
 		}
 		res.redirect('/');
 	});
-};
+}; // no longer using session so change this 

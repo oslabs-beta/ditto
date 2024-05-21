@@ -70,6 +70,7 @@ export const setToken = (token: string) => ({
 // Define initial state
 const initialState = {
 	user: '',
+	token: '',
 	databases: [],
 	migrationVersions: [],
 	selectedTable: '',
