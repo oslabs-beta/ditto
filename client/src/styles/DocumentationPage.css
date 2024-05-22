@@ -24,15 +24,15 @@
 
 .scrolling-text {
   display: block;
-  animation: scrollTopDown 5s linear forwards;
+  animation: scrollBottomUp 5s linear forwards;
   font-size: 1.2em;
   color: #000;
   position: relative;
 }
 
-@keyframes scrollTopDown {
+@keyframes scrollBottomUp {
   0% {
-    transform: translateY(-100%);
+    transform: translateY(100%);
   }
   100% {
     transform: translateY(-15%);

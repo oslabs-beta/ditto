@@ -14,7 +14,7 @@ import SignUpPage from './pages/SignUpPage';
 import GitHubCallBack from './components/GitHubCallBack';
 // import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
-import CommunityPage from './pages/CommunityPage';
+import Community from './components/Community';
 import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
 import UserBubble from './components/UserBubble'; // Might be good to implement for user/guest?
@@ -49,7 +49,7 @@ const App: React.FC = () => {
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />
-					<Route path="/community" element={<CommunityPage />} />
+					<Route path="/community" element={<Community />} />
 					<Route path="/faq" element={<FAQPage />} />
 					<Route path="/login" element={<LogOut />} />
 					{/* Define more routes as necessary */}
