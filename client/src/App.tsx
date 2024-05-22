@@ -35,6 +35,7 @@ const App: React.FC = () => {
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
+				<UserBubble />
 				{/* <UsersList /> */}
 				<Routes>
 					<Route path="/" element={<MainPage />} />
