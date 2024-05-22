@@ -9,6 +9,7 @@
   overflow: hidden;
   border: 2px solid #fff; /* Optional border */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Optional shadow */
+  float: right;
 }
 
 .user-bubble img {

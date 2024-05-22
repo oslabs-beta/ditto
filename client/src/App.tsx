@@ -17,10 +17,10 @@ import DocumentationPage from './pages/DocumentationPage';
 import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
-import LogOut from './components/LogOutButton';
 import UserBubble from './components/UserBubble'; // Might be good to implement for user/guest?
 import AddMigrationsPage from './pages/AddMigrationsPage';
 import UpdateMigrationsPage from './pages/UpdateMigrationsPage';
+import LogOut from './components/LogOutButton';
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -30,7 +30,6 @@ const App: React.FC = () => {
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
 		{ path: '/signup', label: 'Signup' },
-		{ path: '/logout', label: 'Log Out'}
 	];
 
 	return (
@@ -38,6 +37,7 @@ const App: React.FC = () => {
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
 				<UserBubble />
+				<LogOut />
 				{/* <UsersList /> */}
 
 				<Routes>
@@ -51,7 +51,7 @@ const App: React.FC = () => {
 					<Route path="/documentation" element={<DocumentationPage />} />
 					<Route path="/community" element={<CommunityPage />} />
 					<Route path="/faq" element={<FAQPage />} />
-					<Route path="/logout" element={<LogOut />} />
+					<Route path="/login" element={<LogOut />} />
 					{/* Define more routes as necessary */}
 
 				</Routes>

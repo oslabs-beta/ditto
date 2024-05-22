@@ -1,4 +1,5 @@
 import * as React from 'react';
+import '../styles/LogOutButton.css';
 
 function handleLogOut() {
   sessionStorage.clear();
