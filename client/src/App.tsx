@@ -1,6 +1,6 @@
 // App.tsx (or any other component where you want to use the NavBarComponent)
 
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route as Route } from 'react-router-dom';
 import { Routes as Routes } from 'react-router-dom';
@@ -10,9 +10,7 @@ import favicon from '/client/src/assets/favicon.svg';
 import logoImage from './assets/logo.png';
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
-
 import GitHubCallBack from './components/GitHubCallBack';
-// import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
 import Community from './components/Community';
 import FAQPage from './pages/FAQPage';
@@ -40,8 +38,12 @@ const App: React.FC = () => {
 				<LogOut />
 				{/* <UsersList /> */}
 
+	return (
+		<Router>
+			<div>
+				<NavBar logo={logoImage} />
 				<Routes>
-					<Route path="/" element={<MainPage />} />
+					<Route path="/" element={<LoginPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/updateMigrations" element={<UpdateMigrationsPage />} />
 					<Route path="/github/callback" element={<GitHubCallBack />} />

@@ -1,0 +1,30 @@
+/* 'Roboto', sans-serif */
+
+a {
+	text-decoration: none;
+}
+
+nav {
+	font-family: 'Impact', fantasy;
+	/* font-weight: bolder; */
+	font-size: smaller;
+	border-bottom: solid rgb(207, 202, 202);
+	ul {
+		margin: 0;
+	}
+
+	button {
+		padding: 10px 20px;
+		font-size: 12px;
+		/* font-weight: bold; */
+		color: #fff;
+		background-color: #d184eb;
+		border: 2px solid #d184eb;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	button:hover {
+		background-color: #e8adfc;
+		border-color: #e8adfc;
+	}
+}
