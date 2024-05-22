@@ -12,7 +12,7 @@
 }
 
 .user-bubble img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 200%;
+  height: 200%;
+  object-fit: fill;
 }
