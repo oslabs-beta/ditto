@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setdbId } from '../store';
 import { useNavigate } from 'react-router-dom';
 import CodeEditor from './CodeEditor';
+import { setMigrationVersions } from '../store'
 
 interface Migration {
 	version: string;
@@ -17,11 +18,14 @@ const MigrationScripts: React.FC = () => {
 	const dbId = useSelector((state: any) => state.dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
+	const dispatch = useDispatch();
 
 	const [migrations, setMigrations] = useState<Migration[]>([]);
+
 	useEffect(() => {
 		const fetchMigrations = async () => {
 			const token = sessionStorage.getItem('token');
+			console.log('token:', token)
 			try {
 				const response = await fetch(`/migrationlog/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
@@ -37,17 +41,28 @@ const MigrationScripts: React.FC = () => {
 				}
 
 				const result = await response.json();
-				setMigrations(result);
+				console.log('result: ', result);
+				const sortedMigrations = result.sort((a: Migration, b: Migration) => parseInt(a.version) - parseInt(b.version));
+				setMigrations(sortedMigrations);
+				dispatch(setMigrationVersions(result));
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
 			}
-		};
+		}
 
 		if (selectedDatabase) {
 			fetchMigrations();
 		}
-	}, [selectedDatabase, username]);
+	}, [selectedDatabase, dbId, dispatch]);
 
+	/* Add Migrations Button */
+	// const handleFormSubmit = (data: {
+	// 	version: string;
+	// 	description: string;
+	// 	script: string;
+	// }) => {
+	// 	console.log('Form Data:', data);
+	// };
 	/* Add Migrations Button */
 	const handleSubmit = () => {
 		console.log('went into handleSubmit');
@@ -88,16 +103,34 @@ const MigrationScripts: React.FC = () => {
 		setCode(newCode);
 	};
 
-	const handleRunScript = () => {
-		const token = sessionStorage.getItem('token');
-		const response = fetch('./', {
+	const handleRunScript = async () => {
+		try {
+			console.log('Entered handleRunScript')
+			const token = sessionStorage.getItem('token');
+		const response = await fetch('/migration', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({}),
+			body: JSON.stringify({ dbId: Number(dbId) }),
 		});
+
+		if (!response.ok) {
+			throw new Error (`HTTP error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+		console.log('result:', result)
+		if (Array.isArray(result)) {
+		setMigrations(result);
+		} else {
+			console.error('Expected array but got:', result);
+			setMigrations([]);
+		}
+	} catch (error) {
+		console.error('Error running migrations:', error);
+	}
 	};
 	/* Code Editor */
 

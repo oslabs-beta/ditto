@@ -1,4 +1,5 @@
 import db from '../db';
+import crypto from 'crypto';
 
 export interface DB {
 	db_id: number;
@@ -34,7 +35,7 @@ export interface Migration {
 	status: string;
 	version: string;
 	script: string;
-	checksum: number;
+	checksum: string;
 }
 
 export const addDBConnection = async (
@@ -115,11 +116,12 @@ export const getPendingMigrations = async (
 ): Promise<Migration[]> => {
 	const queryString = `
 	SELECT * FROM migration_logs
-	WHERE user_id = $1 AND database_id = $2 AND status = 'pending'
-	ORDER BY version ASC; 
-	`;
-
+	WHERE user_id = $1 AND database_id = $2 AND status = 'Pending'
+	ORDER BY CAST(version AS INTEGER) ASC; 
+	`; // make sure version is set to an integer 
+	console.log('pendingMigration queryString:', queryString);
 	const result = await db.query(queryString, [userId, dbId]);
+	console.log('pending Migration result:', result);
 	return result as Migration[]; // return result as an array of migrations
 };
 
@@ -139,7 +141,7 @@ export const updateMigrationStatus = async (
 
 export const validateChecksum = async (
 	migrationId: number,
-	checksum: number
+	checksum: string,
 ): Promise<boolean> => {
 	const queryString = `
 	SELECT checksum FROM migration_logs
@@ -152,3 +154,9 @@ export const validateChecksum = async (
 	}
 	return false;
 };
+
+export const generateChecksum = (script: string): string => {
+	const hash = crypto.createHash('sha256');
+	hash.update(script);
+	return hash.digest('hex');
+  }
