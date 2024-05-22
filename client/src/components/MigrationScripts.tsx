@@ -43,7 +43,7 @@ const MigrationScripts: React.FC = () => {
 
 				const result = await response.json();
 				console.log('result: ', result);
-				const sortedMigrations = result.sort((a, b) => parseInt(a.version) - parseInt(b.version));
+				const sortedMigrations = result.sort((a: Migration, b: Migration) => parseInt(a.version) - parseInt(b.version));
 				setMigrations(sortedMigrations);
 				dispatch(setMigrationVersions(result));
 			} catch (error) {

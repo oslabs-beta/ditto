@@ -97,8 +97,9 @@ export const executeMigration = async (
 				});
 			}
 		}
-		res.locals.message = 'Migrations executed successfully';
-		return next();
+		// res.locals.message = 'Migrations executed successfully';
+		// return next();
+		res.status(201).json(pendingMigrations); //making sure to return an array 
 	} catch (error) {
 		return next({
 			status: 500,

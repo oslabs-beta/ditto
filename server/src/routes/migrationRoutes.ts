@@ -11,10 +11,10 @@ const router = express.Router();
 router.post(
 	'/',
 	validateJWT,
-	executeMigration,
-	(req: Request, res: Response) => {
-		res.status(201).json({ message: res.locals.message });
-	}
+	executeMigration
+	// (req: Request, res: Response) => {
+	// 	res.status(201).json({ message: res.locals.message });
+	// }
 );
 
 router.patch('/:logId', (req: Request, res: Response) => {
