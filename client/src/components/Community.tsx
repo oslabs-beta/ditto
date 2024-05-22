@@ -35,7 +35,7 @@ const Community: React.FC = () => {
 
   return (
     <div className='bio'>
-      <h1>Meet the Ditto team! (click a face to check out their GitHub)</h1>
+      <h1>Meet the Ditto team! (click a bio to check out their GitHub)</h1>
       <ul>
         {members.map(member => (
           <li key={member.name}>
