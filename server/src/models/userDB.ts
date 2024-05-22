@@ -118,7 +118,7 @@ export const getPendingMigrations = async (
 	SELECT * FROM migration_logs
 	WHERE user_id = $1 AND database_id = $2 AND status = 'Pending'
 	ORDER BY CAST(version AS INTEGER) ASC; 
-	`; // make sure version is set to an integer 
+	`; // make sure version is set to an integer
 	console.log('pendingMigration queryString:', queryString);
 	const result = await db.query(queryString, [userId, dbId]);
 	console.log('pending Migration result:', result);
@@ -131,7 +131,7 @@ export const updateMigrationStatus = async (
 ): Promise<Migration> => {
 	const queryString = `
 	UPDATE migration_logs
-	SET status = $1, executed_at = NOW()
+	SET status = $1, executed_at = timezone('America/New_York'::text, date_trunc('second'::text, now()))
 	WHERE migration_id = $2
 	RETURNING *;
 	`;
@@ -141,7 +141,7 @@ export const updateMigrationStatus = async (
 
 export const validateChecksum = async (
 	migrationId: number,
-	checksum: string,
+	checksum: string
 ): Promise<boolean> => {
 	const queryString = `
 	SELECT checksum FROM migration_logs
@@ -159,4 +159,4 @@ export const generateChecksum = (script: string): string => {
 	const hash = crypto.createHash('sha256');
 	hash.update(script);
 	return hash.digest('hex');
-  }
+};
