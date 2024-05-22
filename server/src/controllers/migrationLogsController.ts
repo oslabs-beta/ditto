@@ -8,6 +8,7 @@ import {
 	addDBMigration,
 	removeDBMigration,
 } from '../models/migrationLog';
+import { generateChecksum } from '../models/userDB';
 /*
 1. user puts in description, version, and script (req.body)
 2. create a migration log when they click on 'save'
@@ -26,7 +27,45 @@ export const createMigrationLog = async (
 ) => {
 	const userId = req.user?.id;
 	const { dbId } = req.params;
-	const { version, script, executedAt, description } = req.body;
+	const { version, script, description } = req.body;
+	if (!userId) {
+		return next({
+			status: 401,
+			message: 'Unauthorized',
+		});
+	}
+
+	try {
+		const checksum = generateChecksum(script);
+		const result = await createMigrationLogQuery(
+			userId,
+			parseInt(dbId),
+			version,
+			script,
+			// executedAt,
+			checksum,
+			description ? description : ''
+		);
+		console.log('creation migration log');
+		await addDBMigration(parseInt(dbId), result.migration_id);
+		console.log('Successfully added migration_id into databases table');
+		res.locals.migrationLog = result;
+		return next();
+	} catch (error) {
+		return next({
+			status: 400,
+			messsage: `Error in migrationLogController createMigrationLog: ${error}`,
+		});
+	}
+};
+
+export const getMigrationLog = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const userId = req.user?.id;
+	const { migrationId } = req.params;
 
 	if (!userId) {
 		return next({
@@ -36,22 +75,13 @@ export const createMigrationLog = async (
 	}
 
 	try {
-		const result = await createMigrationLogQuery(
-			userId,
-			parseInt(dbId),
-			version,
-			script,
-			executedAt,
-			description ? description : ''
-		);
-		await addDBMigration(parseInt(dbId), result.migration_id);
-		console.log('Successfully added migration_id into databases table');
-		res.locals.migrationLog = result;
+		const log = await getMigrationLogQuery(migrationId, userId);
+		res.locals.migrationLog = log;
 		return next();
 	} catch (error) {
 		return next({
 			status: 400,
-			messsage: `Error in migrationLogController createMigrationLog: ${error}`,
+			messsage: `Error in migrationLogController getMigrationLog: ${error}`,
 		});
 	}
 };
@@ -73,13 +103,13 @@ export const updateMigrationLog = async (
 	}
 
 	try {
-		const log = await getMigrationLogQuery(parseInt(migrationId), userId);
+		const log = await getMigrationLogQuery(migrationId, userId);
 		const result = await updateMigrationLogQuery(
 			parseInt(migrationId),
-			log.status === 'Failed' || 'Success' ? 'Pending' : log.status,
-			version ? version : log.version,
-			script ? script : log.script,
-			description ? description : log.description
+			log.status !== script ? 'Pending' : log.status,
+			version,
+			script,
+			description
 		);
 		res.locals.migrationLog = result;
 		return next();
@@ -107,9 +137,10 @@ export const deleteMigrationLog = async (
 	}
 
 	try {
-		const result = await deleteMigrationLogQuery(parseInt(migrationId));
-		await removeDBMigration(result, parseInt(migrationId));
-		res.locals.deletedLog = `Migration log ${migrationId} successfully deleted.`;
+		const dbId = await deleteMigrationLogQuery(parseInt(migrationId));
+		await removeDBMigration(dbId, parseInt(migrationId)); // updating migration_id in databases table
+		const migrationsArr = await getMigrationLogQueryAll(dbId);
+		res.locals.migrationsArr = migrationsArr;
 		return next();
 	} catch (error) {
 		return next({

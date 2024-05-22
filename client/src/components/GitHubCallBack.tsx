@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser, setToken } from '../store'
-
+import { setUser, setToken } from '../store';
 
 interface DecodedToken {
 	id: number;
 	username: string;
 }
-
 
 const GitHubCallback: React.FC = () => {
 	const navigate = useNavigate();
@@ -17,29 +15,28 @@ const GitHubCallback: React.FC = () => {
 
 	useEffect(() => {
 		const params = new URLSearchParams(location.search);
-		console.log("params:" , params)
+		console.log('params:', params);
 		const token = params.get('token');
-		console.log("token", token)
+		console.log('token', token);
 
 		if (token) {
-			localStorage.setItem('token', token)
+			sessionStorage.setItem('token', token);
 			dispatch(setToken(token));
 
 			const payload = JSON.parse(atob(token.split('.')[1])); //decode the JWT payload. Header. Payload. Signature. [1] gives us payload
-			console.log("payload:", payload)
+			console.log('payload:', payload);
 			dispatch(setUser(payload.username)); //dispatch users username from JWT payload
 
-			navigate('/migrations');
+			navigate('/migration');
 		} else {
-			console.error('Access token not found')
+			console.error('Access token not found');
 		}
-	}, [navigate, location, dispatch]);
+	}, []);
 
 	return <div>Loading...</div>;
 };
 
 export default GitHubCallback;
-
 
 // const Callback: React.FC = () => {
 // 	const location = useLocation();

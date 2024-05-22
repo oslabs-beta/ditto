@@ -6,6 +6,7 @@ import dbRoutes from './routes/dbRoutes';
 import migrationLogRoutes from './routes/migrationLogRoutes';
 import githubAuthRoutes from './routes/githubAuthRoutes';
 import cors from 'cors';
+import path from 'path'
 import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -38,10 +39,12 @@ app.use('/db', dbRoutes);
 
 app.use('/github', githubAuthRoutes);
 
+
 // catch all route handler
 app.use('*', (req: Request, res: Response) => {
 	console.log('404 error handler triggered.');
-	res.status(404).json('Page not found.');
+	res.sendFile(path.resolve('client/dist' , 'index.html'))
+	// res.status(404).json('Page not found.');
 });
 
 // Global error handler

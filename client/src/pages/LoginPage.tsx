@@ -55,20 +55,7 @@ const LoginPage: React.FC = () => {
 				const token = data; // session storage way
 				console.log('data.token: ', token);
 				// const dbResponse = await fetch('http://localhost:3001/db/')
-				localStorage.setItem('token', token); // session storage way
-				// dispatch(setDatabases(data.databases)); //test
-				/* if we dispatch in login */
-				// const responsedb = await fetch('/db/connectionStrings', {
-				// 	method: 'GET',
-				// 	headers: {
-				// 		'Content-Type': 'application/json',
-				// 		Authorization: `Bearer ${token}`, // Replace with your JWT token logic
-				// 	},
-				// });
-				// const result = await responsedb.json();
-				// console.log('databases: ', result);
-				// dispatch(setDatabases(result.databases));
-				/* if we dispatch in login */
+				sessionStorage.setItem('token', token); // session storage way
 				navigate('/migration');
 			} else {
 				console.error('Login failed:', await response.json());
@@ -79,24 +66,10 @@ const LoginPage: React.FC = () => {
 	};
 	/* Regular Login */
 
-	/* GitHub Login */
-	// const handleLoginWithGitHub = (): void => {
-	// 	const clientId: string | undefined = process.env.GITHUB_CLIENT_ID;
-	// 	if (!clientId) {
-	// 		console.error('GitHub client ID not found');
-	// 		return;
-	// 	}
-
-	// 	const redirectUri: string = encodeURIComponent(
-	// 		'http://localhost:3000/github/callback'
-	// 	);
-	// 	window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
-	// };
-
 	const handleLoginWithGitHub = (): void => {
-		window.location.href = 'http://localhost:3001/github/login'; 
+		window.location.href = 'http://localhost:3001/github/login';
 	}; // user clicks button to invoke this and redirect to github/login
-	
+
 	/* GitHub Login */
 
 	return (
@@ -125,19 +98,24 @@ const LoginPage: React.FC = () => {
 			</form>
 			Don't have an account?
 			<a href="/signup" className="signUpBtn">
-			<img src={signupImg} alt="signup" className='signUpImage' />
-				<span className='credit'></span>
-				</a>
+				<img src={signupImg} alt="signup" className="signUpImage" />
+				<span className="credit"></span>
+			</a>
 			Login with GitHub:
 			<button onClick={handleLoginWithGitHub} className="githubLoginBtn">
-				<img src={githubIcon} className='githubLoginIcon' />
+				<img src={githubIcon} className="githubLoginIcon" />
 			</button>
-			<div className='credit'>
-				<a target="_blank" href="https://icons8.com/icon/8SXWOtdZLjo8/sign-up">Sign Up</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
-				</div>
+			<div className="credit">
+				<a target="_blank" href="https://icons8.com/icon/8SXWOtdZLjo8/sign-up">
+					Sign Up
+				</a>{' '}
+				icon by{' '}
+				<a target="_blank" href="https://icons8.com">
+					Icons8
+				</a>
+			</div>
 		</div>
 	);
 };
-
 
 export default LoginPage;
