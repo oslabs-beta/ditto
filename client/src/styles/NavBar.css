@@ -2,6 +2,7 @@
 
 a {
 	text-decoration: none;
+	color: rgb(29, 19, 35);
 }
 
 nav {
@@ -27,4 +28,18 @@ nav {
 		background-color: #e8adfc;
 		border-color: #e8adfc;
 	}
+}
+
+body::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: url('../../dist/assets/images/logo.png') no-repeat center center;
+	background-size: contain;
+	opacity: 0.2;
+	width: 50%;
+	height: 50%;
+	z-index: -1;
 }
