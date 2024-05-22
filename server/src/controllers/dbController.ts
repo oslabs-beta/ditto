@@ -121,15 +121,9 @@ export const deleteConnectionStringById = async (
 		});
 	}
 	try {
-		const databaseName = await deleteDBConnectionById(userId, Number(dbId));
-		console.log(databaseName);
-		if (!databaseName) {
-			return next({
-				status: 404,
-				message: 'Connection string not found',
-			});
-		}
-		res.locals.message = `Successfully deleted database ${databaseName}`;
+		await deleteDBConnectionById(userId, Number(dbId));
+		const userDBs = await getDBConnectionByUserId(userId);
+		res.locals.userDBs = userDBs;
 		return next();
 	} catch (error) {
 		next({

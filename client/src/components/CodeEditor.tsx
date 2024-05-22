@@ -6,6 +6,16 @@ import React from 'react';
 // import 'codemirror/mode/sql/sql';
 import UnControlled from '@uiw/react-codemirror';
 
+interface Uncontrolled {
+	value: string;
+	options: {
+		mode: string;
+		theme: string;
+		lineNumbers: boolean;
+		readOnly: boolean;
+	};
+}
+
 type CodeEditorProps = {
 	initialCode: string;
 	onCodeChange: (code: string) => void;
@@ -17,19 +27,21 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
 }) => {
 	return (
 		<UnControlled
-		// value={initialCode}
-		// options={{
-		// 	mode: 'sql',
-		// 	theme: 'material',
-		// 	lineNumbers: true,
-		// }}
-		// onChange={(
-		// 	editor: CodeMirror.Editor,
-		// 	data: CodeMirror.EditorChange,
-		// 	value: string
-		// ) => {
-		// 	onCodeChange(value);
-		// }}
+			value={initialCode}
+			readOnly={true}
+			// options={{
+			// 	mode: 'sql',
+			// 	theme: 'material',
+			// 	lineNumbers: true,
+			// 	readOnly: true,
+			// }}
+			// onChange={(
+			// 	editor: CodeMirror.Editor,
+			// 	data: CodeMirror.EditorChange,
+			// 	value: string
+			// ) => {
+			// 	onCodeChange(value);
+			// }}
 		/>
 	);
 };
