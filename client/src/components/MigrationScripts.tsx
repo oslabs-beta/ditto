@@ -47,12 +47,11 @@ const MigrationScripts: React.FC = () => {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
 
-				let result = await response.json();
+				const result = await response.json();
 				// result.sort(
 				// 	(a: { version: number }, b: { version: number }) =>
 				// 		a.version - b.version
 				// );
-				console.log('result: ', result);
 				const sortedMigrations = result.sort(
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
@@ -66,6 +65,9 @@ const MigrationScripts: React.FC = () => {
 
 		if (selectedDatabase) {
 			fetchMigrations();
+		} else {
+			setMigrations([]);
+			dispatch(setMigrationVersions([]));
 		}
 	}, [selectedDatabase, selectedMigration]);
 
@@ -212,7 +214,7 @@ const MigrationScripts: React.FC = () => {
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
 					<CodeEditor initialCode={code} />
-					<button onClick={handleRunScript}>Run Script</button>
+					<button onClick={handleRunScript}>Run All Scripts</button>
 				</div>
 			</div>
 		</div>

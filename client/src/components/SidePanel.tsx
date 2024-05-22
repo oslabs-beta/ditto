@@ -150,7 +150,11 @@ const SidePanel: React.FC = () => {
 				<select
 					value={selectedDatabase}
 					onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-						dispatch(setdbId(e.target.selectedOptions[0].dataset.dbId));
+						dispatch(
+							setdbId(
+								!e.target.value ? '' : e.target.selectedOptions[0].dataset.dbId
+							)
+						);
 						dispatch(setSelectedDatabase(e.target.value));
 						dispatch(setSelectedMigration(''));
 					}}
