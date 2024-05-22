@@ -1,0 +1,18 @@
+/* UserBubble.css */
+.user-bubble {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 40px;  /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff; /* Optional border */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Optional shadow */
+}
+
+.user-bubble img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

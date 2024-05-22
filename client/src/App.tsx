@@ -6,8 +6,8 @@ import { Route as Route } from 'react-router-dom';
 import { Routes as Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import LoginPage from './pages/LoginPage';
-import favicon from './public/favicon.ico';
-import logoImage from './assets/logo.png'; // imports logo img, can be used with react components
+import favicon from '/client/src/assets/favicon.svg';
+import logoImage from './assets/logo.png';
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
 
@@ -17,6 +17,8 @@ import DocumentationPage from './pages/DocumentationPage';
 import CommunityPage from './pages/CommunityPage';
 import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
+import LogOut from './components/LogOutButton';
+import UserBubble from './components/UserBubble'; // Might be good to implement for user/guest?
 import AddMigrationsPage from './pages/AddMigrationsPage';
 import UpdateMigrationsPage from './pages/UpdateMigrationsPage';
 
@@ -28,12 +30,16 @@ const App: React.FC = () => {
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
 		{ path: '/signup', label: 'Signup' },
+		{ path: '/logout', label: 'Log Out'}
 	];
 
 	return (
 		<Router>
 			<div>
 				<NavBar links={navLinks} logo={logoImage} />
+				<UserBubble />
+				{/* <UsersList /> */}
+
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
@@ -45,6 +51,9 @@ const App: React.FC = () => {
 					<Route path="/documentation" element={<DocumentationPage />} />
 					<Route path="/community" element={<CommunityPage />} />
 					<Route path="/faq" element={<FAQPage />} />
+					<Route path="/logout" element={<LogOut />} />
+					{/* Define more routes as necessary */}
+
 				</Routes>
 			</div>
 		</Router>
