@@ -10,19 +10,19 @@ const Community: React.FC = () => {
     {
       name: 'Jea Lee',
       image: Jea,
-      bio: 'Born at a young age and inspired by the difficulty of schema migration in the field, Jea Lee started Ditto out of a small garage in New Jersey.',
+      bio: 'Frustrated with the difficulties of schema migration, Jea Lee set out to implement a tool to facilitate this task for software engineers and database management teams alike.',
       github: 'https://github.com/jealee44'
     },
     {
       name: 'Jay Cho',
       image: Jay,
-      bio: 'Jay Cho with a background in mechanical engineering found himself pivoting toward a different sector after school. Together, he and Jea Lee invested countless hours into laying the foundation of this tool as well as coordinating backend coding together.',
+      bio: 'Jay Cho with a background in mechanical engineering found himself pivoting toward a different sector after school. Together, he and Jea Lee invested countless hours in laying the foundation of this tool as well as coordinating the backend code with the help of Jeff Kim.',
       github: 'https://github.com/jayc-gh'
     },
     {
       name: 'Jeff Kim',
       image: Jeff,
-      bio: 'Jeff Kim with a range of familiarity between both front and back-end coding, handled everything that makes this tool user friendly and easy to navigate.',
+      bio: 'Jeff Kim with familiarity ranging between front and back-end coding, handled everything that makes this tool user friendly and easy to navigate.',
       github: 'https://github.com/syjeffkim'
     },
     {
@@ -35,8 +35,7 @@ const Community: React.FC = () => {
 
   return (
     <div className='bio'>
-      <h1>The Ditto Team</h1>
-      <h1>Meet the team! (click a face to check out their GitHub)</h1>
+      <h1>Meet the Ditto team! (click a face to check out their GitHub)</h1>
       <ul>
         {members.map(member => (
           <li key={member.name}>
