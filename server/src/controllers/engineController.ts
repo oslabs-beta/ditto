@@ -36,7 +36,8 @@ export const executeMigration = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { dbId } = req.body;
+	console.log('I made it to executeMigration')
+	let { dbId } = req.body;
 	const userId = req.user?.id;
 
 	if (!dbId || !userId) {
@@ -45,13 +46,19 @@ export const executeMigration = async (
 			message: { err: 'DatabaseID and userID required.' },
 		});
 	}
+	dbId = Number(dbId);
 
 	try {
 		const connectionStrings = await getDBConnectionByUserId(userId); // get db connections from user
+		console.log('connectionStrings:', connectionStrings)
+		console.log('dbId:', dbId, 'typeof dbId:', typeof dbId)
+		connectionStrings.forEach(db => {
+			console.log('db_id:', db.db_id, 'typeof db_id:', typeof db.db_id);
+		})
 		const connectionString = connectionStrings.find(
 			db => db.db_id === dbId
 		)?.connection_string; // get specific string by specific db id
-
+			console.log('one connection string:', connectionString)
 		if (!connectionString) {
 			return next({
 				status: 404,
@@ -60,7 +67,13 @@ export const executeMigration = async (
 		}
 
 		const pool = createPool(connectionString);
+		console.log('pool', pool)
 		const pendingMigrations = await getPendingMigrations(userId, dbId); // get all pending status migrations for user/dbid
+		console.log('pendingMigrations:', pendingMigrations);
+
+		if (pendingMigrations.length === 0) {
+			return res.status(200).json({ message: 'No pending migrations found.'});
+		}
 
 		for (const migration of pendingMigrations) {
 			//iterate through all the migrations
@@ -69,26 +82,24 @@ export const executeMigration = async (
 				migration.checksum
 			); //valdiate checksum for each migration
 			if (!validChecksum) {
-				await updateMigrationStatus(migration.migration_id, 'failed'); // if checksum is invalid, then update status to failed
-				return next({
-					status: 400,
-					message: `Invalid checksum for migration ${migration.version}`,
-				});
+				await updateMigrationStatus(migration.migration_id, 'Failed'); // if checksum is invalid, then update status to failed
+				return res.status(400).json({ error: `Invalid checksum for migration ${migration.version}` });
 			}
 
 			try {
 				await migrationScript(migration.script, pool); //still iterating so execute each migration script
-				await updateMigrationStatus(migration.migration_id, 'success'); // update status to success if execution is successful
+				await updateMigrationStatus(migration.migration_id, 'Success'); // update status to success if execution is successful
 			} catch (error) {
-				await updateMigrationStatus(migration.migration_id, 'failed'); // update status to failed if execution is not successful
+				await updateMigrationStatus(migration.migration_id, 'Failed'); // update status to failed if execution is not successful
 				return next({
 					status: 500,
 					message: `Error executing migration ${migration.version}`,
 				});
 			}
 		}
-		res.locals.message = 'Migrations executed successfully';
-		return next();
+		// res.locals.message = 'Migrations executed successfully';
+		// return next();
+		res.status(201).json(pendingMigrations); //making sure to return an array 
 	} catch (error) {
 		return next({
 			status: 500,

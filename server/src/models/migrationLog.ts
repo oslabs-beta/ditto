@@ -19,11 +19,12 @@ export const createMigrationLogQuery = async (
 	version: number,
 	script: string,
 	executedAt: string,
-	description?: string
+	checksum: string,
+	description?: string,
 ): Promise<migrationLog> => {
 	const queryString = `
-    INSERT INTO migration_logs (user_id, database_id, version, script, executed_at, description)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO migration_logs (user_id, database_id, version, script, executed_at, description, checksum, status)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, 'Pending')
     RETURNING *;
     `;
 	const result = await db.query(queryString, [
@@ -33,6 +34,7 @@ export const createMigrationLogQuery = async (
 		script,
 		executedAt,
 		description || '',
+		checksum
 	]);
 	return result[0] as migrationLog;
 };

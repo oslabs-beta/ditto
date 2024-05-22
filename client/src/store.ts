@@ -16,6 +16,7 @@ const SET_DB_NAME = 'SET_DB_NAME';
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
 const SET_TOKEN = 'SET_TOKEN'; // test
 const SET_DB_ID = 'SET_DB_ID';
+const SET_DESCRIPTION = 'SET_DESCRIPTION';
 
 // Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
@@ -67,6 +68,11 @@ export const setToken = (token: string) => ({
 	payload: token,
 });
 
+export const setDescription = (description: string) => ({
+	type: SET_DESCRIPTION,
+	payload: description,
+})
+
 // Define initial state
 const initialState = {
 	user: '',
@@ -80,6 +86,7 @@ const initialState = {
 	dbName: '',
 	connectionString: '',
 	dbId: '',
+	description: '',
 };
 
 // Define reducers
@@ -108,6 +115,8 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, connectionString: action.payload };
 		case SET_DB_ID:
 			return { ...state, dbId: action.payload };
+		case SET_DESCRIPTION:
+			return { ...state, description: action.payload };
 		default:
 			return state;
 	}
