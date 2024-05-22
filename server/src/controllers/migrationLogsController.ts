@@ -40,11 +40,11 @@ export const createMigrationLog = async (
 		const result = await createMigrationLogQuery(
 			userId,
 			parseInt(dbId),
-			parseInt(version),
+			version,
 			script,
-			executedAt,
+			// executedAt,
 			checksum,
-			description ? description : '',
+			description ? description : ''
 		);
 		console.log('creation migration log');
 		await addDBMigration(parseInt(dbId), result.migration_id);
