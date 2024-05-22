@@ -55,6 +55,33 @@ export const createMigrationLog = async (
 	}
 };
 
+export const getMigrationLog = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const userId = req.user?.id;
+	const { migrationId } = req.params;
+
+	if (!userId) {
+		return next({
+			status: 401,
+			message: 'Unauthorized',
+		});
+	}
+
+	try {
+		const log = await getMigrationLogQuery(migrationId, userId);
+		res.locals.migrationLog = log;
+		return next();
+	} catch (error) {
+		return next({
+			status: 400,
+			messsage: `Error in migrationLogController getMigrationLog: ${error}`,
+		});
+	}
+};
+
 export const updateMigrationLog = async (
 	req: Request,
 	res: Response,
@@ -72,13 +99,13 @@ export const updateMigrationLog = async (
 	}
 
 	try {
-		const log = await getMigrationLogQuery(parseInt(migrationId), userId);
+		const log = await getMigrationLogQuery(migrationId, userId);
 		const result = await updateMigrationLogQuery(
 			parseInt(migrationId),
-			log.status === 'Failed' || 'Success' ? 'Pending' : log.status,
-			version ? version : log.version,
-			script ? script : log.script,
-			description ? description : log.description
+			log.status !== script ? 'Pending' : log.status,
+			version,
+			script,
+			description
 		);
 		res.locals.migrationLog = result;
 		return next();
@@ -106,9 +133,10 @@ export const deleteMigrationLog = async (
 	}
 
 	try {
-		const result = await deleteMigrationLogQuery(parseInt(migrationId));
-		await removeDBMigration(result, parseInt(migrationId));
-		res.locals.deletedLog = `Migration log ${migrationId} successfully deleted.`;
+		const dbId = await deleteMigrationLogQuery(parseInt(migrationId));
+		await removeDBMigration(dbId, parseInt(migrationId)); // updating migration_id in databases table
+		const migrationsArr = await getMigrationLogQueryAll(dbId);
+		res.locals.migrationsArr = migrationsArr;
 		return next();
 	} catch (error) {
 		return next({

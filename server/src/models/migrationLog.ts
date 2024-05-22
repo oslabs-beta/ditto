@@ -40,7 +40,7 @@ export const createMigrationLogQuery = async (
 export const updateMigrationLogQuery = async (
 	migrationId: number,
 	status: string,
-	version: number,
+	version: string,
 	script: string,
 	description?: string
 ): Promise<migrationLog> => {
@@ -77,8 +77,8 @@ export const deleteMigrationLogQuery = async (
 };
 
 export const getMigrationLogQuery = async (
-	migrationId: number,
-	userId: number
+	migrationId: string | number,
+	userId: string | number
 ): Promise<migrationLog> => {
 	const queryString = `
 	SELECT *

@@ -1,6 +1,8 @@
 // popup foir migration, it will include version, description and the script.
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setdbId, setSelectedMigration } from '../store';
 
 interface FormData {
 	version: string;
@@ -10,17 +12,37 @@ interface FormData {
 }
 
 const UpdateMigrationsPage: React.FC = () => {
+	const navigate = useNavigate();
 	const [version, setVersion] = useState('');
 	const [description, setDescription] = useState('');
 	const [script, setScript] = useState('');
-	const dbId = useSelector((state: any) => state.dbId);
+	const migrationId = useSelector((state: any) => state.selectedMigration);
+
+	useEffect(() => {
+		const getMigrationLog = async () => {
+			const token = sessionStorage.getItem('token');
+			console.log(migrationId);
+			const response = await fetch(`/migrationlog/${migrationId}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+			});
+			const log = await response.json();
+			setVersion(log.version);
+			setDescription(log.description);
+			setScript(log.script);
+		};
+		getMigrationLog();
+	}, []);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/migrationlog/:${dbId}`, {
-				method: 'POST',
+			const response = await fetch(`/migrationlog/${migrationId}`, {
+				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${token}`,
@@ -31,6 +53,7 @@ const UpdateMigrationsPage: React.FC = () => {
 					description,
 				}), // Will need to include executed_At
 			});
+			navigate('/migration');
 		} catch (error) {
 			console.error('Error posting new migration version', error);
 		}
@@ -72,7 +95,7 @@ const UpdateMigrationsPage: React.FC = () => {
 						/>
 					</label>
 				</div>
-				<button type="submit">Submit</button>
+				<button type="submit">Update</button>
 			</form>
 		</div>
 	);
