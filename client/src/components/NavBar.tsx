@@ -49,10 +49,14 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 							<Link to={link.path}>{link.label}</Link>
 						</li>
 					))}
-					<li style={{ marginLeft: 'auto' }}></li>
-					{isLoggedIn && (
+					<li className="links" style={{ marginLeft: 'auto' }}></li>
+					{isLoggedIn ? (
 						<button className="logOut" onClick={handleLogOut}>
 							Log Out
+						</button>
+					) : (
+						<button className="logOut" onClick={handleLogOut}>
+							Log In
 						</button>
 					)}
 				</ul>
