@@ -49,7 +49,6 @@ const App: React.FC = () => {
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />
-					<Route path="/community" element={<Community />} />
 					<Route path="/faq" element={<FAQPage />} />
 					<Route path="/login" element={<LogOut />} />
 					{/* Define more routes as necessary */}
