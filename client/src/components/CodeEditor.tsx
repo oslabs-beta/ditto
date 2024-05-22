@@ -18,13 +18,9 @@ interface Uncontrolled {
 
 type CodeEditorProps = {
 	initialCode: string;
-	onCodeChange: (code: string) => void;
 };
 
-const CodeEditor: React.FC<CodeEditorProps> = ({
-	initialCode,
-	onCodeChange,
-}) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode }) => {
 	return (
 		<UnControlled
 			value={initialCode}
