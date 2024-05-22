@@ -1,5 +1,5 @@
 // store.ts
-import { createStore, combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -32,7 +32,7 @@ export const setMigrationVersions = (databases: string[]) => ({
 	payload: databases,
 });
 
-export const setdbId = (dbId: string | null) => ({
+export const setdbId = (dbId: string | undefined) => ({
 	type: SET_DB_ID,
 	payload: dbId,
 });
@@ -123,6 +123,8 @@ const rootReducer = (state = initialState, action: any) => {
 };
 
 // Create Redux store
-const store = createStore(rootReducer);
+const store = configureStore({
+	reducer: rootReducer,
+});
 
 export default store;

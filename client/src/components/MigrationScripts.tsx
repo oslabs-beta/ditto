@@ -16,7 +16,6 @@ interface Migration {
 const MigrationScripts: React.FC = () => {
 	const navigate = useNavigate();
 	const dbId = useSelector((state: any) => state.dbId);
-	console.log('dbId: ', dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
 	const dispatch = useDispatch();
@@ -69,7 +68,33 @@ const MigrationScripts: React.FC = () => {
 		console.log('went into handleSubmit');
 		navigate('/addMigrations');
 	};
-	/* Add Migrations Button */
+
+	/* Handles Update Button */
+	const handleUpdateSubmit = () => {
+		console.log('went into handleSubmit');
+		// We need to dispatch state here so we know which version we're working on
+
+		navigate('/updateMigrations');
+	};
+
+	/* Handles Delete Button */
+	const handleDeleteSubmit = () => {
+		console.log('into handleDeleteSubmit');
+		// might want to add an are you sure prompt
+
+		// We need to dispatch state here so we know which version we're working on
+
+		const token = sessionStorage.getItem('token');
+		const response = fetch(`./migrationlog?=${dbId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				AUTHORIZATION: `Bearer ${token}`,
+			},
+		});
+		// are we expecting response? we would have to json pars and confirm deletion or error
+		// dispatch migrationlog logic
+	};
 
 	/* Code Editor */
 	const [code, setCode] = useState('-- Write your PostgreSQL script here');
@@ -111,9 +136,11 @@ const MigrationScripts: React.FC = () => {
 
 	return (
 		<div className="MigrationScriptsContainer">
-			<div className="addMigrationsButton" onClick={handleSubmit}>
+			<div className="addMigrationsButton">
 				{/* Add Migrations Button */}
-				<button type="button">Add Migration</button>
+				<button type="button" onClick={handleSubmit}>
+					Add Migration
+				</button>
 			</div>
 			{/* Add Migrations Button */}
 			<table>
@@ -127,12 +154,20 @@ const MigrationScripts: React.FC = () => {
 				</thead>
 				<tbody>
 					{migrations.map((migration, index) => (
-						<tr key={index}>
-							<td>{migration.version}</td>
-							<td>{migration.description}</td>
-							<td>{migration.status}</td>
-							<td>{migration.executed_at}</td>
-						</tr>
+						<div className="migrationversions">
+							<tr key={index}>
+								<td>{migration.version}</td>
+								<td>{migration.description}</td>
+								<td>{migration.status}</td>
+								<td>{migration.executed_at}</td>
+							</tr>
+							<button type="button" onClick={handleUpdateSubmit}>
+								Update
+							</button>
+							<button type="button" onClick={handleDeleteSubmit}>
+								Delete
+							</button>
+						</div>
 					))}
 				</tbody>
 			</table>

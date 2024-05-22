@@ -116,15 +116,14 @@ const SidePanel: React.FC = () => {
 				<select
 					value={selectedDatabase}
 					onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-						const [dbName, dbId] = e.target.value.split(',');
-						dispatch(setdbId(dbId));
-						dispatch(setSelectedDatabase(dbName));
+						dispatch(setdbId(e.target.selectedOptions[0].dataset.dbId));
+						dispatch(setSelectedDatabase(e.target.value));
 					}}
 				>
 					{/* [ { db1: 30}, {db2: 40}] */}
 					<option value="">--Select a database--</option>
 					{databases.map((db: { db_id: string; db_name: string }) => (
-						<option key={db.db_id} value={`${db.db_name},${db.db_id}`}>
+						<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
 							{db.db_name}
 						</option>
 					))}

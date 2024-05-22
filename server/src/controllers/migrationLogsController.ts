@@ -27,8 +27,7 @@ export const createMigrationLog = async (
 ) => {
 	const userId = req.user?.id;
 	const { dbId } = req.params;
-	const { version, script, executedAt, description } = req.body;
-
+	const { version, script, description } = req.body;
 	if (!userId) {
 		return next({
 			status: 401,
@@ -41,12 +40,13 @@ export const createMigrationLog = async (
 		const result = await createMigrationLogQuery(
 			userId,
 			parseInt(dbId),
-			version,
+			parseInt(version),
 			script,
 			executedAt,
 			checksum,
 			description ? description : '',
 		);
+		console.log('creation migration log');
 		await addDBMigration(parseInt(dbId), result.migration_id);
 		console.log('Successfully added migration_id into databases table');
 		res.locals.migrationLog = result;

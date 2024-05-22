@@ -1,8 +1,6 @@
 // popup foir migration, it will include version, description and the script.
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setMigrationVersions } from '../store'
+import { useSelector } from 'react-redux';
 
 interface FormData {
 	version: string;
@@ -11,23 +9,17 @@ interface FormData {
 	script: string;
 }
 
-// interface FormProps {
-// 	onSubmit: (data: FormData) => void;
-// }
-
-const AddMigrationsPage: React.FC = () => {
+const UpdateMigrationsPage: React.FC = () => {
 	const [version, setVersion] = useState('');
 	const [description, setDescription] = useState('');
 	const [script, setScript] = useState('');
 	const dbId = useSelector((state: any) => state.dbId);
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/migrationlog/${dbId}`, {
+			const response = await fetch(`/migrationlog/:${dbId}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -39,24 +31,14 @@ const AddMigrationsPage: React.FC = () => {
 					description,
 				}), // Will need to include executed_At
 			});
-			// need to dispatch migration versions so when they go back to migration page and navigate to migration page if succesful
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-
-			const result = await response.json();
-			dispatch(setMigrationVersions(result));
-			
-			navigate('/migration');
-			
 		} catch (error) {
 			console.error('Error posting new migration version', error);
 		}
 	};
 
 	return (
-		<div className="addMigrationsPage">
-			<h1>Add Migrations</h1>
+		<div className="updateMigrationsPage">
+			<h1>Update Migrations</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<label>
@@ -96,4 +78,4 @@ const AddMigrationsPage: React.FC = () => {
 	);
 };
 
-export default AddMigrationsPage;
+export default UpdateMigrationsPage;
