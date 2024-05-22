@@ -4,9 +4,9 @@ import { validateJWT } from '../controllers/authController';
 
 const router = express.Router();
 
-router.post('/', (req: Request, res: Response) => {
-	res.sendStatus(201);
-});
+// router.post('/', (req: Request, res: Response) => {
+// 	res.sendStatus(201);
+// });
 
 router.post(
 	'/',

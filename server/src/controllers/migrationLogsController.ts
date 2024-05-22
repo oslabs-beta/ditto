@@ -8,6 +8,7 @@ import {
 	addDBMigration,
 	removeDBMigration,
 } from '../models/migrationLog';
+import { generateChecksum } from '../models/userDB';
 /*
 1. user puts in description, version, and script (req.body)
 2. create a migration log when they click on 'save'
@@ -36,13 +37,15 @@ export const createMigrationLog = async (
 	}
 
 	try {
+		const checksum = generateChecksum(script);
 		const result = await createMigrationLogQuery(
 			userId,
 			parseInt(dbId),
 			version,
 			script,
 			executedAt,
-			description ? description : ''
+			checksum,
+			description ? description : '',
 		);
 		await addDBMigration(parseInt(dbId), result.migration_id);
 		console.log('Successfully added migration_id into databases table');

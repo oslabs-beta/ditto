@@ -1,6 +1,8 @@
 // popup foir migration, it will include version, description and the script.
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setMigrationVersions } from '../store'
 
 interface FormData {
 	version: string;
@@ -18,12 +20,14 @@ const AddMigrationsPage: React.FC = () => {
 	const [description, setDescription] = useState('');
 	const [script, setScript] = useState('');
 	const dbId = useSelector((state: any) => state.dbId);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/migrationlog/:${dbId}`, {
+			const response = await fetch(`/migrationlog/${dbId}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -35,6 +39,16 @@ const AddMigrationsPage: React.FC = () => {
 					description,
 				}), // Will need to include executed_At
 			});
+			// need to dispatch migration versions so when they go back to migration page and navigate to migration page if succesful
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const result = await response.json();
+			dispatch(setMigrationVersions(result));
+			
+			navigate('/migration');
+			
 		} catch (error) {
 			console.error('Error posting new migration version', error);
 		}
