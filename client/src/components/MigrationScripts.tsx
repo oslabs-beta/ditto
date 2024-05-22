@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setdbId } from '../store';
+import { useNavigate } from 'react-router-dom';
+import CodeEditor from './CodeEditor';
+import { setMigrationVersions } from '../store'
+
 interface Migration {
 	version: string;
 	description: string;
@@ -10,45 +14,18 @@ interface Migration {
 }
 
 const MigrationScripts: React.FC = () => {
+	const navigate = useNavigate();
 	const dbId = useSelector((state: any) => state.dbId);
-	console.log('dbId: ', dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
-	// console.log('current user:', username);
-	// console.log('current database:', selectedDatabase);
+	const dispatch = useDispatch();
+
 	const [migrations, setMigrations] = useState<Migration[]>([]);
-
-	// this is going to need muiltiple fields depending on body *** Add Scripts ***
-	// const handleSubmit = async (
-	// 	e: React.FormEvent<HTMLFormElement>
-	// ): Promise<void> => {
-	// 	try {
-	// 		e.preventDefault();
-
-	// 		const response = await fetch('http://localhost:3001/migration', { // endpoint that leads to addMigration
-	// 			// /auth/login
-	// 			method: 'POST',
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 			},
-	// 			body: JSON.stringify(/* whatever data we need to send*/ ),
-	// 		});
-
-	// 		if (response.ok) {
-	// 			const data = await response.json();
-	// 			// we want to fetch for the migration scripts again and dispatch migrations again here
-	// 			navigate('/migration');
-	// 		} else {
-	// 			console.error('Login failed:', await response.json());
-	// 		}
-	// 	} catch (error) {
-	// 		console.error('An error occurred during login:', error);
-	// 	}
-	// };
 
 	useEffect(() => {
 		const fetchMigrations = async () => {
-			const token = localStorage.getItem('token');
+			const token = sessionStorage.getItem('token');
+			console.log('token:', token)
 			try {
 				const response = await fetch(`/migrationlog/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
@@ -65,38 +42,143 @@ const MigrationScripts: React.FC = () => {
 
 				const result = await response.json();
 				console.log('result: ', result);
-				setMigrations(result);
+				const sortedMigrations = result.sort((a: Migration, b: Migration) => parseInt(a.version) - parseInt(b.version));
+				setMigrations(sortedMigrations);
+				dispatch(setMigrationVersions(result));
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
 			}
-		};
+		}
 
 		if (selectedDatabase) {
 			fetchMigrations();
 		}
-	}, [selectedDatabase, username]);
+	}, [selectedDatabase, dbId, dispatch]);
+
+	/* Add Migrations Button */
+	// const handleFormSubmit = (data: {
+	// 	version: string;
+	// 	description: string;
+	// 	script: string;
+	// }) => {
+	// 	console.log('Form Data:', data);
+	// };
+	/* Add Migrations Button */
+	const handleSubmit = () => {
+		console.log('went into handleSubmit');
+		navigate('/addMigrations');
+	};
+
+	/* Handles Update Button */
+	const handleUpdateSubmit = () => {
+		console.log('went into handleSubmit');
+		// We need to dispatch state here so we know which version we're working on
+
+		navigate('/updateMigrations');
+	};
+
+	/* Handles Delete Button */
+	const handleDeleteSubmit = () => {
+		console.log('into handleDeleteSubmit');
+		// might want to add an are you sure prompt
+
+		// We need to dispatch state here so we know which version we're working on
+
+		const token = sessionStorage.getItem('token');
+		const response = fetch(`./migrationlog?=${dbId}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				AUTHORIZATION: `Bearer ${token}`,
+			},
+		});
+		// are we expecting response? we would have to json pars and confirm deletion or error
+		// dispatch migrationlog logic
+	};
+
+	/* Code Editor */
+	const [code, setCode] = useState('-- Write your PostgreSQL script here');
+
+	const handleCodeChange = (newCode: string) => {
+		setCode(newCode);
+	};
+
+	const handleRunScript = async () => {
+		try {
+			console.log('Entered handleRunScript')
+			const token = sessionStorage.getItem('token');
+		const response = await fetch('/migration', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({ dbId: Number(dbId) }),
+		});
+
+		if (!response.ok) {
+			throw new Error (`HTTP error! status: ${response.status}`);
+		}
+
+		const result = await response.json();
+		console.log('result:', result)
+		if (Array.isArray(result)) {
+		setMigrations(result);
+		} else {
+			console.error('Expected array but got:', result);
+			setMigrations([]);
+		}
+	} catch (error) {
+		console.error('Error running migrations:', error);
+	}
+	};
+	/* Code Editor */
 
 	return (
-		<table>
-			<thead>
-				<tr>
-					<th>Version</th>
-					<th>Description</th>
-					<th>Status</th>
-					<th>Date Migrated</th>
-				</tr>
-			</thead>
-			<tbody>
-				{migrations.map((migration, index) => (
-					<tr key={index}>
-						<td>{migration.version}</td>
-						<td>{migration.description}</td>
-						<td>{migration.status}</td>
-						<td>{migration.executed_at}</td>
+		<div className="MigrationScriptsContainer">
+			<div className="addMigrationsButton">
+				{/* Add Migrations Button */}
+				<button type="button" onClick={handleSubmit}>
+					Add Migration
+				</button>
+			</div>
+			{/* Add Migrations Button */}
+			<table>
+				<thead>
+					<tr>
+						<th>Version</th>
+						<th>Description</th>
+						<th>Status</th>
+						<th>Date Migrated</th>
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{migrations.map((migration, index) => (
+						<div className="migrationversions">
+							<tr key={index}>
+								<td>{migration.version}</td>
+								<td>{migration.description}</td>
+								<td>{migration.status}</td>
+								<td>{migration.executed_at}</td>
+							</tr>
+							<button type="button" onClick={handleUpdateSubmit}>
+								Update
+							</button>
+							<button type="button" onClick={handleDeleteSubmit}>
+								Delete
+							</button>
+						</div>
+					))}
+				</tbody>
+			</table>
+
+			<div className="codeEditorContainer">
+				<div className="codeEditor">
+					<CodeEditor initialCode={code} onCodeChange={handleCodeChange} />
+					<button onClick={handleRunScript}>Run Script</button>
+				</div>
+			</div>
+		</div>
 	);
 };
 

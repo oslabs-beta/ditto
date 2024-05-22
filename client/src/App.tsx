@@ -10,7 +10,7 @@ import favicon from '/client/src/assets/favicon.svg';
 import logoImage from './assets/logo.png';
 import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
-// import UsersList from './pages/UsersList';
+
 import GitHubCallBack from './components/GitHubCallBack';
 // import GitHubLogin from './components/GitHubLogin';
 import DocumentationPage from './pages/DocumentationPage';
@@ -19,6 +19,8 @@ import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
 import LogOut from './components/LogOutButton';
 import UserBubble from './components/UserBubble'; // Might be good to implement for user/guest?
+import AddMigrationsPage from './pages/AddMigrationsPage';
+import UpdateMigrationsPage from './pages/UpdateMigrationsPage';
 
 const App: React.FC = () => {
 	const navLinks = [
@@ -37,11 +39,13 @@ const App: React.FC = () => {
 				<NavBar links={navLinks} logo={logoImage} />
 				<UserBubble />
 				{/* <UsersList /> */}
+
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
-					{/* <Route path="/github/login" element={<GitHubLogin />} /> */}
+					<Route path="/updateMigrations" element={<UpdateMigrationsPage />} />
 					<Route path="/github/callback" element={<GitHubCallBack />} />
+					<Route path="/addMigrations" element={<AddMigrationsPage />} />
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />
@@ -49,6 +53,7 @@ const App: React.FC = () => {
 					<Route path="/faq" element={<FAQPage />} />
 					<Route path="/logout" element={<LogOut />} />
 					{/* Define more routes as necessary */}
+
 				</Routes>
 			</div>
 		</Router>

@@ -73,7 +73,9 @@ export const githubCallback = async (
 			{ expiresIn: '1h' }
 		);
 			console.log('token', token)
-		const frontendUrl = `http://localhost:3000/migration?token=${token}`; //check endpoint for front end main page
+		// const frontendUrl = `http://localhost:3000/migration?token=${token}`;
+		const frontendUrl = `http://localhost:3000/migration`
+		//check endpoint for front end main page
 		res.redirect(frontendUrl);
 	} catch (error) {
 		return next({

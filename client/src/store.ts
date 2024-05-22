@@ -1,5 +1,5 @@
 // store.ts
-import { createStore, combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -16,6 +16,7 @@ const SET_DB_NAME = 'SET_DB_NAME';
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
 const SET_TOKEN = 'SET_TOKEN'; // test
 const SET_DB_ID = 'SET_DB_ID';
+const SET_DESCRIPTION = 'SET_DESCRIPTION';
 
 // Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
@@ -31,7 +32,7 @@ export const setMigrationVersions = (databases: string[]) => ({
 	payload: databases,
 });
 
-export const setdbId = (dbId: string | null) => ({
+export const setdbId = (dbId: string | undefined) => ({
 	type: SET_DB_ID,
 	payload: dbId,
 });
@@ -67,6 +68,11 @@ export const setToken = (token: string) => ({
 	payload: token,
 });
 
+export const setDescription = (description: string) => ({
+	type: SET_DESCRIPTION,
+	payload: description,
+})
+
 // Define initial state
 const initialState = {
 	user: '',
@@ -80,6 +86,7 @@ const initialState = {
 	dbName: '',
 	connectionString: '',
 	dbId: '',
+	description: '',
 };
 
 // Define reducers
@@ -108,12 +115,16 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, connectionString: action.payload };
 		case SET_DB_ID:
 			return { ...state, dbId: action.payload };
+		case SET_DESCRIPTION:
+			return { ...state, description: action.payload };
 		default:
 			return state;
 	}
 };
 
 // Create Redux store
-const store = createStore(rootReducer);
+const store = configureStore({
+	reducer: rootReducer,
+});
 
 export default store;
