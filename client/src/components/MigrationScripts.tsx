@@ -126,7 +126,6 @@ const MigrationScripts: React.FC = () => {
 	};
 
 	/* Code Editor */
-	const [code, setCode] = useState('');
 
 	const handleCodeChange = (newCode: string) => {
 		setCode(newCode);
@@ -220,7 +219,7 @@ const MigrationScripts: React.FC = () => {
 
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
-					<CodeEditor initialCode={code} onCodeChange={handleCodeChange} />
+					<CodeEditor initialCode={code} />
 					<button onClick={(e) => handleRunScript(e)}>Run Script</button>
 
 				</div>
