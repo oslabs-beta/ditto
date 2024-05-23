@@ -4,7 +4,6 @@ import '/client/src/styles/DocumentationPage.css';
 const DocumentationPage: React.FC = () => {
   return(
     <div>
-      <h1>Documentation</h1>
       <div className='docTxt'>
         <div className='text-container'>
           <p className='scrolling-text'>
