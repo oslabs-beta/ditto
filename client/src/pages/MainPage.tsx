@@ -7,7 +7,7 @@ import DocumentationPage from './DocumentationPage';
 const MainPage: React.FC = () => {
   return (
     <div>
-      <h1><strong>DITTO (<em>Database Integration and Transfer Tool for Organizations</em>)</strong></h1>
+      <h1>DITTO</h1>
       <div className="content-container">
         <img src={Ditto} alt="Dancing Ditto gif" />
         <DocumentationPage />
