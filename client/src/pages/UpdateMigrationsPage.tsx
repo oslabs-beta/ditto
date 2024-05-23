@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setdbId, setSelectedMigration } from '../store';
+import { setdbId, setSelectedMigration, setSelectedScript } from '../store';
 
 interface FormData {
 	version: string;
@@ -12,11 +12,15 @@ interface FormData {
 }
 
 const UpdateMigrationsPage: React.FC = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [version, setVersion] = useState('');
 	const [description, setDescription] = useState('');
 	const [script, setScript] = useState('');
 	const migrationId = useSelector((state: any) => state.selectedMigration);
+	const selectedScript = useSelector(
+		(state: { selectedScript: string }) => state.selectedScript
+	);
 
 	useEffect(() => {
 		const getMigrationLog = async () => {
@@ -51,8 +55,9 @@ const UpdateMigrationsPage: React.FC = () => {
 					version,
 					script,
 					description,
-				}), // Will need to include executed_At
+				}),
 			});
+			dispatch(setSelectedScript(script));
 			navigate('/migration');
 		} catch (error) {
 			console.error('Error posting new migration version', error);

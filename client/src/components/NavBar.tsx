@@ -18,10 +18,10 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 		{ path: '/faq', label: 'FAQ' },
 		{ path: '/community', label: 'Community' },
 		{ path: '/login', label: 'Login' },
-		{ path: '/signup', label: 'Signup' },
 	];
 
 	if (sessionStorage.getItem('token')) {
+		navLinks.pop();
 		navLinks.push({ path: '/migration', label: 'Migration' });
 	}
 

@@ -1,20 +1,6 @@
-// CodeEditor.tsx
 import React from 'react';
-// import { UnControlled as CodeMirror } from '@uiw/react-codemirror';
-// import 'codemirror/lib/codemirror.css';
-// import 'codemirror/theme/material.css';
-// import 'codemirror/mode/sql/sql';
-import UnControlled from '@uiw/react-codemirror';
-
-interface Uncontrolled {
-	value: string;
-	options: {
-		mode: string;
-		theme: string;
-		lineNumbers: boolean;
-		readOnly: boolean;
-	};
-}
+import CodeMirror from '@uiw/react-codemirror';
+import { sql } from '@codemirror/lang-sql';
 
 type CodeEditorProps = {
 	initialCode: string;
@@ -22,15 +8,12 @@ type CodeEditorProps = {
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode }) => {
 	return (
-		<UnControlled
+		<CodeMirror
 			value={initialCode}
 			readOnly={true}
-			// options={{
-			// 	mode: 'sql',
-			// 	theme: 'material',
-			// 	lineNumbers: true,
-			// 	readOnly: true,
-			// }}
+			theme="dark"
+			extensions={[sql({})]}
+
 			// onChange={(
 			// 	editor: CodeMirror.Editor,
 			// 	data: CodeMirror.EditorChange,

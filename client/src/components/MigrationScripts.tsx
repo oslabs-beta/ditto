@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CodeEditor from './CodeEditor';
-import { setdbId, setSelectedMigration } from '../store';
-import { setMigrationVersions } from '../store';
+import {
+	setdbId,
+	setSelectedMigration,
+	setMigrationVersions,
+	setSelectedScript,
+} from '../store';
 
 interface Migration {
 	migration_id: string;
@@ -25,12 +29,13 @@ const MigrationScripts: React.FC = () => {
 	const selectedMigration = useSelector(
 		(state: { selectedMigration: string }) => state.selectedMigration
 	);
-	const [code, setCode] = useState('');
-
+	const selectedScript = useSelector(
+		(state: { selectedScript: string }) => state.selectedScript
+	);
 	useEffect(() => {
 		const fetchMigrations = async () => {
 			if (!selectedMigration) {
-				setCode('');
+				dispatch(setSelectedScript(''));
 			}
 			const token = sessionStorage.getItem('token');
 			try {
@@ -81,7 +86,6 @@ const MigrationScripts: React.FC = () => {
 	// };
 	/* Add Migrations Button */
 	const handleSubmit = () => {
-		console.log('went into handleSubmit');
 		navigate('/addMigrations');
 	};
 
@@ -119,6 +123,7 @@ const MigrationScripts: React.FC = () => {
 				(a: { version: number }, b: { version: number }) =>
 					a.version - b.version
 			);
+			dispatch(setSelectedScript(''));
 			setMigrations(migrationsArr);
 			// are we expecting response? we would have to json pars and confirm deletion or error
 			// dispatch migrationlog logic
@@ -127,94 +132,74 @@ const MigrationScripts: React.FC = () => {
 		}
 	};
 
-	const handleRunScript = async () => {
-		try {
-			console.log('Entered handleRunScript');
-			const token = sessionStorage.getItem('token');
-			const response = await fetch('/migration', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({ dbId: Number(dbId) }),
-			});
-
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-
-			const result = await response.json();
-			console.log('result:', result);
-			if (Array.isArray(result)) {
-				setMigrations(result);
-			} else {
-				console.error('Expected array but got:', result);
-				setMigrations([]);
-			}
-		} catch (error) {
-			console.error('Error running migrations:', error);
-		}
-	};
 	/* Code Editor */
 
 	const handleHighlight = (id: string, script: string) => {
 		dispatch(setSelectedMigration(id === selectedMigration ? '' : id));
-		setCode(script);
+		dispatch(setSelectedScript(script));
 	};
 
 	return (
 		<div className="MigrationScriptsContainer">
-			<div className="addMigrationsButton">
+			<div className="scriptsheader">
 				{/* Add Migrations Button */}
-				<button type="button" onClick={handleSubmit}>
+				<div className="selectedDB font-bold">
+					{selectedDatabase}
+					{/* <h1>{selectedDatabase}</h1> */}
+				</div>
+				<button className="purplebtn" type="button" onClick={handleSubmit}>
 					Add Migration
 				</button>
-				<button type="button" onClick={handleUpdateSubmit}>
+			</div>
+			<div className="migrationstable">
+				<table>
+					<thead>
+						<tr>
+							<th className="version">Version</th>
+							<th className="desc">Description</th>
+							<th className="status">Status</th>
+							<th className="executedat">Date Migrated (ET)</th>
+						</tr>
+					</thead>
+					{migrations.map(migration => (
+						<tbody key={migration.migration_id}>
+							<tr
+								id={migration.migration_id}
+								className="migrationversions"
+								onClick={() =>
+									handleHighlight(migration.migration_id, migration.script)
+								}
+								style={{
+									backgroundColor:
+										selectedMigration === migration.migration_id
+											? '#dc92ff'
+											: 'transparent',
+								}}
+							>
+								<td className="version">{migration.version}</td>
+								<td className="desc">{migration.description}</td>
+								<td className="status">{migration.status}</td>
+								<td className="executedat">{migration.executed_at}</td>
+							</tr>
+						</tbody>
+					))}
+				</table>
+			</div>
+			<div className="updatedeletebtn">
+				<button
+					className="purplebtn"
+					type="button"
+					onClick={handleUpdateSubmit}
+				>
 					Update
 				</button>
-				<button type="button" onClick={handleDeleteSubmit}>
+				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
 					Delete
 				</button>
 			</div>
-			{/* Add Migrations Button */}
-			<table style={{ borderCollapse: 'collapse' }}>
-				<thead>
-					<tr>
-						<th>Version</th>
-						<th>Description</th>
-						<th>Status</th>
-						<th>Date Migrated (ET)</th>
-					</tr>
-				</thead>
-				{migrations.map(migration => (
-					<tbody key={migration.migration_id}>
-						<tr
-							id={migration.migration_id}
-							className="migrationversions"
-							onClick={() =>
-								handleHighlight(migration.migration_id, migration.script)
-							}
-							style={{
-								backgroundColor:
-									selectedMigration === migration.migration_id
-										? '#C58DD0'
-										: 'transparent',
-							}}
-						>
-							<td>{migration.version}</td>
-							<td>{migration.description}</td>
-							<td>{migration.status}</td>
-							<td>{migration.executed_at}</td>
-						</tr>
-					</tbody>
-				))}
-			</table>
-
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
-					<CodeEditor initialCode={code} />
-					<button onClick={handleRunScript}>Run All Scripts</button>
+					<CodeEditor initialCode={selectedScript} />
 				</div>
 			</div>
 		</div>
