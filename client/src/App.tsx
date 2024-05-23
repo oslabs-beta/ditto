@@ -8,7 +8,6 @@ import MigrationPage from './pages/MigrationPage';
 import SignUpPage from './pages/SignUpPage';
 import GitHubCallBack from './components/GitHubCallBack';
 import DocumentationPage from './pages/DocumentationPage';
-import Community from './components/Community';
 import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
 import AddMigrationsPage from './pages/AddMigrationsPage';
@@ -20,7 +19,6 @@ const App: React.FC = () => {
 		{ path: '/', label: 'Home' },
 		{ path: '/documentation', label: 'Documentation' },
 		{ path: '/faq', label: 'FAQ' },
-		{ path: '/community', label: 'Community' },
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
 		{ path: '/signup', label: 'Signup' },
@@ -40,7 +38,6 @@ const App: React.FC = () => {
 					<Route path="/signup" element={<SignUpPage />} />
 					<Route path="/documentation" element={<DocumentationPage />} />
 					<Route path="/faq" element={<FAQPage />} />
-					<Route path="/community" element={<Community />} />
 				</Routes>
 			</div>
 		</Router>

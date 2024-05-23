@@ -1,30 +1,28 @@
-/* 'Roboto', sans-serif */
-
-a {
-	text-decoration: none;
+.navbar {
+	display: flex;
+	align-items: center;
+	list-style: none;
 }
 
-nav {
-	font-family: 'Impact', fantasy;
-	/* font-weight: bolder; */
-	font-size: smaller;
-	border-bottom: solid rgb(207, 202, 202);
-	ul {
-		margin: 0;
-	}
+.navbar-logo-button {
+	border: none;
+	background: none;
+	padding: 0;
+	cursor: pointer;
+}
 
-	button {
-		padding: 10px 20px;
-		font-size: 12px;
-		/* font-weight: bold; */
-		color: #fff;
-		background-color: #d184eb;
-		border: 2px solid #d184eb;
-		border-radius: 5px;
-		cursor: pointer;
-	}
-	button:hover {
-		background-color: #e8adfc;
-		border-color: #e8adfc;
-	}
+.navbar-logo {
+	height: 50px;
+}
+
+.navbar-item {
+	margin-left: 20px;
+}
+
+.navbar-item-auto {
+	margin-left: auto;
+}
+
+.logOut {
+	/* Add your log out button styles here */
 }
