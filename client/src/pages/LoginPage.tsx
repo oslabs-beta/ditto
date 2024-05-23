@@ -6,6 +6,7 @@ import { setUser, setDatabases } from '../store';
 import signupImg from '/client/src/assets/img/signup.png';
 import githubIcon from '/client/src/assets/img/github-mark.png';
 import '/client/src/styles/LoginPage.css';
+import '../styles/NavBar.css';
 
 interface LoginFormData {
 	username: string;
@@ -72,9 +73,14 @@ const LoginPage: React.FC = () => {
 
 	/* GitHub Login */
 
+	const handleSignUp = (): void => {
+		sessionStorage.clear();
+		navigate('/signup');
+	};
+
 	return (
 		<div className="container">
-			<h1>Login:</h1>
+			<h1 className="login">Log In</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<input
 					type="text"
@@ -92,27 +98,23 @@ const LoginPage: React.FC = () => {
 					placeholder="Password"
 					className="input"
 				/>
-				<button type="submit" className="button">
-					Login
+				<button type="submit" className="loginbutton">
+					Log In
 				</button>
 			</form>
-			Don't have an account?
-			<a href="/signup" className="signUpBtn">
-				<img src={signupImg} alt="signup" className="signUpImage" />
-				<span className="credit"></span>
-			</a>
-			Login with GitHub:
-			<button onClick={handleLoginWithGitHub} className="githubLoginBtn">
-				<img src={githubIcon} className="githubLoginIcon" />
-			</button>
-			<div className="credit">
-				<a target="_blank" href="https://icons8.com/icon/8SXWOtdZLjo8/sign-up">
+			<div className="signupcontainer">
+				Don't have an account?
+				<button className="signupbtn" onClick={handleSignUp}>
 					Sign Up
-				</a>{' '}
-				icon by{' '}
-				<a target="_blank" href="https://icons8.com">
-					Icons8
-				</a>
+				</button>
+			</div>
+			<div className="githubcontainer">
+				<p>Login with:</p>
+				<div className="links">
+					<button onClick={handleLoginWithGitHub} className="githubLoginBtn">
+						<img src={githubIcon} className="githubLoginIcon" />
+					</button>
+				</div>
 			</div>
 		</div>
 	);

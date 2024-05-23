@@ -1,43 +1,36 @@
-// CodeEditor.tsx
-import React from 'react';
-// import { UnControlled as CodeMirror } from '@uiw/react-codemirror';
-// import 'codemirror/lib/codemirror.css';
-// import 'codemirror/theme/material.css';
-// import 'codemirror/mode/sql/sql';
-import UnControlled from '@uiw/react-codemirror';
-
-interface Uncontrolled {
-	value: string;
-	options: {
-		mode: string;
-		theme: string;
-		lineNumbers: boolean;
-		readOnly: boolean;
-	};
-}
+import CodeMirror from '@uiw/react-codemirror';
+import { sql } from '@codemirror/lang-sql';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setScript } from '../store';
 
 type CodeEditorProps = {
-	initialCode: string;
+	code: string;
+	inMigration: boolean;
 };
 
-const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode }) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ code, inMigration }) => {
+	const dispatch = useDispatch();
+	const selectedScript = useSelector(
+		(state: { selectedScript: string }) => state.selectedScript
+	);
+	const script = useSelector((state: any) => state.script);
+
+	useEffect(() => {
+		dispatch(setScript(code));
+	}, [selectedScript]);
+
+	const handleChange = (value: string) => {
+		dispatch(setScript(value));
+	};
+
 	return (
-		<UnControlled
-			value={initialCode}
-			readOnly={true}
-			// options={{
-			// 	mode: 'sql',
-			// 	theme: 'material',
-			// 	lineNumbers: true,
-			// 	readOnly: true,
-			// }}
-			// onChange={(
-			// 	editor,
-			// 	data,
-			// 	value
-			// ) => {
-			// 	onCodeChange(value);
-			// }}
+		<CodeMirror
+			value={script}
+			readOnly={inMigration}
+			theme="dark"
+			extensions={[sql({})]}
+			onChange={handleChange}
 		/>
 	);
 };

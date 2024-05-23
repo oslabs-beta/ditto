@@ -1,8 +1,10 @@
 .content-container {
-  display: flex;
-  align-items: flex-start; /* Align items at the start of the container */
+	padding-top: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Align items at the start of the container */
 }
 
 .content-container img {
-  margin-right: 20px; /* Add some space between the gif and the Community component */
+	margin-right: 20px; /* Add some space between the gif and the Community component */
 }
