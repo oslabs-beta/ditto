@@ -12,11 +12,11 @@ import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
 import AddMigrationsPage from './pages/AddMigrationsPage';
 import UpdateMigrationsPage from './pages/UpdateMigrationsPage';
-import logoImage from './assets/logo.png';
+import LogoBtn from './components/LogoBtn';
 
 const App: React.FC = () => {
 	const navLinks = [
-		{ path: '/', label: 'Home' },
+		{ path: '/', label: LogoBtn },
 		{ path: '/faq', label: 'FAQ' },
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
@@ -26,7 +26,7 @@ const App: React.FC = () => {
 	return (
 		<Router>
 			<div>
-				<NavBar links={navLinks} logo={logoImage} />
+				<NavBar links={navLinks} />
 				<Routes>
 					<Route path="/" element={<MainPage />} />
 					<Route path="/login" element={<LoginPage />} />
