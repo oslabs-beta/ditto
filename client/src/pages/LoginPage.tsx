@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, setDatabases } from '../store';
-import signupImg from '/client/src/assets/img/signup.png';
 import githubIcon from '/client/src/assets/img/github-mark.png';
 import '/client/src/styles/LoginPage.css';
 
@@ -98,7 +97,6 @@ const LoginPage: React.FC = () => {
 			</form>
 			Don't have an account?
 			<a href="/signup" className="signUpBtn">
-				<img src={signupImg} alt="signup" className="signUpImage" />
 				<span className="credit"></span>
 			</a>
 			Login with GitHub:
@@ -109,10 +107,6 @@ const LoginPage: React.FC = () => {
 				<a target="_blank" href="https://icons8.com/icon/8SXWOtdZLjo8/sign-up">
 					Sign Up
 				</a>{' '}
-				icon by{' '}
-				<a target="_blank" href="https://icons8.com">
-					Icons8
-				</a>
 			</div>
 		</div>
 	);

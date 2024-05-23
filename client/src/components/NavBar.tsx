@@ -1,21 +1,19 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import '../styles/NavBar.css';
 
 interface NavLink {
-  path: string;
-  label: string;
+	path: string;
+	label: string;
 }
 
 interface NavBarProps {
-  logo?: string;
+	logo?: string;
 }
 
 const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
-	const navLinks: NavLink[] = [
-		{ path: '/faq', label: 'FAQ' }
-	];
+	const navLinks: NavLink[] = [{ path: '/faq', label: 'FAQ' }];
 
 	if (sessionStorage.getItem('token')) {
 		navLinks.push({ path: '/migration', label: 'Migration' });
@@ -63,8 +61,8 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 					<button className="signUp" onClick={handleSignUp}>
 						Sign Up
 					</button>
+					<img src="../assets/img/github.svg" />
 				</ul>
-				{/* <UserBubble /> */}
 			</nav>
 		</div>
 	);

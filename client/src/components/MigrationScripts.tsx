@@ -129,9 +129,8 @@ const MigrationScripts: React.FC = () => {
 	// 	setCode(newCode);
 	// };
 
-
 	const handleRunScript = async (e: React.FormEvent) => {
-		e.preventDefault
+		e.preventDefault;
 
 		try {
 			console.log('Entered handleRunScript');
@@ -152,13 +151,16 @@ const MigrationScripts: React.FC = () => {
 			const result = await response.json();
 			console.log('result:', result);
 			if (Array.isArray(result)) {
+				console.log(result);
 				setMigrations(result);
 			} else {
 				console.error('Expected array but got:', result);
 				setMigrations([]);
 			}
+			console.log(result);
 		} catch (error) {
 			console.error('Error running migrations:', error);
+			navigate('/migration');
 		}
 	};
 	/* Code Editor */
@@ -218,11 +220,11 @@ const MigrationScripts: React.FC = () => {
 
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
+					<CodeEditor
+						initialCode={code} /* onCodeChange={handleCodeChange} */
+					/>
 
-					<CodeEditor initialCode={code} /* onCodeChange={handleCodeChange} */ />
-
-					<button onClick={(e) => handleRunScript(e)}>Run Script</button>
-
+					<button onClick={e => handleRunScript(e)}>Run Script</button>
 				</div>
 			</div>
 		</div>
