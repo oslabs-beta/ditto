@@ -15,6 +15,7 @@ import {
 	setSelectedAction,
 	setdbId,
 	setSelectedScript,
+	setMigrationVersions,
 } from '../store';
 
 interface Migration {
@@ -49,7 +50,7 @@ const SidePanel: React.FC = () => {
 	const referenceElement = useRef<HTMLButtonElement>(null);
 	const popperElement = useRef<HTMLDivElement>(null);
 	const dbId = useSelector((state: any) => state.dbId);
-	const [migrations, setMigrations] = useState<Migration[]>([]);
+	// const [migrations, setMigrationVersions] = useState<Migration[]>([]);
 	const selectedScript = useSelector(
 		(state: { selectedScript: string }) => state.selectedScript
 	);
@@ -138,17 +139,19 @@ const SidePanel: React.FC = () => {
 						throw new Error(`HTTP error! status: ${response.status}`);
 					}
 
+					console.log('result:', response);
 					const result = await response.json();
-					console.log('result:', result);
 					if (Array.isArray(result)) {
-						setMigrations(result);
+						console.log(result);
+						dispatch(setMigrationVersions(result));
 					} else {
 						console.error('Expected array but got:', result);
-						setMigrations([]);
+						dispatch(setMigrationVersions([]));
 					}
 				} catch (error) {
 					console.error('Error running migrations:', error);
 				}
+				break;
 			case 'Repair':
 				console.log('chose repair');
 		}

@@ -3,10 +3,11 @@ import {
 	getPendingMigrations,
 	updateMigrationStatus,
 	validateChecksum,
+	Migration,
 } from '../models/userDB';
 import { Pool } from 'pg';
 import { Request, Response, NextFunction } from 'express';
-import db from '../db'
+import db from '../db';
 
 const createPool = (connectionString: string) => {
 	return new Pool({
@@ -37,7 +38,7 @@ export const executeMigration = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	console.log('I made it to executeMigration')
+	console.log('I made it to executeMigration');
 	let { dbId } = req.body;
 	const userId = req.user?.id;
 
@@ -51,15 +52,15 @@ export const executeMigration = async (
 
 	try {
 		const connectionStrings = await getDBConnectionByUserId(userId); // get db connections from user
-		console.log('connectionStrings:', connectionStrings)
-		console.log('dbId:', dbId, 'typeof dbId:', typeof dbId)
+		console.log('connectionStrings:', connectionStrings);
+		console.log('dbId:', dbId, 'typeof dbId:', typeof dbId);
 		connectionStrings.forEach(db => {
 			console.log('db_id:', db.db_id, 'typeof db_id:', typeof db.db_id);
-		})
+		});
 		const connectionString = connectionStrings.find(
-			(db) => db.db_id === dbId
+			db => db.db_id === dbId
 		)?.connection_string; // get specific string by specific db id
-			console.log('one connection string:', connectionString)
+		console.log('one connection string:', connectionString);
 		if (!connectionString) {
 			return next({
 				status: 404,
@@ -68,14 +69,13 @@ export const executeMigration = async (
 		}
 
 		const pool = createPool(connectionString);
-		console.log('pool', pool)
+		console.log('pool', pool);
 		const pendingMigrations = await getPendingMigrations(userId, dbId); // get all pending status migrations for user/dbid
 		console.log('pendingMigrations:', pendingMigrations);
 
 		// if (pendingMigrations.length === 0) {
 		// 	return res.status(200).json({ message: 'No pending migrations found.'});
 		// }
-
 		for (const migration of pendingMigrations) {
 			//iterate through all the migrations
 			const validChecksum = await validateChecksum(
@@ -84,7 +84,9 @@ export const executeMigration = async (
 			); //valdiate checksum for each migration
 			if (!validChecksum) {
 				await updateMigrationStatus(migration.migration_id, 'Failed'); // if checksum is invalid, then update status to failed
-				return res.status(400).json({ error: `Invalid checksum for migration ${migration.version}` });
+				return res.status(400).json({
+					error: `Invalid checksum for migration ${migration.version}`,
+				});
 			}
 
 			try {
@@ -100,13 +102,15 @@ export const executeMigration = async (
 		}
 		// res.locals.message = 'Migrations executed successfully';
 		// return next();
-		const allMigrations = await db.query(`
+		const allMigrations = await db.query(
+			`
 		SELECT * FROM migration_logs
 		WHERE user_id = $1 AND database_id = $2
 		ORDER BY CAST(version AS INTEGER) ASC;
-		`, [userId, dbId]);
-
-		res.status(201).json(allMigrations.rows); //making sure to return an array 
+		`,
+			[userId, dbId]
+		);
+		res.status(201).json(allMigrations); //making sure to return an array
 	} catch (error) {
 		return next({
 			status: 500,

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/SignUpPage.css';
 
 interface SignUpFormData {
 	username: string;
@@ -57,8 +58,8 @@ const SignUpPage: React.FC = () => {
 	};
 
 	return (
-		<div className="container">
-			<h1>Sign up:</h1>
+		<div className="signuppagecontainer">
+			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<input
 					type="text"
@@ -84,12 +85,12 @@ const SignUpPage: React.FC = () => {
 					placeholder="Confirm Password"
 					className="input confirm-password"
 				/>
-				<button type="submit" className="button">
+				<button type="submit" className="loginbutton">
 					Sign Up
 				</button>
 			</form>
 		</div>
-		);
-	}	
+	);
+};
 
 export default SignUpPage;

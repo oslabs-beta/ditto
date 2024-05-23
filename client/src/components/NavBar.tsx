@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import logo from '../assets/logo.png';
+import '../styles/NavBar.css';
+import { resetState } from '../store';
 
 interface NavLink {
 	path: string;
@@ -13,6 +16,7 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const navLinks: NavLink[] = [{ path: '/faq', label: 'FAQ' }];
 
 	if (sessionStorage.getItem('token')) {
@@ -21,18 +25,13 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	}
 
 	function handleLogging() {
+		dispatch(resetState());
 		sessionStorage.clear();
 		navigate('/login');
 	}
 
-	function handleSignUp() {
-		sessionStorage.clear();
-		navigate('/signup');
-	}
-
 	const isLoggedIn = Boolean(sessionStorage.getItem('token'));
 
-	console.log(navLinks);
 	return (
 		<div className="navbar">
 			<nav>
@@ -41,7 +40,13 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 				>
 					{logo && (
 						<li>
-							<img src={logo} alt="Logo" style={{ height: '50px' }} />
+							<img
+								className="logo"
+								src={logo}
+								alt="Logo"
+								style={{ height: '50px' }}
+								onClick={() => navigate('/')}
+							/>
 						</li>
 					)}
 					{navLinks.map((link, index) => (
@@ -49,7 +54,8 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 							<Link to={link.path}>{link.label}</Link>
 						</li>
 					))}
-					<li className="links" style={{ marginLeft: 'auto' }}></li>
+				</ul>
+				<div className="navbtns">
 					{isLoggedIn ? (
 						<button className="logOut" onClick={handleLogging}>
 							Log Out
@@ -59,11 +65,7 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 							Log In
 						</button>
 					)}
-					<button className="signUp" onClick={handleSignUp}>
-						Sign Up
-					</button>
-				</ul>
-				{/* <UserBubble /> */}
+				</div>
 			</nav>
 		</div>
 	);

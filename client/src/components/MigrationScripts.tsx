@@ -7,6 +7,7 @@ import {
 	setSelectedMigration,
 	setMigrationVersions,
 	setSelectedScript,
+	setScript,
 } from '../store';
 
 interface Migration {
@@ -32,6 +33,10 @@ const MigrationScripts: React.FC = () => {
 	const selectedScript = useSelector(
 		(state: { selectedScript: string }) => state.selectedScript
 	);
+	const migrationVersions = useSelector(
+		(state: any) => state.migrationVersions
+	);
+
 	useEffect(() => {
 		const fetchMigrations = async () => {
 			if (!selectedMigration) {
@@ -62,7 +67,6 @@ const MigrationScripts: React.FC = () => {
 						parseInt(a.version) - parseInt(b.version)
 				);
 				setMigrations(sortedMigrations);
-				dispatch(setMigrationVersions(result));
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
 			}
@@ -72,9 +76,8 @@ const MigrationScripts: React.FC = () => {
 			fetchMigrations();
 		} else {
 			setMigrations([]);
-			dispatch(setMigrationVersions([]));
 		}
-	}, [selectedDatabase, selectedMigration]);
+	}, [selectedDatabase, selectedMigration, migrationVersions]);
 
 	/* Add Migrations Button */
 	// const handleFormSubmit = (data: {
@@ -86,6 +89,7 @@ const MigrationScripts: React.FC = () => {
 	// };
 	/* Add Migrations Button */
 	const handleSubmit = () => {
+		dispatch(setScript(''));
 		navigate('/addMigrations');
 	};
 
@@ -136,9 +140,8 @@ const MigrationScripts: React.FC = () => {
 	// 	setCode(newCode);
 	// };
 
-
 	const handleRunScript = async (e: React.FormEvent) => {
-		e.preventDefault
+		e.preventDefault;
 
 		try {
 			console.log('Entered handleRunScript');
@@ -208,7 +211,7 @@ const MigrationScripts: React.FC = () => {
 								style={{
 									backgroundColor:
 										selectedMigration === migration.migration_id
-											? '#dc92ff'
+											? '#b592f1'
 											: 'transparent',
 								}}
 							>
@@ -235,7 +238,7 @@ const MigrationScripts: React.FC = () => {
 			</div>
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
-					<CodeEditor initialCode={selectedScript} />
+					<CodeEditor code={selectedScript} inMigration={true} />
 				</div>
 			</div>
 		</div>

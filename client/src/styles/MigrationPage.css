@@ -5,6 +5,7 @@ body {
 .migrationPage {
 	display: flex;
 	height: 100%;
+	padding: 90px 30px 0 30px;
 }
 
 p {
@@ -16,10 +17,6 @@ p {
 	display: flex;
 	width: 25%;
 	height: 88vh;
-}
-
-#sidecontainer {
-	padding-left: 8%;
 }
 
 #sidecontainer select {
@@ -67,7 +64,7 @@ p {
 }
 
 .purplebtn {
-	background-color: #dc92ff;
+	background-color: #b592f1;
 	border: none;
 	border-radius: 7px;
 	padding: 8px 12px;
@@ -77,7 +74,7 @@ p {
 }
 
 .purplebtn:hover {
-	background-color: #cc5dff;
+	background-color: #9561f0;
 }
 
 .whitebtn {
@@ -190,7 +187,6 @@ select {
 }
 
 .MigrationScriptsContainer {
-	margin-right: 2%;
 	margin-left: 1.5%;
 }
 
@@ -211,7 +207,7 @@ select {
 	align-items: center;
 	justify-content: center;
 	font-size: 27px;
-	background-color: #f6e3ffb9;
+	background-color: #dacbf3;
 }
 
 .MigrationScriptsContainer table {
@@ -223,7 +219,7 @@ select {
 .MigrationScriptsContainer th {
 	padding: 14px 40px;
 	border-right: none;
-	background-color: #f6e3ffb9;
+	background-color: #dacbf3;
 }
 
 .MigrationScriptsContainer td {

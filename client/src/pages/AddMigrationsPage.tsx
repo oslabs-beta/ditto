@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setMigrationVersions } from '../store';
 import '../styles/AddUpdateMigrations.css';
-// import CodeEditor from '../components/CodeEditor';
+import CodeEditor from '../components/CodeEditor';
 
 interface FormData {
 	version: string;
@@ -20,11 +20,11 @@ interface FormData {
 const AddMigrationsPage: React.FC = () => {
 	const [version, setVersion] = useState('');
 	const [description, setDescription] = useState('');
-	const [script, setScript] = useState('');
+	// const [script, setScript] = useState('');
 	const dbId = useSelector((state: any) => state.dbId);
+	const script = useSelector((state: any) => state.script);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const [code, setCode] = useState('');
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -46,9 +46,8 @@ const AddMigrationsPage: React.FC = () => {
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
-
-			const result = await response.json();
-			dispatch(setMigrationVersions(result));
+			// const result = await response.json();
+			// dispatch(setMigrationVersions(result));
 
 			navigate('/migration');
 		} catch (error) {
@@ -87,12 +86,13 @@ const AddMigrationsPage: React.FC = () => {
 				<fieldset>
 					{/* <CodeEditor initialCode={code} /> */}
 					<label>
-						<textarea
+						{/* <textarea
 							className="code-editor"
 							value={script}
 							onChange={e => setScript(e.target.value)}
 							required
-						/>
+						/> */}
+						<CodeEditor code={script} inMigration={false} />
 					</label>
 
 					<legend>Script</legend>

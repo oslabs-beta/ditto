@@ -12,24 +12,21 @@ import UpdateMigrationsPage from './pages/UpdateMigrationsPage';
 import logo from './assets/logo.png';
 
 const App: React.FC = () => {
-
 	return (
 		<Router>
-			<div>
-				<NavBar logo={logo} />
-				<Routes>
-					<Route path="/" element={<MainPage />} />
-					<Route path="/login" element={<LoginPage />} />
-					<Route path="/updateMigrations" element={<UpdateMigrationsPage />} />
-					<Route path="/githubs/callbacks" element={<GitHubCallBack />} />
-					<Route path="/addMigrations" element={<AddMigrationsPage />} />
-					<Route path="/migration" element={<MigrationPage />} />
-					<Route path="/signup" element={<SignUpPage />} />
-					<Route path="/faq" element={<FAQPage />} />
-				</Routes>
-			</div>
+			<NavBar logo={logo} />
+			<Routes>
+				<Route path="/" element={<MainPage />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/updateMigrations" element={<UpdateMigrationsPage />} />
+				<Route path="/githubs/callbacks" element={<GitHubCallBack />} />
+				<Route path="/addMigrations" element={<AddMigrationsPage />} />
+				<Route path="/migration" element={<MigrationPage />} />
+				<Route path="/signup" element={<SignUpPage />} />
+				<Route path="/faq" element={<FAQPage />} />
+			</Routes>
 		</Router>
 	);
-}
+};
 
 export default App;
