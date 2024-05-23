@@ -27,7 +27,7 @@ const App: React.FC = () => {
 					<Route path="/" element={<LoginPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/updateMigrations" element={<UpdateMigrationsPage />} />
-					<Route path="/github/callback" element={<GitHubCallBack />} />
+					<Route path="/githubs/callbacks" element={<GitHubCallBack />} />
 					<Route path="/addMigrations" element={<AddMigrationsPage />} />
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />

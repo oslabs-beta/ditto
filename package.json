@@ -7,7 +7,7 @@
 		"test": "jest --verbose",
 		"build:client": "webpack --config ./client/webpack.config.js",
 		"build:server": "tsc --project ./server/tsconfig.json",
-		"build": "npm run build:client && npm run build:server",
+		"build": "npm run build:server",
 		"dev": "webpack server --config client/webpack.config.js --mode development",
 		"start": "nodemon ./server/dist/server.js"
 	},
