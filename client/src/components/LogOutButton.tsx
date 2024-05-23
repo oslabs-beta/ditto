@@ -12,4 +12,5 @@ const LogOut: React.FC = () => {
   return <button className="logOut" onClick={handleLogout}>Log Out</button>
 };
 
-export default LogOut;
+
+// export default LogOut;

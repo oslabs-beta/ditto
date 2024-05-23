@@ -22,15 +22,17 @@ const MigrationScripts: React.FC = () => {
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
 	const [migrations, setMigrations] = useState<Migration[]>([]);
-
 	const selectedMigration = useSelector(
 		(state: { selectedMigration: string }) => state.selectedMigration
 	);
+	const [code, setCode] = useState('');
 
 	useEffect(() => {
 		const fetchMigrations = async () => {
+			if (!selectedMigration) {
+				setCode('');
+			}
 			const token = sessionStorage.getItem('token');
-			console.log('token:', token);
 			try {
 				const response = await fetch(`/migrationlog/all/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
@@ -65,7 +67,7 @@ const MigrationScripts: React.FC = () => {
 		if (selectedDatabase) {
 			fetchMigrations();
 		}
-	}, [selectedDatabase, dbId, dispatch]);
+	}, [selectedDatabase, selectedMigration]);
 
 	/* Add Migrations Button */
 	// const handleFormSubmit = (data: {
@@ -132,6 +134,7 @@ const MigrationScripts: React.FC = () => {
 
 	const handleRunScript = async (e: React.FormEvent) => {
 		e.preventDefault
+
 		try {
 			console.log('Entered handleRunScript');
 			const token = sessionStorage.getItem('token');
@@ -188,7 +191,7 @@ const MigrationScripts: React.FC = () => {
 						<th>Version</th>
 						<th>Description</th>
 						<th>Status</th>
-						<th>Date Migrated</th>
+						<th>Date Migrated (ET)</th>
 					</tr>
 				</thead>
 				{migrations.map(migration => (
@@ -219,6 +222,7 @@ const MigrationScripts: React.FC = () => {
 				<div className="codeEditor">
 					<CodeEditor initialCode={code} onCodeChange={handleCodeChange} />
 					<button onClick={(e) => handleRunScript(e)}>Run Script</button>
+
 				</div>
 			</div>
 		</div>

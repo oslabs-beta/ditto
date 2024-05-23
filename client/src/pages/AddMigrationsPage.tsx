@@ -1,8 +1,10 @@
 // popup foir migration, it will include version, description and the script.
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setMigrationVersions } from '../store'
+import { setMigrationVersions } from '../store';
+import '../styles/AddUpdateMigrations.css';
+// import CodeEditor from '../components/CodeEditor';
 
 interface FormData {
 	version: string;
@@ -22,6 +24,7 @@ const AddMigrationsPage: React.FC = () => {
 	const dbId = useSelector((state: any) => state.dbId);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const [code, setCode] = useState('');
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -46,51 +49,55 @@ const AddMigrationsPage: React.FC = () => {
 
 			const result = await response.json();
 			dispatch(setMigrationVersions(result));
-			
+
 			navigate('/migration');
-			
 		} catch (error) {
 			console.error('Error posting new migration version', error);
 		}
 	};
 
 	return (
-		<div className="addMigrationsPage">
-			<h1>Add Migrations</h1>
+		<div className="addUpdateMigrationsPage">
+			{/* <h1>ADD MIGRATIONS</h1> */}
 			<form onSubmit={handleSubmit}>
-				<div>
-					<label>
-						Version:
-						<input
-							type="text"
-							value={version}
-							onChange={e => setVersion(e.target.value)}
-							required
-						/>
-					</label>
+				<div className="versionDescription">
+					<fieldset className="version">
+						<label>
+							<input
+								type="text"
+								value={version}
+								onChange={e => setVersion(e.target.value)}
+								required
+							/>
+						</label>
+						<legend>Version</legend>
+					</fieldset>
+					<fieldset className="description">
+						<label>
+							<input
+								type="text"
+								value={description}
+								onChange={e => setDescription(e.target.value)}
+								required
+							/>
+						</label>
+						<legend>Description</legend>
+					</fieldset>
 				</div>
-				<div>
+				<fieldset>
+					{/* <CodeEditor initialCode={code} /> */}
 					<label>
-						Description:
-						<input
-							type="text"
-							value={description}
-							onChange={e => setDescription(e.target.value)}
-							required
-						/>
-					</label>
-				</div>
-				<div>
-					<label>
-						Script:
 						<textarea
+							className="code-editor"
 							value={script}
 							onChange={e => setScript(e.target.value)}
 							required
 						/>
 					</label>
-				</div>
-				<button type="submit">Submit</button>
+
+					<legend>Script</legend>
+				</fieldset>
+				<button type="submit">Save</button>
 			</form>
 		</div>
 	);
