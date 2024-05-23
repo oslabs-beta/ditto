@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const FAQPage: React.FC = () => {
   return(
     <div>
+      <h1>Frequently Asked Questions (Questions will be added as they grow more frequent)</h1>
       <section>
         <ul>
         <li><strong><em>What was the inspiration behind Ditto?</em></strong></li>
@@ -14,7 +15,7 @@ const FAQPage: React.FC = () => {
         </ul>
       </section>
     </div>
-  )
-}
+  );
+};
 
 export default FAQPage;

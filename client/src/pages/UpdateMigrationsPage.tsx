@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setdbId, setSelectedMigration, setSelectedScript } from '../store';
+import '../styles/AddUpdateMigrations.css';
 
 interface FormData {
 	version: string;
@@ -65,41 +66,46 @@ const UpdateMigrationsPage: React.FC = () => {
 	};
 
 	return (
-		<div className="updateMigrationsPage">
+		<div className="addUpdateMigrationsPage">
 			<h1>Update Migrations</h1>
 			<form onSubmit={handleSubmit}>
-				<div>
-					<label>
-						Version:
-						<input
-							type="text"
-							value={version}
-							onChange={e => setVersion(e.target.value)}
-							required
-						/>
-					</label>
+				<div className="versionDescription">
+					<fieldset className="version">
+						<label>
+							<input
+								type="text"
+								value={version}
+								onChange={e => setVersion(e.target.value)}
+								required
+							/>
+						</label>
+						<legend>Version</legend>
+					</fieldset>
+					<fieldset className="description">
+						<label>
+							<input
+								type="text"
+								value={description}
+								onChange={e => setDescription(e.target.value)}
+								required
+							/>
+						</label>
+						<legend>Description</legend>
+					</fieldset>
 				</div>
-				<div>
+				<fieldset>
+					{/* <CodeEditor initialCode={code} /> */}
 					<label>
-						Description:
-						<input
-							type="text"
-							value={description}
-							onChange={e => setDescription(e.target.value)}
-							required
-						/>
-					</label>
-				</div>
-				<div>
-					<label>
-						Script:
 						<textarea
+							className="code-editor"
 							value={script}
 							onChange={e => setScript(e.target.value)}
 							required
 						/>
 					</label>
-				</div>
+
+					<legend>Script</legend>
+				</fieldset>
 				<button type="submit">Update</button>
 			</form>
 		</div>

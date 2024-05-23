@@ -1,0 +1,12 @@
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+button img {
+  display: flex;
+  width: 50px;
+  height: auto;
+}

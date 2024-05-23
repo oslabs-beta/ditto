@@ -132,6 +132,42 @@ const MigrationScripts: React.FC = () => {
 		}
 	};
 
+	// const handleCodeChange = (newCode: string) => {
+	// 	setCode(newCode);
+	// };
+
+
+	const handleRunScript = async (e: React.FormEvent) => {
+		e.preventDefault
+
+		try {
+			console.log('Entered handleRunScript');
+			const token = sessionStorage.getItem('token');
+			const response = await fetch('/migration', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ dbId: Number(dbId) }),
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const result = await response.json();
+			console.log('result:', result);
+			if (Array.isArray(result)) {
+				setMigrations(result);
+			} else {
+				console.error('Expected array but got:', result);
+				setMigrations([]);
+			}
+		} catch (error) {
+			console.error('Error running migrations:', error);
+		}
+	};
 	/* Code Editor */
 
 	const handleHighlight = (id: string, script: string) => {

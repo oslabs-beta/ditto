@@ -15,6 +15,11 @@ ul {
   padding: 0;
 }
 
+.bioPicLink {
+  text-decoration: none;
+  color: inherit;
+}
+
 .bioPic {
   display: flex;
   align-items: center;
