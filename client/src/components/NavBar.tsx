@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'; // imports al;l exports from reacct pkg and bundles them as React
 import { Link, useNavigate } from 'react-router-dom'; // Link used to navigate btwn routes w/in app without page refresh
-import UserBubble from './UserBubble'; // Might be good to implement for user/guest?
 import '../styles/NavBar.css';
 interface NavLink {
 	// describes sha[pe of objects where each object has path and label type of string]
@@ -9,8 +8,10 @@ interface NavLink {
 }
 
 interface NavBarProps {
-	logo?: string; // Optional logo prop
+	logo?: string;
+	links?: NavLink[];
 }
+
 
 const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
@@ -53,7 +54,7 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 					</button>
 				)}
 			</ul>
-			{/* <UserBubble /> */}
+			{}
 		</nav>
 	);
 };
