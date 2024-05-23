@@ -32,9 +32,9 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialCode }) => {
 			// 	readOnly: true,
 			// }}
 			// onChange={(
-			// 	editor: CodeMirror.Editor,
-			// 	data: CodeMirror.EditorChange,
-			// 	value: string
+			// 	editor,
+			// 	data,
+			// 	value
 			// ) => {
 			// 	onCodeChange(value);
 			// }}

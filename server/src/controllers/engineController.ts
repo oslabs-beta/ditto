@@ -6,6 +6,7 @@ import {
 } from '../models/userDB';
 import { Pool } from 'pg';
 import { Request, Response, NextFunction } from 'express';
+import db from '../db'
 
 const createPool = (connectionString: string) => {
 	return new Pool({
@@ -56,7 +57,7 @@ export const executeMigration = async (
 			console.log('db_id:', db.db_id, 'typeof db_id:', typeof db.db_id);
 		})
 		const connectionString = connectionStrings.find(
-			db => db.db_id === dbId
+			(db) => db.db_id === dbId
 		)?.connection_string; // get specific string by specific db id
 			console.log('one connection string:', connectionString)
 		if (!connectionString) {
@@ -71,9 +72,9 @@ export const executeMigration = async (
 		const pendingMigrations = await getPendingMigrations(userId, dbId); // get all pending status migrations for user/dbid
 		console.log('pendingMigrations:', pendingMigrations);
 
-		if (pendingMigrations.length === 0) {
-			return res.status(200).json({ message: 'No pending migrations found.'});
-		}
+		// if (pendingMigrations.length === 0) {
+		// 	return res.status(200).json({ message: 'No pending migrations found.'});
+		// }
 
 		for (const migration of pendingMigrations) {
 			//iterate through all the migrations
@@ -99,7 +100,13 @@ export const executeMigration = async (
 		}
 		// res.locals.message = 'Migrations executed successfully';
 		// return next();
-		res.status(201).json(pendingMigrations); //making sure to return an array 
+		const allMigrations = await db.query(`
+		SELECT * FROM migration_logs
+		WHERE user_id = $1 AND database_id = $2
+		ORDER BY CAST(version AS INTEGER) ASC;
+		`, [userId, dbId]);
+
+		res.status(201).json(allMigrations.rows); //making sure to return an array 
 	} catch (error) {
 		return next({
 			status: 500,
