@@ -17,7 +17,6 @@ import logoImage from './assets/logo.png';
 const App: React.FC = () => {
 	const navLinks = [
 		{ path: '/', label: 'Home' },
-		{ path: '/documentation', label: 'Documentation' },
 		{ path: '/faq', label: 'FAQ' },
 		{ path: '/migration', label: 'Migration' },
 		{ path: '/login', label: 'Login' },
@@ -36,7 +35,6 @@ const App: React.FC = () => {
 					<Route path="/addMigrations" element={<AddMigrationsPage />} />
 					<Route path="/migration" element={<MigrationPage />} />
 					<Route path="/signup" element={<SignUpPage />} />
-					<Route path="/documentation" element={<DocumentationPage />} />
 					<Route path="/faq" element={<FAQPage />} />
 				</Routes>
 			</div>
