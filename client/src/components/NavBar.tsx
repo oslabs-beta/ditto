@@ -1,23 +1,20 @@
-// NavBar.tsx
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 interface NavLink {
   path: string;
-  label: string | React.ComponentType;
+  label: string;
 }
 
 interface NavBarProps {
-  links: NavLink[];
+  logo?: string;
 }
 
 const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
 	const navLinks: NavLink[] = [
-		{ path: '/documentation', label: 'Documentation' },
-		{ path: '/faq', label: 'FAQ' },
-		{ path: '/community', label: 'Community' },
+		{ path: '/faq', label: 'FAQ' }
 	];
 
 	if (sessionStorage.getItem('token')) {
