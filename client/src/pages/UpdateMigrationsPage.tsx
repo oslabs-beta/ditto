@@ -2,8 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setdbId, setSelectedMigration } from '../store';
+import {
+	setdbId,
+	setSelectedMigration,
+	setSelectedScript,
+	setScript,
+} from '../store';
 import '../styles/AddUpdateMigrations.css';
+import CodeEditor from '../components/CodeEditor';
 
 interface FormData {
 	version: string;
@@ -13,11 +19,16 @@ interface FormData {
 }
 
 const UpdateMigrationsPage: React.FC = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [version, setVersion] = useState('');
 	const [description, setDescription] = useState('');
-	const [script, setScript] = useState('');
+	const script = useSelector((state: any) => state.script);
 	const migrationId = useSelector((state: any) => state.selectedMigration);
+	const selectedScript = useSelector(
+		(state: { selectedScript: string }) => state.selectedScript
+	);
+	// const script = useSelector((state: any) => state.script);
 
 	useEffect(() => {
 		const getMigrationLog = async () => {
@@ -52,8 +63,9 @@ const UpdateMigrationsPage: React.FC = () => {
 					version,
 					script,
 					description,
-				}), // Will need to include executed_At
+				}),
 			});
+			dispatch(setSelectedScript(script));
 			navigate('/migration');
 		} catch (error) {
 			console.error('Error posting new migration version', error);
@@ -91,12 +103,7 @@ const UpdateMigrationsPage: React.FC = () => {
 				<fieldset>
 					{/* <CodeEditor initialCode={code} /> */}
 					<label>
-						<textarea
-							className="code-editor"
-							value={script}
-							onChange={e => setScript(e.target.value)}
-							required
-						/>
+						<CodeEditor code={script} inMigration={false} />
 					</label>
 
 					<legend>Script</legend>

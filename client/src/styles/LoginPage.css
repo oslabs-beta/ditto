@@ -1,33 +1,62 @@
+html {
+	height: 90%;
+}
+
+#root {
+	height: 90%;
+}
+
 .container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	height: 90vh;
+	padding-top: 47px;
+	height: 100%;
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
-	margin: 20px;
+	margin: 20px 20px 0px 20px;
 	width: 300px;
 }
 
-.input {
-	margin-bottom: 10px;
-	padding: 10px;
+.form > * {
+	height: 30px;
+	margin-bottom: 20px;
+	box-sizing: border-box;
+	padding: 20px;
+	border-radius: 7px;
+	border-width: 1px;
 }
 
-.input[type='password'] {
-	margin-bottom: 20px;
+.loginbutton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: transparent;
+	background-color: #b592f1;
+	color: whitesmoke;
+	font-size: 16px;
+}
+
+.loginbutton:hover {
+	background-color: #9561f0;
 }
 
 .githubLoginBtn {
 	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	height: 25px;
+	background-color: transparent;
+	border: none;
 }
 
-.button {
-	padding: 10px 20px;
+button {
+	cursor: pointer;
 }
 
 .signUpImg {
@@ -37,4 +66,35 @@
 .signup-link {
 	text-decoration: none;
 	color: inherit;
+}
+
+.githubLoginIcon {
+	width: 35px;
+}
+
+.login {
+	margin: 0;
+}
+
+.signupcontainer {
+	display: flex;
+	font-size: 16px;
+}
+
+.signupbtn {
+	background-color: transparent;
+	border: none;
+	color: #b592f1;
+	font-weight: bold;
+}
+
+.githubcontainer {
+	display: flex;
+	flex-direction: column;
+	font-size: 16px;
+}
+
+.links {
+	display: flex;
+	justify-content: center;
 }

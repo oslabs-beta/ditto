@@ -17,6 +17,10 @@ const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
 const SET_TOKEN = 'SET_TOKEN'; // test
 const SET_DB_ID = 'SET_DB_ID';
 const SET_DESCRIPTION = 'SET_DESCRIPTION';
+const SET_SELECTED_ACTION = 'SET_SELECTED_ACTION';
+const SET_SELECTED_SCRIPT = 'SET_SELECTED_SCRIPT';
+const SET_SCRIPT = 'SET_SCRIPT';
+const RESET_STATE = 'RESET_STATE';
 
 // Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
@@ -71,7 +75,26 @@ export const setToken = (token: string) => ({
 export const setDescription = (description: string) => ({
 	type: SET_DESCRIPTION,
 	payload: description,
-})
+});
+
+export const setSelectedAction = (selectedAction: string) => ({
+	type: SET_SELECTED_ACTION,
+	payload: selectedAction,
+});
+
+export const setSelectedScript = (selectedScript: string) => ({
+	type: SET_SELECTED_SCRIPT,
+	payload: selectedScript,
+});
+
+export const setScript = (script: string) => ({
+	type: SET_SCRIPT,
+	payload: script,
+});
+
+export const resetState = () => ({
+	type: RESET_STATE,
+});
 
 // Define initial state
 const initialState = {
@@ -87,6 +110,8 @@ const initialState = {
 	connectionString: '',
 	dbId: '',
 	description: '',
+	selectedAction: 'Migrate',
+	selectedScript: '',
 };
 
 // Define reducers
@@ -117,6 +142,15 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, dbId: action.payload };
 		case SET_DESCRIPTION:
 			return { ...state, description: action.payload };
+		case SET_SELECTED_ACTION:
+			return { ...state, selectedAction: action.payload };
+		case SET_SELECTED_SCRIPT:
+			return { ...state, selectedScript: action.payload };
+		case SET_SCRIPT:
+			return { ...state, script: action.payload };
+		case RESET_STATE:
+			console.log('in reset state', initialState);
+			return initialState;
 		default:
 			return state;
 	}

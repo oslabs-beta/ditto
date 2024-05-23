@@ -34,7 +34,7 @@ export const createMigrationLog = async (
 			message: 'Unauthorized',
 		});
 	}
-
+	console.log('in mlog');
 	try {
 		const checksum = generateChecksum(script);
 		const result = await createMigrationLogQuery(
