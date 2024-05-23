@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const FAQPage: React.FC = () => {
   return(
     <div>
+      <h1>Questions will be added as they grow more frequent</h1>
       <section>
         <ul>
         <li><strong><em>What was the inspiration behind Ditto?</em></strong></li>
