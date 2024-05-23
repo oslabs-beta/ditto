@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faDatabase } from '@fortawesome/free-solid-svg-icons';
-import { usePopper } from 'react-popper';
 import {
 	setSelectedTable,
 	setSelectedDatabase,
@@ -232,38 +231,41 @@ const SidePanel: React.FC = () => {
 							className="whitebtn"
 							ref={referenceElement}
 							onClick={() => {
-								if (selectedDatabase) setIsOpen(true);
+								if (selectedDatabase && !isOpen) setIsOpen(true);
+								else if (selectedDatabase && isOpen) setIsOpen(false);
 							}}
 						>
 							<FontAwesomeIcon icon={faTrashAlt} style={{ color: 'black' }} />
 						</button>
-						<p id="textbox">Remove database</p>
+						{isOpen ? null : <p id="textbox">Remove database</p>}
+						{selectedDatabase && isOpen && (
+							<div className="popper" ref={popperElement}>
+								<p>Are you sure?</p>
+								<div className="popperbtns">
+									<button
+										className="whitebtn"
+										onClick={e => {
+											dispatch(setSelectedDatabase(''));
+											dispatch(setSelectedScript(''));
+											handleButtonClick('deletedb');
+											setIsOpen(false);
+										}}
+									>
+										Yes
+									</button>
+									<button
+										className="whitebtn"
+										onClick={() => {
+											setIsOpen(false);
+										}}
+									>
+										No
+									</button>
+								</div>
+							</div>
+						)}
 					</div>
 				</div>
-				{selectedDatabase && isOpen && (
-					<div ref={popperElement}>
-						<p>Are you sure?</p>
-						<div>
-							<button
-								onClick={e => {
-									dispatch(setSelectedDatabase(''));
-									dispatch(setSelectedScript(''));
-									handleButtonClick('deletedb');
-									setIsOpen(false);
-								}}
-							>
-								Yes
-							</button>
-							<button
-								onClick={() => {
-									setIsOpen(false);
-								}}
-							>
-								No
-							</button>
-						</div>
-					</div>
-				)}
 			</div>
 			{/* database */}
 			{/* connection string form */}

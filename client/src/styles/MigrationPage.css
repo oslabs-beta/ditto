@@ -26,6 +26,7 @@ p {
 	width: 200px;
 	text-align: center;
 	background-color: whitesmoke;
+	height: 40px;
 }
 
 .font-bold {
@@ -99,6 +100,7 @@ p {
 
 .selectdb {
 	display: flex;
+	align-items: center;
 }
 
 .selectdb button {
@@ -258,4 +260,23 @@ select {
 	border: 1px solid;
 	border-radius: 7px;
 	height: 35vh;
+}
+
+.popper {
+	display: flex;
+	flex-direction: column;
+	background-color: #f6e3ffb9;
+	width: 120px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 7px;
+	margin-top: 5px;
+	align-self: center;
+	position: absolute;
+	z-index: 999;
+	left: 325px;
+}
+
+.popperbtns .whitebtn {
+	margin: 5px 5px 10px 5px;
 }
