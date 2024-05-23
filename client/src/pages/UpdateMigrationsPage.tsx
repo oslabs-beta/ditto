@@ -88,9 +88,9 @@ const UpdateMigrationsPage: React.FC = () => {
 						<legend>Description</legend>
 					</fieldset>
 				</div>
-				<div>
+				<fieldset>
+					{/* <CodeEditor initialCode={code} /> */}
 					<label>
-						Script:
 						<textarea
 							className="code-editor"
 							value={script}
@@ -98,7 +98,9 @@ const UpdateMigrationsPage: React.FC = () => {
 							required
 						/>
 					</label>
-				</div>
+
+					<legend>Script</legend>
+				</fieldset>
 				<button type="submit">Update</button>
 			</form>
 		</div>
