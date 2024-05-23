@@ -25,7 +25,7 @@ export const githubCallback = async (
 	next: NextFunction
 ) => {
 	const code = req.query.code as string;
-	console.log('code:', code)
+	console.log('code:', code, 'typeof code:', typeof code)
 	if (!code) {
 		return res.status(400).json({ error: 'No code provided' });
 	}
@@ -72,11 +72,12 @@ export const githubCallback = async (
 			jwtSecret as jwt.Secret,
 			{ expiresIn: '1h' }
 		);
-			console.log('token', token)
-		// const frontendUrl = `http://localhost:3000/migration?token=${token}`;
-		const frontendUrl = `http://localhost:3000/migration`
+			console.log('token:', token, 'typeof token:', typeof token)
+		const frontendUrl = `http://localhost:3000/githubs/callbacks?token=${token}`;
+		// const frontendUrl = `http://localhost:3000/migration`
 		//check endpoint for front end main page
 		res.redirect(frontendUrl);
+		console.log("i am redirecting to front end")
 	} catch (error) {
 		return next({
 			message: `Error in githubAuthController githubCallback ${error}`,

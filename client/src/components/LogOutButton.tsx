@@ -1,14 +1,16 @@
-import * as React from 'react';
-import '../styles/LogOutButton.css';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function handleLogOut() {
-	sessionStorage.clear();
-}
+const LogOut: React.FC = () => {
+  const navigate = useNavigate();
 
-const LogOut: React.FC = () => (
-	<button className="logOut" onClick={handleLogOut}>
-		Log Out
-	</button>
-);
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate('/login');
+  };
+
+  return <button className="logOut" onClick={handleLogout}>Log Out</button>
+};
+
 
 export default LogOut;

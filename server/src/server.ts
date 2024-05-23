@@ -19,6 +19,9 @@ app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const joinPath = path.join(__dirname, '../../client/dist');
+app.use(express.static(joinPath));
+
 // app.use(
 // 	session({
 // 		secret: process.env.SESSION_SECRET as string,
@@ -43,7 +46,7 @@ app.use('/github', githubAuthRoutes);
 // catch all route handler
 app.use('*', (req: Request, res: Response) => {
 	console.log('404 error handler triggered.');
-	res.sendFile(path.resolve('client/dist' , 'index.html'))
+	res.sendFile(path.resolve(joinPath , 'index.html'))
 	// res.status(404).json('Page not found.');
 });
 
