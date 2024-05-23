@@ -23,6 +23,8 @@ nav {
 		border: 2px solid #d184eb;
 		border-radius: 5px;
 		cursor: pointer;
+		margin-left: 7px;
+		margin-right: 7px;
 	}
 	button:hover {
 		background-color: #e8adfc;

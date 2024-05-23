@@ -18,18 +18,22 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 		{ path: '/documentation', label: 'Documentation' },
 		{ path: '/faq', label: 'FAQ' },
 		{ path: '/community', label: 'Community' },
-		{ path: '/login', label: 'Login' },
-		{ path: '/signup', label: 'Signup' },
 	];
 
 	if (sessionStorage.getItem('token')) {
 		navLinks.push({ path: '/migration', label: 'Migration' });
 	}
 
-	function handleLogOut() {
+	function handleLogging() {
 		sessionStorage.clear();
 		navigate('/login');
 	}
+
+	function handleSignUp() {
+		sessionStorage.clear();
+		navigate('/signup');
+	}
+
 	const isLoggedIn = Boolean(sessionStorage.getItem('token'));
 
 	console.log(navLinks);
@@ -51,14 +55,17 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 					))}
 					<li className="links" style={{ marginLeft: 'auto' }}></li>
 					{isLoggedIn ? (
-						<button className="logOut" onClick={handleLogOut}>
+						<button className="logOut" onClick={handleLogging}>
 							Log Out
 						</button>
 					) : (
-						<button className="logOut" onClick={handleLogOut}>
+						<button className="logOut" onClick={handleLogging}>
 							Log In
 						</button>
 					)}
+					<button className="signUp" onClick={handleSignUp}>
+						Sign Up
+					</button>
 				</ul>
 				{/* <UserBubble /> */}
 			</nav>
