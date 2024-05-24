@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, setDatabases } from '../store';
-import signupImg from '/client/src/assets/img/signup.png';
 import githubIcon from '/client/src/assets/img/github-mark.png';
 import '/client/src/styles/LoginPage.css';
 import '../styles/NavBar.css';
