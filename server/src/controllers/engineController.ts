@@ -94,10 +94,11 @@ export const executeMigration = async (
 				await updateMigrationStatus(migration.migration_id, 'Success'); // update status to success if execution is successful
 			} catch (error) {
 				await updateMigrationStatus(migration.migration_id, 'Failed'); // update status to failed if execution is not successful
-				return next({
-					status: 500,
-					message: `Error executing migration ${migration.version}`,
-				});
+
+				// return next({
+				// 	status: 500,
+				// 	message: `Error executing migration ${migration.version}`,
+				// });
 			}
 		}
 		// res.locals.message = 'Migrations executed successfully';
