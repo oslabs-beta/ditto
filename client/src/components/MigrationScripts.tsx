@@ -162,13 +162,16 @@ const MigrationScripts: React.FC = () => {
 			const result = await response.json();
 			console.log('result:', result);
 			if (Array.isArray(result)) {
+				console.log(result);
 				setMigrations(result);
 			} else {
 				console.error('Expected array but got:', result);
 				setMigrations([]);
 			}
+			console.log(result);
 		} catch (error) {
 			console.error('Error running migrations:', error);
+			navigate('/migration');
 		}
 	};
 	/* Code Editor */
