@@ -108,9 +108,9 @@ export const executeMigration = async (
 		WHERE user_id = $1 AND database_id = $2
 		ORDER BY CAST(version AS INTEGER) ASC;
 		`,
-			[userId, dbId]
+			[userId, dbId] // an example of preventing SQL injection 
 		);
-		res.status(201).json(allMigrations); //making sure to return an array
+		res.status(201).json(allMigrations); //this makes sure our state is the same as it was 
 	} catch (error) {
 		return next({
 			status: 500,
