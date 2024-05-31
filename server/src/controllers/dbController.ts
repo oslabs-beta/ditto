@@ -17,11 +17,10 @@ export const addDBConnectionString = async (
 	const userId = req.user?.id;
 
 	if (!userId) {
-		return next({
-			status: 401,
-			message: 'Unauthorized',
-		});
+		console.log('Unauthorized');
+		return res.sendStatus(401);
 	}
+
 	try {
 		const existingConnections = await getDBConnectionByUserId(userId);
 		if (existingConnections) {
@@ -30,10 +29,8 @@ export const addDBConnectionString = async (
 			);
 
 			if (duplicate) {
-				return next({
-					status: 400,
-					message: 'Connection string already exists',
-				});
+				console.log('Connection string already exists');
+				return res.sendStatus(400);
 			}
 		}
 
@@ -56,10 +53,8 @@ export const getConnectionString = async (
 ) => {
 	const userId = req.user?.id;
 	if (!userId) {
-		return next({
-			status: 401,
-			message: 'Unauthorized',
-		});
+		console.log('Unauthorized');
+		return res.sendStatus(401);
 	}
 	try {
 		const connectionStrings = await getDBConnectionByUserId(userId);
@@ -83,10 +78,8 @@ export const getConnectionStringById = async (
 	const userId = req.user?.id;
 
 	if (!userId) {
-		return next({
-			status: 401,
-			message: 'Unauthorized',
-		});
+		console.log('Unauthorized');
+		return res.sendStatus(401);
 	}
 	try {
 		const connectionString = await getDBConnectionById(userId, Number(dbId));
@@ -115,10 +108,8 @@ export const deleteConnectionStringById = async (
 	const userId = req.user?.id;
 
 	if (!userId) {
-		return next({
-			status: 401,
-			message: 'Unauthorized',
-		});
+		console.log('Unauthorized');
+		return res.sendStatus(401);
 	}
 	try {
 		await deleteDBConnectionById(userId, Number(dbId));

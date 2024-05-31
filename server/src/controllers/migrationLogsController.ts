@@ -30,10 +30,7 @@ export const createMigrationLog = async (
 	const { dbId } = req.params;
 	const { version, script, description } = req.body;
 	if (!userId) {
-		return next({
-			status: 401,
-			message: 'Unauthorized',
-		});
+		return res.sendStatus(401);
 	}
 	try {
 		const checksum = generateChecksum(script);
@@ -42,7 +39,6 @@ export const createMigrationLog = async (
 			parseInt(dbId),
 			version,
 			script,
-			// executedAt,
 			checksum,
 			description ? description : ''
 		);

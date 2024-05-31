@@ -209,6 +209,7 @@ const SidePanel: React.FC = () => {
 				<div className="selectdb">
 					<select
 						value={selectedDatabase}
+						aria-label="choose a database"
 						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
 							dispatch(
 								setdbId(
@@ -232,6 +233,7 @@ const SidePanel: React.FC = () => {
 					<div className="removedb">
 						<button
 							className="whitebtn"
+							aria-label="remove database"
 							ref={referenceElement}
 							onClick={() => {
 								if (selectedDatabase && !isOpen) setIsOpen(true);
@@ -276,6 +278,7 @@ const SidePanel: React.FC = () => {
 				<div className="addDbBtn">
 					<button
 						className="purplebtn btn"
+						aria-label="add database"
 						onClick={e => handleButtonClick('adddb')}
 					>
 						<FontAwesomeIcon icon={faDatabase} />{' '}
@@ -307,6 +310,7 @@ const SidePanel: React.FC = () => {
 				<div>
 					<select
 						value={selectedAction}
+						aria-label="choose an action"
 						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
 							dispatch(setSelectedAction(e.target.value));
 						}}
@@ -359,6 +363,7 @@ const SidePanel: React.FC = () => {
 				<p className="font-bold">Preview Table:</p>
 				<select
 					value={selectedTable}
+					aria-label="preview table"
 					onChange={e => dispatch(setSelectedTable(e.target.value))}
 				>
 					<option value="">--Select a table--</option>
