@@ -1,3 +1,6 @@
+import { Request, Response, NextFunction } from 'express';
+import { Pool } from 'pg';
+import db from '../db';
 import {
 	getDBConnectionByUserId,
 	getPendingMigrations,
@@ -5,9 +8,7 @@ import {
 	validateChecksum,
 	Migration,
 } from '../models/userDB';
-import { Pool } from 'pg';
-import { Request, Response, NextFunction } from 'express';
-import db from '../db';
+
 
 const createPool = (connectionString: string) => {
 	return new Pool({
