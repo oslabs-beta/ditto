@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">78.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>11/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -111,7 +111,7 @@
 <a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -120,29 +120,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -165,26 +165,26 @@ export interface User {
 	date_created: string;
 }
 &nbsp;
-export const createUser = <span class="fstat-no" title="function not covered" >as</span>ync (
+export const createUser = async (
 	username: string,
 	password: string
 ): Promise&lt;User&gt; =&gt; {
-	const hashedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(password, salt);</span>
-	const queryString = <span class="cstat-no" title="statement not covered" >`</span>
+	const hashedPassword = await bcrypt.hash(password, salt);
+	const queryString = `
       INSERT INTO users (username, password)
       VALUES ($1, $2)
       RETURNING *;
     `;
-	const result = <span class="cstat-no" title="statement not covered" >await db.query(queryString, [username, hashedPassword]);</span>
-<span class="cstat-no" title="statement not covered" >	return result[0] as User;</span>
+	const result = await db.query(queryString, [username, hashedPassword]);
+	return result[0] as User;
 };
 &nbsp;
-export const findUser = <span class="fstat-no" title="function not covered" >as</span>ync (username: string): Promise&lt;User | null&gt; =&gt; {
-	const queryString = <span class="cstat-no" title="statement not covered" >`</span>
+export const findUser = async (username: string): Promise&lt;User | null&gt; =&gt; {
+	const queryString = `
       SELECT * FROM users WHERE username = $1;
     `;
-	const result = <span class="cstat-no" title="statement not covered" >await db.query(queryString, [username]);</span>
-<span class="cstat-no" title="statement not covered" >	return result.length &gt; 0 ? (result[0] as User) : null;</span>
+	const result = await db.query(queryString, [username]);
+	return result.length &gt; 0 ? (result[0] as User) : null;
 };
 &nbsp;
 export const createOAuthUser = <span class="fstat-no" title="function not covered" >as</span>ync (
@@ -205,7 +205,7 @@ export const createOAuthUser = <span class="fstat-no" title="function not covere
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-30T18:21:04.245Z
+                at 2024-06-01T00:07:01.020Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

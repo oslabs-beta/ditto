@@ -5,6 +5,8 @@ import authRoutes from './routes/authRoutes';
 import dbRoutes from './routes/dbRoutes';
 import migrationLogRoutes from './routes/migrationLogRoutes';
 import githubAuthRoutes from './routes/githubAuthRoutes';
+import newDbRoutes from './routes/newDbRoutes';
+import projectRoutes from './routes/projectRoutes';
 import cors from 'cors';
 import path from 'path';
 import session from 'express-session';
@@ -38,9 +40,12 @@ app.use('/migrationlog', migrationLogRoutes);
 
 app.use('/auth', authRoutes);
 
-app.use('/db', dbRoutes);
+app.use('/db', newDbRoutes);
+// app.use('/db', dbRoutes);
 
 app.use('/github', githubAuthRoutes);
+
+app.use('/project', projectRoutes);
 
 // catch all route handler
 app.use('*', (req: Request, res: Response) => {
