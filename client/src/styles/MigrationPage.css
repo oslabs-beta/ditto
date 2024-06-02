@@ -169,17 +169,6 @@ select {
 	font-size: 1.2em;
 }
 
-.MigrationScriptsContainer {
-	margin-left: 1.5%;
-}
-
-.scriptsheader {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 10px;
-}
-
 .selectedDB {
 	display: flex;
 	height: 40px;
@@ -191,6 +180,17 @@ select {
 	justify-content: center;
 	font-size: 27px;
 	background-color: #dacbf3;
+}
+
+.scriptsheader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 10px;
+}
+
+.MigrationScriptsContainer {
+	margin-left: 1.5%;
 }
 
 .MigrationScriptsContainer table {

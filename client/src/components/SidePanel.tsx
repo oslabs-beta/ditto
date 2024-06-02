@@ -73,16 +73,6 @@ const SidePanel: React.FC = () => {
 				}
 
 				const result = await response.json();
-				// const dbNames: string[] = result.map(
-				// 	(obj: { db_name: string }) => obj.db_name
-				// );
-				// console.log('databases: ', dbNames);
-				//
-				// const dbId: string[] = result.map(
-				// 	(obj: { db_id: string }) => obj.db_id
-				// );
-				// console.log('dbid: ', dbIds);
-
 				dispatch(setDatabases(result));
 			} catch (error) {
 				console.error('Error fetching databases:', error);

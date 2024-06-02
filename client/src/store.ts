@@ -11,6 +11,7 @@ const SET_MIGRATION_VERSIONS = 'SET_MIGRATION_VERSIONS';
 const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
 const SET_SELECTED_DATABASE = 'SET_SELECTED_DATABASE';
 const SET_SELECTED_MIGRATION = 'SET_SELECTED_MIGRATION';
+const SET_SELECTED_PROJECTS = 'SET_SELECTED_PROJECTS';
 const SET_SHOW_INPUT = 'SET_SHOW_INPUT';
 const SET_DB_NAME = 'SET_DB_NAME';
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
@@ -53,6 +54,12 @@ export const setSelectedMigration = (migration: string) => ({
 	type: SET_SELECTED_MIGRATION,
 	payload: migration,
 });
+
+export const setSelectedProjects = (projects: string) => ({
+	type: SET_SELECTED_PROJECTS,
+	payload: projects,
+});
+
 export const setShowInput = (show: boolean) => ({
 	type: SET_SHOW_INPUT,
 	payload: show,
@@ -66,7 +73,6 @@ export const setConnectionString = (connectionString: string) => ({
 	payload: connectionString,
 });
 
-//test
 export const setToken = (token: string) => ({
 	type: SET_TOKEN,
 	payload: token,
@@ -105,6 +111,7 @@ const initialState = {
 	selectedTable: '',
 	selectedDatabase: '',
 	selectedMigration: '',
+	selectedProjects: '',
 	showInput: false,
 	dbName: '',
 	connectionString: '',
@@ -132,6 +139,8 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, selectedDatabase: action.payload };
 		case SET_SELECTED_MIGRATION:
 			return { ...state, selectedMigration: action.payload };
+		case SET_SELECTED_PROJECTS:
+			return { ...state, selectedProjects: action.payload };
 		case SET_SHOW_INPUT:
 			return { ...state, showInput: action.payload };
 		case SET_DB_NAME:

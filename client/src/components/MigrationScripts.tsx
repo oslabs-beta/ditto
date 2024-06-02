@@ -184,11 +184,7 @@ const MigrationScripts: React.FC = () => {
 	return (
 		<div className="MigrationScriptsContainer">
 			<div className="scriptsheader">
-				{/* Add Migrations Button */}
-				<div className="selectedDB font-bold">
-					{selectedDatabase}
-					{/* <h1>{selectedDatabase}</h1> */}
-				</div>
+				<div className="selectedDB font-bold">{selectedDatabase}</div>
 				<button className="purplebtn" type="button" onClick={handleSubmit}>
 					Add Migration
 				</button>

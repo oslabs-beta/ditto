@@ -2,7 +2,7 @@ import * as React from 'react';
 
 const UsersTable: React.FC = () => {
 	return (
-		<div className="usersTable">
+		<div className="users">
 			<div className="usersHeader">
 				<fieldset>
 					<label>
