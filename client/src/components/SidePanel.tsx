@@ -1,5 +1,6 @@
 // SidePanel.tsx
 import React, { useState, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -72,9 +73,6 @@ const SidePanel: React.FC = () => {
 		};
 		fetchDatabases();
 	}, []);
-
-	// const [migrations, setMigrationVersions] = useState<Migration[]>([]);
-	const actions = ['Migrate', 'Repair', 'Undo', 'Clean'];
 
 	const handleButtonClick = async (btnText: string | null) => {
 		if (btnText === 'adddb') {
@@ -223,7 +221,7 @@ const SidePanel: React.FC = () => {
 						<option value="">-- Select a database --</option>
 						{mapDatabaseOptions}
 					</select>
-					{userRole === 'Admin' || userRole === 'Owner' ? (
+					{userRole === 'admin' || userRole === 'owner' ? (
 						<div className="removedb">
 							<button
 								className="whitebtn"
@@ -257,7 +255,7 @@ const SidePanel: React.FC = () => {
 				</div>
 			</div>
 			{/* connection string form */}
-			{userRole === 'Admin' || userRole === 'Owner' ? (
+			{userRole === 'admin' || userRole === 'owner' ? (
 				<div className="addDb">
 					<div className="addDbBtn">
 						<button
