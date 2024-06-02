@@ -6,12 +6,13 @@ import ReactDOM from 'react-dom';
 
 // Define action types
 const SET_USER = 'SET_USER';
+const SET_PROJECTS = 'SET_PROJECTS';
 const SET_DATABASES = 'SET_DATABASES';
 const SET_MIGRATION_VERSIONS = 'SET_MIGRATION_VERSIONS';
-const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
+const SET_SELECTED_PROJECTS = 'SET_SELECTED_PROJECTS';
 const SET_SELECTED_DATABASE = 'SET_SELECTED_DATABASE';
 const SET_SELECTED_MIGRATION = 'SET_SELECTED_MIGRATION';
-const SET_SELECTED_PROJECTS = 'SET_SELECTED_PROJECTS';
+const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
 const SET_SHOW_INPUT = 'SET_SHOW_INPUT';
 const SET_DB_NAME = 'SET_DB_NAME';
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
@@ -25,6 +26,14 @@ const RESET_STATE = 'RESET_STATE';
 
 // Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
+
+export const setProjects = (
+	projects: { projects_name: string; projects_id: string }[]
+) => ({
+	type: SET_PROJECTS,
+	payload: projects,
+});
+
 export const setDatabases = (
 	databases: { connection_string: string; db_name: string; db_id: string }[]
 ) => ({
@@ -102,11 +111,11 @@ export const resetState = () => ({
 	type: RESET_STATE,
 });
 
-// Define initial state
 const initialState = {
 	user: '',
 	token: '',
 	databases: [],
+	projects: [],
 	migrationVersions: [],
 	selectedTable: '',
 	selectedDatabase: '',
@@ -121,14 +130,14 @@ const initialState = {
 	selectedScript: '',
 };
 
-// Define reducers
 const rootReducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case SET_USER:
 			return { ...state, user: action.payload };
-		//test
 		case SET_TOKEN:
 			return { ...state, token: action.payload };
+		case SET_PROJECTS:
+			return { ...state, projects: action.payload };
 		case SET_DATABASES:
 			return { ...state, databases: action.payload };
 		case SET_MIGRATION_VERSIONS:

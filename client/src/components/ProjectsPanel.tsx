@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faHammer,
@@ -7,12 +7,31 @@ import {
 	faTrash,
 	faUserMinus,
 } from '@fortawesome/free-solid-svg-icons';
-import { setSelectedProjects } from '../store';
+import { setProjects, setSelectedProjects } from '../store';
 
 const OrganizationsPanel: React.FC = () => {
 	/* States */
-	// I'm pretty sure these states are supposed to have parameter string and return void
-	const selectedProjects = useSelector((state: any) => state.selecteDatabase);
+	const projects = useSelector((state: any) => state.projects);
+	const selectedProjects = useSelector((state: any) => state.selecteProjects);
+
+	/* Built in Methods */
+	const dispatch = useDispatch();
+
+	/* Dropdown Logic */
+	const handleChooseProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		dispatch(setSelectedProjects(''));
+	};
+	const mapProjectOptions = projects.map(
+		(project: { project_id: string; project_name: string }) => {
+			<option
+				key={project.project_id}
+				value={project.project_name}
+				data-project-id={project.project_id}
+			>
+				{project.project_name}
+			</option>;
+		}
+	);
 
 	/* Button Logic */
 	const handleCreate = () => {};
@@ -25,7 +44,13 @@ const OrganizationsPanel: React.FC = () => {
 		<div className="projectsPanel">
 			<div className="chooseProject">
 				<p>Choose Project</p>
-				<select>Choose Project</select>
+				<select value={selectedProjects} onChange={handleChooseProject}>
+					<option>-- Select a Project --</option>
+					{/* Will map our options for projects based on user */}
+					{/* {projects.map((project: string) => {
+						<option>project</option>;
+					})} */}
+				</select>
 				<div className="projectButtons">
 					<button onClick={handleCreate}>
 						<FontAwesomeIcon icon={faHammer} />

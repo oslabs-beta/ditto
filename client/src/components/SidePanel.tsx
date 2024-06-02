@@ -73,7 +73,9 @@ const SidePanel: React.FC = () => {
 				}
 
 				const result = await response.json();
+				console.log('result: ', result);
 				dispatch(setDatabases(result));
+				console.log('databases: ', databases);
 			} catch (error) {
 				console.error('Error fetching databases:', error);
 			}
@@ -191,6 +193,14 @@ const SidePanel: React.FC = () => {
 		}
 	};
 
+	const mapDatabaseOptions = databases.map(
+		(db: { db_id: string; db_name: string }) => (
+			<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
+				{db.db_name}
+			</option>
+		)
+	);
+
 	return (
 		<div id="sidecontainer">
 			{/* database */}
@@ -212,11 +222,7 @@ const SidePanel: React.FC = () => {
 						}}
 					>
 						<option value="">--Select a database--</option>
-						{databases.map((db: { db_id: string; db_name: string }) => (
-							<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
-								{db.db_name}
-							</option>
-						))}
+						{mapDatabaseOptions}
 					</select>
 					<div className="removedb">
 						<button
