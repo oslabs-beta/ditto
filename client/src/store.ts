@@ -13,7 +13,6 @@ const SET_SELECTED_MIGRATION = 'SET_SELECTED_MIGRATION';
 const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
 const SET_SHOW_INPUT = 'SET_SHOW_INPUT';
 const SET_DB_NAME = 'SET_DB_NAME';
-
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
 const SET_TOKEN = 'SET_TOKEN';
 const SET_DB_ID = 'SET_DB_ID';
@@ -23,6 +22,7 @@ const SET_SELECTED_ACTION = 'SET_SELECTED_ACTION';
 const SET_SELECTED_SCRIPT = 'SET_SELECTED_SCRIPT';
 const SET_SCRIPT = 'SET_SCRIPT';
 const RESET_STATE = 'RESET_STATE';
+const SET_USER_ROLE = 'SET_USER_ROLE';
 
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
 
@@ -116,6 +116,11 @@ export const resetState = () => ({
 	type: RESET_STATE,
 });
 
+export const setUserRole = (role: string) => ({
+	type: SET_USER_ROLE,
+	payload: role,
+});
+
 const initialState = {
 	user: '',
 	token: '',
@@ -133,6 +138,7 @@ const initialState = {
 	description: '',
 	selectedAction: 'Migrate',
 	selectedScript: '',
+	userRole: 'admin',
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -171,6 +177,8 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, selectedScript: action.payload };
 		case SET_SCRIPT:
 			return { ...state, script: action.payload };
+		case SET_USER_ROLE:
+			return { ...state, userRole: action.payload };
 		case RESET_STATE:
 			console.log('in reset state', initialState);
 			return initialState;

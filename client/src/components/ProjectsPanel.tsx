@@ -7,15 +7,22 @@ import {
 	faTrash,
 	faUserMinus,
 } from '@fortawesome/free-solid-svg-icons';
-import { setProjects, setSelectedProject, setProjectId } from '../store';
+import {
+	setProjects,
+	setSelectedProject,
+	setProjectId,
+	setUserRole,
+} from '../store';
 
 const OrganizationsPanel: React.FC = () => {
 	/* States */
+	const userRole = useSelector((state: any) => state.userRole);
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
 	const [projectName, setProjectName] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [showInput, setShowInput] = useState(false);
+	const [accessCode, setAccessCode] = useState('');
 
 	const token = sessionStorage.getItem('token');
 
@@ -136,7 +143,10 @@ const OrganizationsPanel: React.FC = () => {
 
 	const handleLeave = () => {};
 
-	const handleGenerate = () => {};
+	const handleGenerate = () => {
+		const accessCode = Math.random().toString(36).substring(7);
+		setAccessCode(accessCode);
+	};
 
 	return (
 		<div className="projectsPanel">
@@ -153,10 +163,30 @@ const OrganizationsPanel: React.FC = () => {
 					<button onClick={handleJoin}>
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
-					{/* Conditional if Owner, Admin, User determines what button renders */}
-					<button onClick={handlePopper}>
-						<FontAwesomeIcon icon={faTrash} />
-					</button>
+
+					{(userRole === 'owner' || userRole === 'admin') && (
+						<button onClick={handlePopper}>
+							<FontAwesomeIcon icon={faTrash} />
+						</button>
+					)}
+					{(userRole === 'owner' || userRole === 'admin') && (
+						<button onClick={handleLeave}>
+							<FontAwesomeIcon icon={faUserMinus} />
+						</button>
+					)}
+					{/* Create Project Fields */}
+					{showInput && (
+						<form onSubmit={addProject}>
+							<input
+								type="text"
+								value={projectName}
+								onChange={handledbNameInputChange}
+								placeholder="Enter project name"
+							/>
+							<button>+</button>
+						</form>
+					)}
+					{/* Popper */}
 					{selectedProject && isOpen && (
 						<div>
 							<p>Are you sure?</p>
@@ -172,26 +202,14 @@ const OrganizationsPanel: React.FC = () => {
 							</div>
 						</div>
 					)}
-					<button onClick={handleLeave}>
-						<FontAwesomeIcon icon={faUserMinus} />
-					</button>
-					{showInput && (
-						<form onSubmit={addProject}>
-							<input
-								type="text"
-								value={projectName}
-								onChange={handledbNameInputChange}
-								placeholder="Enter project name"
-							/>
-							<button>+</button>
-						</form>
-					)}
 				</div>
 			</div>
-			<div className="generateCode">
-				<button onClick={handleGenerate}>Generate Access Code</button>
-				<input></input>
-			</div>
+			{(userRole === 'owner' || userRole === 'admin') && (
+				<div className="generateCode">
+					<button onClick={handleGenerate}>Generate Access Code</button>
+					<input type="text" value={accessCode} />
+				</div>
+			)}
 		</div>
 	);
 };
