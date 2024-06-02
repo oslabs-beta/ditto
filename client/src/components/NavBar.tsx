@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import logo from '../assets/logo.png';
 import '../styles/NavBar.css';
 import { resetState } from '../store';
 
@@ -19,11 +18,11 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const dispatch = useDispatch();
 	const navLinks: NavLink[] = [
 		{ path: '/faq', label: 'FAQ' },
+		{ path: '/chatty', label: 'Chatty' }, // Add the new link
 		{ path: '/organizations', label: 'Organizations' },
 	];
 
 	if (sessionStorage.getItem('token')) {
-		navLinks.pop();
 		navLinks.push({ path: '/migration', label: 'Migration' });
 	}
 

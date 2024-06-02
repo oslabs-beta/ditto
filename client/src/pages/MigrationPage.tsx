@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import CodeEditor from '../components/CodeEditor';
 import SidePanel from '../components/SidePanel';
 import MigrationScripts from '../components/MigrationScripts';
 import '/client/src/styles/MigrationPage.css';
