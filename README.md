@@ -10,7 +10,7 @@
 - selectedScript:
 - setShowInput:
 - connectionString:
-- dbName:
+- dbName: // we might be able to get rid of this because its only used in SidePanel
 - dbId:
 - description:
 - token: where token gets stashed
@@ -22,4 +22,4 @@
 
 # SidePanel.tsx
 
-- short circuiting in javascript (https://www.freecodecamp.org/news/short-circuiting-in-javascript/)
+- handleButtonClick: has two features, if you press the database icon it will show the input fields to add database name and connection string. The other feauture is if you press yes after pressing the trash can popper, it will delete whatever database your state is on.

@@ -35,7 +35,7 @@ const SidePanel: React.FC = () => {
 	const selectedMigration = useSelector(
 		(state: any) => state.selectedMigration
 	);
-	const showInput = useSelector((state: any) => state.showInput);
+	const showInput = useSelector((state: any) => state.showInput); // we can probably get rid of this, since its only used in SidePanel
 	const dbName = useSelector((state: any) => state.dbName);
 	const connectionString = useSelector((state: any) => state.connectionString);
 	const databases = useSelector((state: any) => state.databases);

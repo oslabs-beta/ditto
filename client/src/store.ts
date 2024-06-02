@@ -13,6 +13,7 @@ const SET_SELECTED_MIGRATION = 'SET_SELECTED_MIGRATION';
 const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
 const SET_SHOW_INPUT = 'SET_SHOW_INPUT';
 const SET_DB_NAME = 'SET_DB_NAME';
+
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
 const SET_TOKEN = 'SET_TOKEN';
 const SET_DB_ID = 'SET_DB_ID';
@@ -80,6 +81,7 @@ export const setDbName = (dbName: string) => ({
 	type: SET_DB_NAME,
 	payload: dbName,
 });
+
 export const setConnectionString = (connectionString: string) => ({
 	type: SET_CONNECTION_STRING,
 	payload: connectionString,
@@ -177,7 +179,6 @@ const rootReducer = (state = initialState, action: any) => {
 	}
 };
 
-// Create Redux store
 const store = configureStore({
 	reducer: rootReducer,
 });

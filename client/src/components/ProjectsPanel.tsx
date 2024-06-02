@@ -13,7 +13,10 @@ const OrganizationsPanel: React.FC = () => {
 	/* States */
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
+	const [projectName, setProjectName] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
+	const [showInput, setShowInput] = useState(false);
+
 	const token = sessionStorage.getItem('token');
 
 	/* Built in Methods */
@@ -25,6 +28,7 @@ const OrganizationsPanel: React.FC = () => {
 		const fetchProjects = async () => {
 			try {
 				const response = await fetch('', {
+					// Needs endpoint
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -43,9 +47,45 @@ const OrganizationsPanel: React.FC = () => {
 		fetchProjects;
 	}, []);
 
+	/* POST (ADD) Project */
+	const addProject = async () => {
+		const response = await fetch('', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				project_name: projectName,
+			}),
+		});
+		if (response.ok) {
+			const result = await response.json();
+			setProjectName('');
+			setShowInput(false);
+		}
+	};
+
 	/* DELETE Project */
 	const deleteProject = async () => {
 		if (selectedProject) {
+			try {
+				const response = await fetch('', {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				setIsOpen(false);
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				const results = await response.json();
+				dispatch(setProjects(results));
+			} catch (error) {
+				console.error('Error deleting project:', error);
+			}
 		}
 	};
 
@@ -72,19 +112,25 @@ const OrganizationsPanel: React.FC = () => {
 	);
 
 	/* Button Logic */
-	const handleCreate = () => {};
+	const handleCreate = () => {
+		setShowInput(showInput ? false : true);
+	};
+
+	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setProjectName(e.target.value);
+	};
 
 	const handleJoin = () => {};
 
-	const handleDelete = () => {
+	const handlePopper = () => {
 		if (selectedProject && !isOpen) setIsOpen(true);
 		else if (selectedProject && isOpen) setIsOpen(false);
 	};
 
 	const handlePopperYes = () => {
 		dispatch(setSelectedProject(''));
-		// dispatch(setSelectedUsers(''));
-		// handleButtonClick('deletedb');
+		// We will dispatch for users table and make it an empty string to clear
+		deleteProject();
 		setIsOpen(false);
 	};
 
@@ -108,18 +154,15 @@ const OrganizationsPanel: React.FC = () => {
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
 					{/* Conditional if Owner, Admin, User determines what button renders */}
-					<button onClick={handleDelete}>
+					<button onClick={handlePopper}>
 						<FontAwesomeIcon icon={faTrash} />
 					</button>
 					{selectedProject && isOpen && (
-						<div className="popper">
+						<div>
 							<p>Are you sure?</p>
-							<div className="popperbtns">
-								<button className="whitebtn" onClick={handlePopperYes}>
-									Yes
-								</button>
+							<div>
+								<button onClick={handlePopperYes}>Yes</button>
 								<button
-									className="whitebtn"
 									onClick={() => {
 										setIsOpen(false);
 									}}
@@ -132,6 +175,17 @@ const OrganizationsPanel: React.FC = () => {
 					<button onClick={handleLeave}>
 						<FontAwesomeIcon icon={faUserMinus} />
 					</button>
+					{showInput && (
+						<form onSubmit={addProject}>
+							<input
+								type="text"
+								value={projectName}
+								onChange={handledbNameInputChange}
+								placeholder="Enter project name"
+							/>
+							<button>+</button>
+						</form>
+					)}
 				</div>
 			</div>
 			<div className="generateCode">
