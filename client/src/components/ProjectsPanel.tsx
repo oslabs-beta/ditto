@@ -22,6 +22,7 @@ const OrganizationsPanel: React.FC = () => {
 	const [projectName, setProjectName] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [showInput, setShowInput] = useState(false);
+	const [joinInput, setJoinInput] = useState(false);
 	const [accessCode, setAccessCode] = useState('');
 
 	const token = sessionStorage.getItem('token');
@@ -32,6 +33,8 @@ const OrganizationsPanel: React.FC = () => {
 	/* HTTP Requests */
 	/* GET Projects */
 	useEffect(() => {
+		console.log(projects);
+		console.log('mapped options: ', mapProjectOptions);
 		const fetchProjects = async () => {
 			try {
 				const response = await fetch('', {
@@ -54,8 +57,28 @@ const OrganizationsPanel: React.FC = () => {
 		fetchProjects;
 	}, []);
 
-	/* POST (ADD) Project */
-	const addProject = async () => {
+	/* POST (Create) Project */
+	const createProject = async () => {
+		const response = await fetch('', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				project_name: projectName,
+				role: 'owner',
+			}),
+		});
+		if (response.ok) {
+			const result = await response.json();
+			setProjectName('');
+			setShowInput(false);
+		}
+	};
+
+	/* POST (Join) Project */
+	const joinProject = async () => {
 		const response = await fetch('', {
 			method: 'POST',
 			headers: {
@@ -68,8 +91,8 @@ const OrganizationsPanel: React.FC = () => {
 		});
 		if (response.ok) {
 			const result = await response.json();
-			setProjectName('');
-			setShowInput(false);
+			setAccessCode('');
+			setJoinInput(false);
 		}
 	};
 
@@ -98,6 +121,7 @@ const OrganizationsPanel: React.FC = () => {
 
 	/* Dropdown Logic */
 	const handleChooseProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		console.log(projects);
 		dispatch(
 			setProjectId(
 				!e.target.value ? '' : e.target.selectedOptions[0].dataset.projectId
@@ -106,16 +130,28 @@ const OrganizationsPanel: React.FC = () => {
 		dispatch(setSelectedProject(e.target.value));
 	};
 
+	// const mapProjectOptions = projects.map(
+	// 	(project: { project_id: string; project_name: string }) => {
+	// 		<option
+	// 			// key={project.project_id}
+	// 			value={project.project_name}
+	// 			// data-project-id={project.project_id}
+	// 		>
+	// 			{project.project_name}
+	// 		</option>;
+	// 	}
+	// );
+
 	const mapProjectOptions = projects.map(
-		(project: { project_id: string; project_name: string }) => {
+		(project: { project_id: string; project_name: string }) => (
 			<option
 				key={project.project_id}
 				value={project.project_name}
 				data-project-id={project.project_id}
 			>
 				{project.project_name}
-			</option>;
-		}
+			</option>
+		)
 	);
 
 	/* Button Logic */
@@ -127,7 +163,9 @@ const OrganizationsPanel: React.FC = () => {
 		setProjectName(e.target.value);
 	};
 
-	const handleJoin = () => {};
+	const handleJoin = () => {
+		setJoinInput(joinInput ? false : true);
+	};
 
 	const handlePopper = () => {
 		if (selectedProject && !isOpen) setIsOpen(true);
@@ -153,7 +191,7 @@ const OrganizationsPanel: React.FC = () => {
 			<div className="chooseProject">
 				<p>Choose Project</p>
 				<select value={selectedProject} onChange={handleChooseProject}>
-					<option>-- Select a Project --</option>
+					<option value="">-- Select a Project --</option>
 					{mapProjectOptions}
 				</select>
 				<div className="projectButtons">
@@ -174,14 +212,32 @@ const OrganizationsPanel: React.FC = () => {
 							<FontAwesomeIcon icon={faUserMinus} />
 						</button>
 					)}
-					{/* Create Project Fields */}
+					{/* If you press create */}
 					{showInput && (
-						<form onSubmit={addProject}>
+						<form onSubmit={createProject}>
 							<input
 								type="text"
 								value={projectName}
 								onChange={handledbNameInputChange}
 								placeholder="Enter project name"
+							/>
+							<button>+</button>
+						</form>
+					)}
+					{/* If you press join */}
+					{joinInput && (
+						<form onSubmit={joinProject}>
+							<input
+								type="text"
+								value={projectName}
+								onChange={handledbNameInputChange}
+								placeholder="Enter project name"
+							/>
+							<input
+								type="text"
+								value={accessCode}
+								onChange={handledbNameInputChange}
+								placeholder="Enter access code"
 							/>
 							<button>+</button>
 						</form>
