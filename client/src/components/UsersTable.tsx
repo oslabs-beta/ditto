@@ -25,6 +25,14 @@ const UsersTable: React.FC = () => {
 							<th>Role</th>
 						</tr>
 					</thead>
+					<tbody>
+						<tr>
+							<td>PlaceHolderUser</td>
+							<td>
+								<select>PlaceHolderRole</select>
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>

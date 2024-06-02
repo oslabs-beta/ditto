@@ -34,3 +34,21 @@ body {
 .usersHeader {
 	display: flex;
 }
+
+.usersTable {
+	flex: 1;
+	margin-bottom: 20px;
+	.usersHeader {
+		display: flex;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+	}
+	th {
+		border: 1px solid #ccc;
+		padding: 8px;
+		text-align: left;
+		background-color: #f2f2f2;
+	}
+}
