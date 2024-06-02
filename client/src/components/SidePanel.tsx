@@ -50,15 +50,14 @@ const SidePanel: React.FC = () => {
 	const referenceElement = useRef<HTMLButtonElement>(null);
 	const popperElement = useRef<HTMLDivElement>(null);
 	const dbId = useSelector((state: any) => state.dbId);
-	// const [migrations, setMigrationVersions] = useState<Migration[]>([]);
 	const selectedScript = useSelector(
 		(state: { selectedScript: string }) => state.selectedScript
 	);
+	const token = sessionStorage.getItem('token');
 	const actions = ['Migrate', 'Repair', 'Undo', 'Clean'];
 
 	useEffect(() => {
 		const fetchDatabases = async () => {
-			const token = sessionStorage.getItem('token');
 			try {
 				const response = await fetch('/db/connectionStrings', {
 					method: 'GET',
@@ -88,7 +87,6 @@ const SidePanel: React.FC = () => {
 			dispatch(setShowInput(showInput ? false : true));
 		} else {
 			if (selectedDatabase) {
-				const token = sessionStorage.getItem('token');
 				try {
 					const response = await fetch(
 						`/db/deleteConnectionString/${selectedDbId}`,
@@ -175,9 +173,6 @@ const SidePanel: React.FC = () => {
 						connection_string: connectionString,
 					}),
 				});
-				// if response is ok we need backend to query for databases again so i can dispatch setdatabases here again
-				// Maybe backend can have a controller for querying for databases again. so fetch for getDBConnectionByUserId
-				// and set dispatch setDatabases here again
 				if (response.ok) {
 					const result = await response.json();
 					const databaseCopy = JSON.parse(JSON.stringify(databases));
@@ -193,6 +188,15 @@ const SidePanel: React.FC = () => {
 		}
 	};
 
+	/* Dropdown Logic */
+	const handleChooseDatabase = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		dispatch(
+			setdbId(!e.target.value ? '' : e.target.selectedOptions[0].dataset.dbId)
+		);
+		dispatch(setSelectedDatabase(e.target.value));
+		dispatch(setSelectedMigration(''));
+	};
+
 	const mapDatabaseOptions = databases.map(
 		(db: { db_id: string; db_name: string }) => (
 			<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
@@ -201,37 +205,34 @@ const SidePanel: React.FC = () => {
 		)
 	);
 
+	/* Button Logic */
+	const handleTrashButton = () => {
+		if (selectedDatabase && !isOpen) setIsOpen(true);
+		else if (selectedDatabase && isOpen) setIsOpen(false);
+	};
+
+	const handlePopperYes = () => {
+		dispatch(setSelectedDatabase(''));
+		dispatch(setSelectedScript(''));
+		handleButtonClick('deletedb');
+		setIsOpen(false);
+	};
+
 	return (
 		<div id="sidecontainer">
 			{/* database */}
 			<div id="dbdropdown">
-				<p className="font-bold">Choose Database:</p>
+				<p className="font-bold">Choose Database</p>
 				<div className="selectdb">
-					<select
-						value={selectedDatabase}
-						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-							dispatch(
-								setdbId(
-									!e.target.value
-										? ''
-										: e.target.selectedOptions[0].dataset.dbId
-								)
-							);
-							dispatch(setSelectedDatabase(e.target.value));
-							dispatch(setSelectedMigration(''));
-						}}
-					>
-						<option value="">--Select a database--</option>
+					<select value={selectedDatabase} onChange={handleChooseDatabase}>
+						<option value="">-- Select a database --</option>
 						{mapDatabaseOptions}
 					</select>
 					<div className="removedb">
 						<button
 							className="whitebtn"
 							ref={referenceElement}
-							onClick={() => {
-								if (selectedDatabase && !isOpen) setIsOpen(true);
-								else if (selectedDatabase && isOpen) setIsOpen(false);
-							}}
+							onClick={handleTrashButton}
 						>
 							<FontAwesomeIcon icon={faTrashAlt} style={{ color: 'black' }} />
 						</button>
@@ -240,15 +241,7 @@ const SidePanel: React.FC = () => {
 							<div className="popper" ref={popperElement}>
 								<p>Are you sure?</p>
 								<div className="popperbtns">
-									<button
-										className="whitebtn"
-										onClick={e => {
-											dispatch(setSelectedDatabase(''));
-											dispatch(setSelectedScript(''));
-											handleButtonClick('deletedb');
-											setIsOpen(false);
-										}}
-									>
+									<button className="whitebtn" onClick={handlePopperYes}>
 										Yes
 									</button>
 									<button
@@ -265,7 +258,6 @@ const SidePanel: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			{/* database */}
 			{/* connection string form */}
 			<div className="addDb">
 				<div className="addDbBtn">
@@ -306,7 +298,6 @@ const SidePanel: React.FC = () => {
 							dispatch(setSelectedAction(e.target.value));
 						}}
 					>
-						{/* [ { db1: 30}, {db2: 40}] */}
 						{actions.map((action: string) => (
 							<option key={action} value={action}>
 								{action}
@@ -357,10 +348,6 @@ const SidePanel: React.FC = () => {
 					onChange={e => dispatch(setSelectedTable(e.target.value))}
 				>
 					<option value="">--Select a table--</option>
-					{/* <option value="products">Products</option>
-					<option value="customers">Customers</option>
-					<option value="orders">Orders</option>
-				<option value="suppliers">Suppliers</option> */}
 				</select>
 			</div>
 		</div>

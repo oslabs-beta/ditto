@@ -118,3 +118,7 @@
 
 - useSelector gets access to global state
 - useDispatch, to dispatch actions
+
+# SidePanel.tsx
+
+- short circuiting in javascript (https://www.freecodecamp.org/news/short-circuiting-in-javascript/)
