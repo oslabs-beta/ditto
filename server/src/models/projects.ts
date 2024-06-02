@@ -5,6 +5,15 @@ export interface Project {
 	project_name: string;
 	project_id: number;
 	owner: number;
+	code: string;
+}
+
+export interface UserProject {
+	user_project_id: number;
+	project_name: string;
+	user_id: number;
+	project_id: number;
+	role: string;
 }
 
 export interface SelectedProject {
@@ -13,6 +22,18 @@ export interface SelectedProject {
 	project_id: number;
 	role: string;
 }
+
+export const getProjectsByUserId = async (
+	userId: number
+): Promise<UserProject[]> => {
+	const queryString = `
+  SELECT *
+  FROM user_projects
+  WHERE user_id = $1;
+  `;
+	const result = await db.query(queryString, [userId]);
+	return result as UserProject[];
+};
 
 export const createProject = async (
 	project_name: string,
@@ -48,7 +69,8 @@ export const deleteProject = async (project_id: number, owner: number) => {
 	return result[0] as string;
 };
 
-export const generateCode = async (
+// use this in frontend - don't need to be in middleware
+export const addCode = async (
 	code: string,
 	project_id: number,
 	owner: number
@@ -62,35 +84,27 @@ export const generateCode = async (
 	return;
 };
 
-export const joinProject = async (
-	user: number,
-	code: string
-): Promise<void> => {
+export const findProjectByCode = async (code: string): Promise<Project> => {
 	const queryString = `
   SELECT *
   FROM projects
   WHERE code = $1;
   `;
 
-	const queryString2 = `
+	const result = await db.query(queryString, [code]);
+	return result[0] as Project;
+};
+
+export const joinProject = async (
+	user: number,
+	project_name: string,
+	project_id: number
+): Promise<void> => {
+	const queryString = `
   INSERT INTO user_projects (project_name, user_id, project_id, role)
   VALUES ($1, $2, $3, $4);
   `;
-
-	const queryString3 = `
-  UPDATE projects
-  SET code = NULL
-  WHERE code = $1;
-  `;
-
-	const result = await db.query(queryString, [code]);
-	await db.query(queryString2, [
-		result[0].project_name,
-		user,
-		result[0].project_id,
-		'User',
-	]);
-	await db.query(queryString3, [code]);
+	await db.query(queryString, [project_name, user, project_id, 'User']);
 	return;
 };
 
@@ -108,7 +122,7 @@ export const leaveProject = async (
 
 export const getAllUsers = async (project_id: number): Promise<string[]> => {
 	const queryString = `
-  SELECT u.username
+  SELECT u.username, u.user_id, up.role
   FROM user_projects AS up
   JOIN users AS u ON up.user_id = u.user_id
   WHERE up.project_id = $1;
@@ -117,15 +131,12 @@ export const getAllUsers = async (project_id: number): Promise<string[]> => {
 	return result as string[];
 };
 
-export const selectProject = async (
-	project_id: number,
-	user: number
-): Promise<SelectedProject> => {
+export const selectProject = async (project_id: number): Promise<Project> => {
 	const queryString = `
   SELECT *
-  FROM user_projects
-  WHERE project_id = $1 AND user_id = $2;
+  FROM projects
+  WHERE project_id = $1;
   `;
-	const result = await db.query(queryString, [project_id, user]);
-	return result[0] as SelectedProject;
+	const result = await db.query(queryString, [project_id]);
+	return result[0] as Project;
 };

@@ -17,7 +17,7 @@ router.post(
 	}
 );
 router.get(
-	'/connectionStrings',
+	'/connectionStrings/:projectId',
 	validateJWT,
 	getConnectionString,
 	(_req: Request, res: Response, _next: NextFunction) => {

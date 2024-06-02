@@ -1,12 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
-import {} from '../models/projects';
+import {
+	getProjectsByUserId,
+	createProject,
+	getAllUsers,
+	deleteProject,
+	selectProject,
+	findProjectByCode,
+	joinProject,
+	leaveProject,
+} from '../models/projects';
 
 export const createNewProject = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const { project_name, ownerId } = req.body;
+	const { project_name } = req.body;
 	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
@@ -16,62 +25,58 @@ export const createNewProject = async (
 	}
 
 	try {
-		const existingConnections = await getDBConnectionByProjectId(projectId);
-		if (existingConnections) {
-			const duplicate = existingConnections.find(
-				db => db.connection_string === connection_string
+		const existingDBs = await getProjectsByUserId(userId);
+		if (existingDBs) {
+			const duplicate = existingDBs.find(
+				projectName => projectName.project_name === project_name
 			);
 
 			if (duplicate) {
-				console.log('Connection string already exists');
+				console.log('Project already exists');
 				return res.sendStatus(400);
 			}
 		}
 
-		const newDB = await addDBConnection(connection_string);
-		await addDBConnectionToProject(db_name, newDB.db_id, projectId);
-		res.locals.db = { connection_string, db_name, db_id: newDB.db_id };
+		const newProject = await createProject(project_name, userId);
+		res.locals.project = newProject; // {date_created, project_name, project_id, owner, code}
 		return next();
 	} catch (error) {
 		return next({
 			status: 400,
-			message: `Error in dbController addDBConnectionString: ${error}`,
+			message: `Error in projectController createNewProject: ${error}`,
 		});
 	}
 };
 
-export const getConnectionString = async (
+export const getAllProjectsByUserId = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
 	const userId = req.user?.id;
-	const { projectId } = req.params;
 	if (!userId) {
 		console.log('Unauthorized');
 		return res.sendStatus(401);
 	}
 	try {
-		const connectionStrings = await getDBConnectionByProjectId(
-			Number(projectId)
-		);
-		res.locals.connectionStrings = connectionStrings; // { connection_string, db_name }
+		const projects = await getProjectsByUserId(userId);
+		res.locals.projects = projects; // array of all projects columns
 		return next();
 	} catch (error) {
 		return next({
 			status: 400,
-			message: `Error in dbController getConnectionString: ${error}`,
+			message: `Error in projectController getAllProjectsByUserId: ${error}`,
 		});
 	}
 };
 
-export const getConnectionStringById = async (
+export const selectProjectAndGetAllUsers = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
 	//get DB ID from req params
-	const { dbId } = req.params;
+	const { projectId } = req.params;
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -79,44 +84,134 @@ export const getConnectionStringById = async (
 		return res.sendStatus(401);
 	}
 	try {
-		const connectionString = await getDBConnectionById(Number(dbId));
-		if (!connectionString) {
-			return next({
-				status: 404,
-				message: 'Connection string not found',
-			});
-		}
-		res.locals.connectionString = connectionString; // { connection_string, migration_id (array) }
+		const allUsers = await getAllUsers(Number(projectId));
+		res.locals.users = allUsers; // [{username, user_id, role}]
 		return next();
 	} catch (error) {
 		return next({
 			status: 400,
-			message: `Error in dbController getConnectionStringbyId: ${error}`,
+			message: `Error in projectController selectProjectAndGetAllUsers: ${error}`,
 		});
 	}
 };
 
-export const deleteConnectionStringById = async (
+export const deleteProjectById = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const { dbId, projectId } = req.params;
+	const { projectId } = req.params;
 	const userId = req.user?.id;
 
 	if (!userId) {
 		console.log('Unauthorized');
 		return res.sendStatus(401);
 	}
+
 	try {
-		await deleteDBConnectionById(Number(projectId), Number(dbId));
-		const projectDBs = await getDBConnectionByProjectId(Number(projectId));
-		res.locals.projectDBs = projectDBs;
+		const project = await selectProject(Number(projectId));
+		if (userId != project.owner) {
+			console.log('Only the owner can delete a project');
+			return res.sendStatus(401);
+		}
+		const deleted = await deleteProject(Number(projectId), Number(userId));
+		res.locals.deletedProject = deleted;
 		return next();
 	} catch (error) {
 		next({
 			status: 400,
-			message: `Error in dbController getConnectionStringbyId: ${error}`,
+			message: `Error in projectController deleteProjectById: ${error}`,
+		});
+	}
+};
+
+export const joinExistingProject = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { code } = req.body;
+	const userId = req.user?.id;
+
+	if (!userId) {
+		console.log('Unauthorized');
+		return res.sendStatus(401);
+	}
+
+	try {
+		const existingProject = await findProjectByCode(code);
+		if (!existingProject) {
+			console.log('Project with matching code does not exist');
+			return res.sendStatus(400);
+		}
+		await joinProject(
+			userId,
+			existingProject.project_name,
+			existingProject.project_id
+		);
+		return next();
+	} catch (error) {
+		next({
+			status: 400,
+			message: `Error in projectController joinExistingProject: ${error}`,
+		});
+	}
+};
+
+export const leaveCurrentProject = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { projectId } = req.params;
+	const userId = req.user?.id;
+
+	if (!userId) {
+		console.log('Unauthorized');
+		return res.sendStatus(401);
+	}
+
+	try {
+		const project = await selectProject(Number(projectId));
+		if (!project) {
+			console.log('Project does not exist');
+			return res.sendStatus(400);
+		}
+		await leaveProject(userId, Number(projectId));
+		return next();
+	} catch (error) {
+		next({
+			status: 400,
+			message: `Error in projectController leaveCurrentProject: ${error}`,
+		});
+	}
+};
+
+export const kickUser = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { projectId, user } = req.params;
+	const userId = req.user?.id;
+
+	if (!userId) {
+		console.log('Unauthorized');
+		return res.sendStatus(401);
+	}
+
+	try {
+		const project = await selectProject(Number(projectId));
+		if (!project) {
+			console.log('Project does not exist');
+			return res.sendStatus(400);
+		}
+		await leaveProject(Number(user), Number(projectId));
+		return next();
+	} catch (error) {
+		next({
+			status: 400,
+			message: `Error in projectController leaveCurrentProject: ${error}`,
 		});
 	}
 };

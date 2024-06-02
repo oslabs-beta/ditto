@@ -64,7 +64,7 @@ export const getDBConnectionByProjectId = async (
     SELECT databases.connection_string, project_db.db_name, databases.db_id
 		FROM databases
 		JOIN project_db ON databases.db_id = project_db.db_id
-		WHERE project_db.user_id = $1;
+		WHERE project_db.project_id = $1;
     `;
 	const result = await db.query(queryString, [projectId]);
 	return result as DBbyProjectId[];

@@ -1,32 +1,80 @@
 import express, { Request, Response, NextFunction } from 'express';
-import {} from '../controllers/projectController';
 import { validateJWT } from '../controllers/authController';
+import {
+	createNewProject,
+	deleteProjectById,
+	getAllProjectsByUserId,
+	joinExistingProject,
+	kickUser,
+	leaveCurrentProject,
+	selectProjectAndGetAllUsers,
+} from '../controllers/projectController';
 
 const router = express.Router();
 
 router.post(
-	'/addConnectionString',
+	'/create',
 	validateJWT,
-	addDBConnectionString,
+	createNewProject,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(201).json(res.locals.db);
+		res.status(201).json(res.locals.project);
 	}
 );
+
 router.get(
-	'/connectionStrings',
+	'/allprojects',
 	validateJWT,
-	getConnectionString,
+	getAllProjectsByUserId,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(200).json(res.locals.connectionStrings);
+		res.status(200).json(res.locals.projects);
+	}
+);
+
+router.get(
+	'/allusers/:projectId',
+	validateJWT,
+	selectProjectAndGetAllUsers,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.users);
 	}
 );
 
 router.delete(
-	`/deleteConnectionString/:dbId/:projectId`,
+	`/delete/:projectId`,
 	validateJWT,
-	deleteConnectionStringById,
+	deleteProjectById,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(200).json(res.locals.projectDBs);
+		res.status(200).json(res.locals.deletedProject);
+	}
+);
+
+router.post(
+	'/join',
+	validateJWT,
+	joinExistingProject,
+	getAllProjectsByUserId,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.projects);
+	}
+);
+
+router.delete(
+	`/leave/:projectId`,
+	validateJWT,
+	leaveCurrentProject,
+	getAllProjectsByUserId,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.projects);
+	}
+);
+
+router.delete(
+	`/kick/:projectId/:user`,
+	validateJWT,
+	kickUser,
+	selectProjectAndGetAllUsers,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.users);
 	}
 );
 
