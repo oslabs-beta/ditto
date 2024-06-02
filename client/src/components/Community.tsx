@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Jea from '/client/src/assets/img/teamPNG/Jea.png';
-import Jay from '/client/src/assets/img/teamPNG/Jay.png';
-import Jeff from '/client/src/assets/img/teamPNG/Jeff.png';
-import Shaan from '/client/src/assets/img/teamPNG/Shaan.png';
+import Jea from '/client/src/assets/img/teamPNG/Jea.webp'; 
+import Jay from '/client/src/assets/img/teamPNG/Jay.webp';
+import Jeff from '/client/src/assets/img/teamPNG/Jeff.webp';
+import Shaan from '/client/src/assets/img/teamPNG/Shaan.webp';
 import '/client/src/styles/Community.css';
 
 const Community: React.FC = () => {

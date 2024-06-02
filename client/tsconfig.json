@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "es6",
+		"module": "esnext",
 		"target": "es2019",
 		"outDir": "./dist",
 		"rootDir": "./src",

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import '../styles/SignUpPage.css';
 
 interface SignUpFormData {
@@ -59,6 +60,10 @@ const SignUpPage: React.FC = () => {
 
 	return (
 		<div className="signuppagecontainer">
+			<Helmet>
+				<title>Sign Up for Ditto</title>
+				<meta name="description" content="Sign up for Ditto to start managing and tracking your PostgreSQL database migrations."/>
+			</Helmet>
 			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<input

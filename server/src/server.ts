@@ -21,16 +21,16 @@ app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const joinPath = path.join(__dirname, '../../client/dist');
-app.use(express.static(joinPath));
+const oneYear = 365 * 24 * 60 * 60 * 1000;
 
-// app.use(
-// 	session({
-// 		secret: process.env.SESSION_SECRET as string,
-// 		resave: false,
-// 		saveUninitialized: false,
-// 	})
-// );
+const joinPath = path.join(__dirname, '../../client/dist');
+app.use(express.static(joinPath, {
+	maxAge: oneYear
+}));
+
+app.get('/robots.txt', (req: Request, res: Response) => {
+	res.sendFile(path.join(joinPath, 'robots.txt'));
+});
 
 app.use('/migration', migrationRoutes);
 

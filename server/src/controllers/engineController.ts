@@ -1,3 +1,6 @@
+import { Request, Response, NextFunction } from 'express';
+import { Pool } from 'pg';
+import db from '../db';
 import {
 	getDBConnectionByUserId,
 	getPendingMigrations,
@@ -5,11 +8,9 @@ import {
 	validateChecksum,
 	Migration,
 } from '../models/userDB';
-import { Pool } from 'pg';
-import { Request, Response, NextFunction } from 'express';
-import db from '../db';
 
-const createPool = (connectionString: string) => {
+
+export const createPool = (connectionString: string) => {
 	return new Pool({
 		connectionString,
 		ssl: {
@@ -93,27 +94,32 @@ export const executeMigration = async (
 			}
 
 			try {
+				console.log('Reached before migrationscript')
 				await migrationScript(migration.script, pool); //still iterating so execute each migration script
+				console.log('Reached before updatemigration', migration.status)
 				await updateMigrationStatus(migration.migration_id, 'Success'); // update status to success if execution is successful
+				console.log('reached after update migration status', migration.status)
 			} catch (error) {
+				console.log('Entered catch error for migration status to failure')
 				await updateMigrationStatus(migration.migration_id, 'Failed'); // update status to failed if execution is not successful
 			}
 		}
 		// res.locals.message = 'Migrations executed successfully';
 		// return next();
+		console.log('maybe db', db)
 		const allMigrations = await db.query(
 			`
 		SELECT * FROM migration_logs
 		WHERE user_id = $1 AND database_id = $2
 		ORDER BY CAST(version AS INTEGER) ASC;
 		`,
-			[userId, dbId]
+			[userId, dbId] // an example of preventing SQL injection 
 		);
-		res.status(201).json(allMigrations); //making sure to return an array
+		res.status(201).json(allMigrations); //this makes sure our state is the same as it was 
 	} catch (error) {
 		return next({
 			status: 500,
-			message: `$Error in engineController.executeMigration ${error}.`,
+			message: `Error in engineController.executeMigration ${error}.`,
 		});
 	}
 };

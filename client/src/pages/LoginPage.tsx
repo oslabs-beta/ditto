@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser, setDatabases } from '../store';
+import { Helmet } from 'react-helmet-async';
 import githubIcon from '/client/src/assets/img/github-mark.png';
 import '/client/src/styles/LoginPage.css';
 import '../styles/NavBar.css';
@@ -99,6 +100,10 @@ const LoginPage: React.FC = () => {
 
 	return (
 		<div className="container">
+			<Helmet>
+				<title>Login to Ditto</title>
+				<meta name="description" content="Log in to Ditto to access and manage your PostgreSQL database migrations."/>
+			</Helmet>
 			<h1 className="login">Log In</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<input
