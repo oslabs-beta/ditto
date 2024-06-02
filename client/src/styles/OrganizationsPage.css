@@ -7,3 +7,26 @@ body {
 	height: 100%;
 	padding: 90px 30px 0 30px;
 }
+
+.organizationsPanel {
+	border-right: 1px solid;
+	display: flex;
+	flex-direction: column;
+	width: 25%;
+	height: 88vh;
+	button {
+		background-color: #b592f1;
+		border: none;
+		border-radius: 7px;
+		padding: 8px 12px;
+		color: whitesmoke;
+		cursor: pointer;
+		height: 35px;
+	}
+	select {
+		width: 200px;
+		text-align: center;
+		background-color: whitesmoke;
+		height: 40px;
+	}
+}
