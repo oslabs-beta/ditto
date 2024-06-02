@@ -57,6 +57,26 @@ const LoginPage: React.FC = () => {
 				console.log('data.token: ', token);
 				// const dbResponse = await fetch('http://localhost:3001/db/')
 				sessionStorage.setItem('token', token); // session storage way
+
+				// get user's saved databases and update state
+				try {
+					const response = await fetch('/db/connectionStrings', {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`, // Replace with your JWT token logic
+						},
+					});
+
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+
+					const result = await response.json();
+					dispatch(setDatabases(result));
+				} catch (error) {
+					console.error('Error fetching databases:', error);
+				}
 				navigate('/migration');
 			} else {
 				console.error('Login failed:', await response.json());

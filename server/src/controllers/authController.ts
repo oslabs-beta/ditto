@@ -29,10 +29,8 @@ export const validateJWT = (
 			return next();
 		});
 	} else {
-		return next({
-			status: 401,
-			message: 'Error in authController validateJWT: Unauthorized',
-		});
+		console.log('header missing - unauthorized');
+		return res.sendStatus(401);
 	}
 };
 
@@ -45,13 +43,14 @@ export const register = async (
 	try {
 		const existingUser = await findUser(username);
 		if (existingUser) {
-			return next({
-				status: 400,
-				message: 'Username already exists',
-			});
+			console.log('Username already exists');
+			return res.sendStatus(400);
+		} else if (!username || !password) {
+			console.log('Username and/or password missing');
+			return res.sendStatus(400);
 		}
 		const user = await createUser(username, password);
-		res.locals.message = `Successfully created user ${user.username}`;
+		res.locals.userId = user.user_id;
 		return next();
 	} catch (error) {
 		next({
@@ -70,18 +69,14 @@ export const login = async (
 	try {
 		const user = await findUser(username);
 		if (!user) {
-			return next({
-				status: 401,
-				message: 'Username does not exist',
-			});
+			console.log('Username does not exist');
+			return res.sendStatus(401);
 		}
 		//compare given pass with stored hashed pass
 		const match = await bcrypt.compare(password, user.password);
 		if (!match) {
-			return next({
-				status: 401,
-				message: 'Incorrect password',
-			});
+			console.log('Wrong password');
+			return res.sendStatus(401);
 		}
 		//generate JWT token with user iD and username valid for 1 hr
 		const token = jwt.sign(

@@ -3,7 +3,7 @@ import {
 	addDBConnectionString,
 	getConnectionString,
 	deleteConnectionStringById,
-} from '../controllers/dbController';
+} from '../controllers/newDbController';
 import { validateJWT } from '../controllers/authController';
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.post(
 	}
 );
 router.get(
-	'/connectionStrings',
+	'/connectionStrings/:projectId',
 	validateJWT,
 	getConnectionString,
 	(_req: Request, res: Response, _next: NextFunction) => {
@@ -26,11 +26,11 @@ router.get(
 );
 
 router.delete(
-	`/deleteConnectionString/:dbId`,
+	`/deleteConnectionString/:dbId/:projectId`,
 	validateJWT,
 	deleteConnectionStringById,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(200).json(res.locals.userDBs);
+		res.status(200).json(res.locals.projectDBs);
 	}
 );
 

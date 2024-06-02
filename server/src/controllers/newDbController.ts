@@ -1,18 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 import {
 	addDBConnection,
-	getDBConnectionByUserId,
+	getDBConnectionByProjectId,
 	getDBConnectionById,
 	deleteDBConnectionById,
-	addDBConnectionToUser,
-} from '../models/userDB';
+	addDBConnectionToProject,
+} from '../models/dbModels';
 
 export const addDBConnectionString = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const { db_name, connection_string } = req.body;
+	const { db_name, connection_string, projectId } = req.body;
 	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
@@ -22,7 +22,7 @@ export const addDBConnectionString = async (
 	}
 
 	try {
-		const existingConnections = await getDBConnectionByUserId(userId);
+		const existingConnections = await getDBConnectionByProjectId(projectId);
 		if (existingConnections) {
 			const duplicate = existingConnections.find(
 				db => db.connection_string === connection_string
@@ -35,7 +35,7 @@ export const addDBConnectionString = async (
 		}
 
 		const newDB = await addDBConnection(connection_string);
-		await addDBConnectionToUser(db_name, newDB.db_id, userId);
+		await addDBConnectionToProject(db_name, newDB.db_id, projectId);
 		res.locals.db = { connection_string, db_name, db_id: newDB.db_id };
 		return next();
 	} catch (error) {
@@ -52,12 +52,15 @@ export const getConnectionString = async (
 	next: NextFunction
 ) => {
 	const userId = req.user?.id;
+	const { projectId } = req.params;
 	if (!userId) {
 		console.log('Unauthorized');
 		return res.sendStatus(401);
 	}
 	try {
-		const connectionStrings = await getDBConnectionByUserId(userId);
+		const connectionStrings = await getDBConnectionByProjectId(
+			Number(projectId)
+		);
 		res.locals.connectionStrings = connectionStrings; // { connection_string, db_name }
 		return next();
 	} catch (error) {
@@ -82,7 +85,7 @@ export const getConnectionStringById = async (
 		return res.sendStatus(401);
 	}
 	try {
-		const connectionString = await getDBConnectionById(userId, Number(dbId));
+		const connectionString = await getDBConnectionById(Number(dbId));
 		if (!connectionString) {
 			return next({
 				status: 404,
@@ -104,7 +107,7 @@ export const deleteConnectionStringById = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const { dbId } = req.params;
+	const { dbId, projectId } = req.params;
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -112,9 +115,9 @@ export const deleteConnectionStringById = async (
 		return res.sendStatus(401);
 	}
 	try {
-		await deleteDBConnectionById(userId, Number(dbId));
-		const userDBs = await getDBConnectionByUserId(userId);
-		res.locals.userDBs = userDBs;
+		await deleteDBConnectionById(Number(projectId), Number(dbId));
+		const projectDBs = await getDBConnectionByProjectId(Number(projectId));
+		res.locals.projectDBs = projectDBs;
 		return next();
 	} catch (error) {
 		next({

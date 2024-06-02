@@ -19,7 +19,10 @@ export const createPool = (connectionString: string) => {
 	});
 };
 
-export const migrationScript = async (script: string, pool: Pool): Promise<void> => {
+export const migrationScript = async (
+	script: string,
+	pool: Pool
+): Promise<void> => {
 	let client;
 	try {
 		client = await pool.connect();
