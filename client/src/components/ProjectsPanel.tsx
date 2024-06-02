@@ -21,10 +21,10 @@ const OrganizationsPanel: React.FC = () => {
 	const selectedProject = useSelector((state: any) => state.selectedProject);
 	const [projectName, setProjectName] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
+	const [promptLeave, setPromptLeave] = useState(false);
 	const [showInput, setShowInput] = useState(false);
 	const [joinInput, setJoinInput] = useState(false);
 	const [accessCode, setAccessCode] = useState('');
-
 	const token = sessionStorage.getItem('token');
 
 	/* Built in Methods */
@@ -119,6 +119,29 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 
+	/* LEAVE Project */
+	const leaveProject = async () => {
+		if (selectedProject) {
+			try {
+				const response = await fetch('', {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				setPromptLeave(false);
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+				const results = await response.json();
+				dispatch(setProjects(results));
+			} catch (error) {
+				console.error('Error deleting project:', error);
+			}
+		}
+	};
+
 	/* Dropdown Logic */
 	const handleChooseProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		console.log(projects);
@@ -129,18 +152,6 @@ const OrganizationsPanel: React.FC = () => {
 		);
 		dispatch(setSelectedProject(e.target.value));
 	};
-
-	// const mapProjectOptions = projects.map(
-	// 	(project: { project_id: string; project_name: string }) => {
-	// 		<option
-	// 			// key={project.project_id}
-	// 			value={project.project_name}
-	// 			// data-project-id={project.project_id}
-	// 		>
-	// 			{project.project_name}
-	// 		</option>;
-	// 	}
-	// );
 
 	const mapProjectOptions = projects.map(
 		(project: { project_id: string; project_name: string }) => (
@@ -156,6 +167,9 @@ const OrganizationsPanel: React.FC = () => {
 
 	/* Button Logic */
 	const handleCreate = () => {
+		setIsOpen(false);
+		setPromptLeave(false);
+		setJoinInput(false);
 		setShowInput(showInput ? false : true);
 	};
 
@@ -164,10 +178,16 @@ const OrganizationsPanel: React.FC = () => {
 	};
 
 	const handleJoin = () => {
+		setIsOpen(false);
+		setPromptLeave(false);
+		setShowInput(false);
 		setJoinInput(joinInput ? false : true);
 	};
 
-	const handlePopper = () => {
+	const handlePopperDelete = () => {
+		setPromptLeave(false);
+		setShowInput(false);
+		setJoinInput(false);
 		if (selectedProject && !isOpen) setIsOpen(true);
 		else if (selectedProject && isOpen) setIsOpen(false);
 	};
@@ -179,7 +199,13 @@ const OrganizationsPanel: React.FC = () => {
 		setIsOpen(false);
 	};
 
-	const handleLeave = () => {};
+	const handleLeave = () => {
+		setIsOpen(false);
+		setShowInput(false);
+		setJoinInput(false);
+		if (selectedProject && !promptLeave) setPromptLeave(true);
+		else if (selectedProject && promptLeave) setPromptLeave(false);
+	};
 
 	const handleGenerate = () => {
 		const accessCode = Math.random().toString(36).substring(7);
@@ -203,7 +229,7 @@ const OrganizationsPanel: React.FC = () => {
 					</button>
 
 					{(userRole === 'owner' || userRole === 'admin') && (
-						<button onClick={handlePopper}>
+						<button onClick={handlePopperDelete}>
 							<FontAwesomeIcon icon={faTrash} />
 						</button>
 					)}
@@ -215,6 +241,7 @@ const OrganizationsPanel: React.FC = () => {
 					{/* If you press create */}
 					{showInput && (
 						<form onSubmit={createProject}>
+							<p>Create Project:</p>
 							<input
 								type="text"
 								value={projectName}
@@ -227,6 +254,7 @@ const OrganizationsPanel: React.FC = () => {
 					{/* If you press join */}
 					{joinInput && (
 						<form onSubmit={joinProject}>
+							<p>Join Project:</p>
 							<input
 								type="text"
 								value={projectName}
@@ -242,15 +270,33 @@ const OrganizationsPanel: React.FC = () => {
 							<button>+</button>
 						</form>
 					)}
-					{/* Popper */}
+					{/* Popper for Delete */}
 					{selectedProject && isOpen && (
 						<div>
+							<p>Delete Project:</p>
 							<p>Are you sure?</p>
 							<div>
 								<button onClick={handlePopperYes}>Yes</button>
 								<button
 									onClick={() => {
 										setIsOpen(false);
+									}}
+								>
+									No
+								</button>
+							</div>
+						</div>
+					)}
+					{/* Popper for Leave */}
+					{selectedProject && promptLeave && (
+						<div>
+							<p>Leave Project:</p>
+							<p>Are you sure?</p>
+							<div>
+								<button onClick={handlePopperYes}>Yes</button>
+								<button
+									onClick={() => {
+										setPromptLeave(false);
 									}}
 								>
 									No

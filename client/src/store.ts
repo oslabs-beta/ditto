@@ -7,6 +7,7 @@ const SET_USER = 'SET_USER';
 const SET_PROJECTS = 'SET_PROJECTS';
 const SET_DATABASES = 'SET_DATABASES';
 const SET_MIGRATION_VERSIONS = 'SET_MIGRATION_VERSIONS';
+const SET_SELECTED_USER = 'SET_SELECTED_USER';
 const SET_SELECTED_PROJECT = 'SET_SELECTED_PROJECTS';
 const SET_SELECTED_DATABASE = 'SET_SELECTED_DATABASE';
 const SET_SELECTED_MIGRATION = 'SET_SELECTED_MIGRATION';
@@ -55,10 +56,16 @@ export const setProjectId = (projectId: string | undefined) => ({
 	payload: projectId,
 });
 
+export const setSelectedUser = (selectedUser: string) => ({
+	type: SET_SELECTED_USER,
+	payload: selectedUser,
+});
+
 export const setSelectedTable = (table: string) => ({
 	type: SET_SELECTED_TABLE,
 	payload: table,
 });
+
 export const setSelectedDatabase = (database: string) => ({
 	type: SET_SELECTED_DATABASE,
 	payload: database,
@@ -131,6 +138,7 @@ const initialState = {
 		{ project_id: '67', project_name: 'Solibee' },
 	],
 	migrationVersions: [],
+	selectedUser: '',
 	selectedTable: '',
 	selectedDatabase: '',
 	selectedMigration: '',
@@ -157,6 +165,8 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, databases: action.payload };
 		case SET_MIGRATION_VERSIONS:
 			return { ...state, migrationVersions: action.payload };
+		case SET_SELECTED_USER:
+			return { ...state, selectedUser: action.payload };
 		case SET_SELECTED_TABLE:
 			return { ...state, selectedTable: action.payload };
 		case SET_SELECTED_DATABASE:

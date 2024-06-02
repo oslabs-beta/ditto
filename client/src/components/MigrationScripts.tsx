@@ -80,14 +80,6 @@ const MigrationScripts: React.FC = () => {
 	}, [selectedDatabase, selectedMigration, migrationVersions]);
 
 	/* Add Migrations Button */
-	// const handleFormSubmit = (data: {
-	// 	version: string;
-	// 	description: string;
-	// 	script: string;
-	// }) => {
-	// 	console.log('Form Data:', data);
-	// };
-	/* Add Migrations Button */
 	const handleSubmit = () => {
 		dispatch(setScript(''));
 		navigate('/addMigrations');
