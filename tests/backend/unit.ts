@@ -1,7 +1,9 @@
 // import { Pool } from 'pg';
-// import { describe, expect, beforeEach, afterEach, it, } from '@jest/globals';
-// import { migrationController } from '../../server/src/controllers/engineController';
+// import { Request, Response, NextFunction } from 'express';
+// import { executeMigration} from '../../server/src/controllers/engineController';
+// import { getDBConnectionByUserId, getPendingMigrations, updateMigrationStatus, validateChecksum, } from '../../server/src/models/userDB';
 
+// jest.mock('../../server/src/models/userDB');
 // jest.mock('pg', () => {
 //     const mClient = {
 //         query: jest.fn(),
@@ -20,8 +22,14 @@
 //     const connectionString = process.env.FAKE_URL;
 
 //     beforeEach(() => {
+//         jest.clearAllMocks();
 //         pool = new Pool({ connectionString });
 //     });
+
+//     const mockRequest = (body: any) => ({
+//         body,
+//         user: {id: 1},
+//     }) as Request;
 
 //     afterEach(() => {
 //         jest.clearAllMocks();

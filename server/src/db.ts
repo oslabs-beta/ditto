@@ -15,7 +15,6 @@ const pool = new Pool({
 
 const db = {
 	async connect(): Promise<void> {
-		// Connect to the database
 		try {
 			await pool.connect();
 			console.log('Connected to PostgreSQL database');
@@ -29,7 +28,6 @@ const db = {
 	},
 
 	async end(): Promise<void> {
-		// End connection to database
 		try {
 			await pool.end();
 			console.log('Connection to database ended');
@@ -45,7 +43,7 @@ const db = {
 	async query(queryString: string, values?: (string | number)[]): Promise<any> {
 		try {
 			const result = await pool.query(queryString, values);
-			return result.rows; // should return rows for SELECT
+			return result.rows;
 		} catch (err: unknown) {
 			if (err instanceof Error) {
 				console.error('Query error:', err.stack);

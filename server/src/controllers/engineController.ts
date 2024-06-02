@@ -10,7 +10,7 @@ import {
 } from '../models/userDB';
 
 
-const createPool = (connectionString: string) => {
+export const createPool = (connectionString: string) => {
 	return new Pool({
 		connectionString,
 		ssl: {
@@ -19,7 +19,7 @@ const createPool = (connectionString: string) => {
 	});
 };
 
-const migrationScript = async (script: string, pool: Pool): Promise<void> => {
+export const migrationScript = async (script: string, pool: Pool): Promise<void> => {
 	let client;
 	try {
 		client = await pool.connect();
@@ -91,14 +91,19 @@ export const executeMigration = async (
 			}
 
 			try {
+				console.log('Reached before migrationscript')
 				await migrationScript(migration.script, pool); //still iterating so execute each migration script
+				console.log('Reached before updatemigration', migration.status)
 				await updateMigrationStatus(migration.migration_id, 'Success'); // update status to success if execution is successful
+				console.log('reached after update migration status', migration.status)
 			} catch (error) {
+				console.log('Entered catch error for migration status to failure')
 				await updateMigrationStatus(migration.migration_id, 'Failed'); // update status to failed if execution is not successful
 			}
 		}
 		// res.locals.message = 'Migrations executed successfully';
 		// return next();
+		console.log('maybe db', db)
 		const allMigrations = await db.query(
 			`
 		SELECT * FROM migration_logs
@@ -111,7 +116,7 @@ export const executeMigration = async (
 	} catch (error) {
 		return next({
 			status: 500,
-			message: `$Error in engineController.executeMigration ${error}.`,
+			message: `Error in engineController.executeMigration ${error}.`,
 		});
 	}
 };
