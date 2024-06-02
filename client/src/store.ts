@@ -21,6 +21,8 @@ const SET_SELECTED_ACTION = 'SET_SELECTED_ACTION';
 const SET_SELECTED_SCRIPT = 'SET_SELECTED_SCRIPT';
 const SET_SCRIPT = 'SET_SCRIPT';
 const RESET_STATE = 'RESET_STATE';
+const SET_CURRENT_PROJECT ='SET_CURRENT_PROJECT';
+const SET_USER_ROLE = 'SET_USER_ROLE';
 
 // Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
@@ -96,6 +98,16 @@ export const resetState = () => ({
 	type: RESET_STATE,
 });
 
+export const setCurrentProject = (project: string) => ({ 
+	type: SET_CURRENT_PROJECT,
+	payload: project,
+ });
+
+ export const setUserRole = (role: string) => ({
+	type: SET_USER_ROLE,
+	payload: role,
+ });
+
 // Define initial state
 const initialState = {
 	user: '',
@@ -112,6 +124,8 @@ const initialState = {
 	description: '',
 	selectedAction: 'Migrate',
 	selectedScript: '',
+	currentProject: '',
+	userRole: '',
 };
 
 // Define reducers
@@ -148,6 +162,10 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, selectedScript: action.payload };
 		case SET_SCRIPT:
 			return { ...state, script: action.payload };
+		case SET_CURRENT_PROJECT:
+			return { ...state, currentProject: action.payload };
+		case SET_USER_ROLE:
+			return { ...state, userRole: action.payload };
 		case RESET_STATE:
 			console.log('in reset state', initialState);
 			return initialState;

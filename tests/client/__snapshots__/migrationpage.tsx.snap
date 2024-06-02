@@ -1,0 +1,559 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SidePanel Component should not show add database button for regular user 1`] = `
+<div
+  id="sidecontainer"
+>
+  <p
+    className="font-bold"
+  >
+    Test Project
+  </p>
+  <div
+    id="dbdropdown"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Database:
+    </p>
+    <div
+      className="selectdb"
+    >
+      <select
+        aria-label="choose a database"
+        onChange={[Function]}
+        value=""
+      >
+        <option
+          value=""
+        >
+          --Select a database--
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    id="chooseaction"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Action
+    </p>
+    <div>
+      <select
+        aria-label="choose an action"
+        onChange={[Function]}
+        value="Migrate"
+      >
+        <option
+          value="Migrate"
+        >
+          Migrate
+        </option>
+        <option
+          value="Repair"
+        >
+          Repair
+        </option>
+        <option
+          value="Undo"
+        >
+          Undo
+        </option>
+        <option
+          value="Clean"
+        >
+          Clean
+        </option>
+      </select>
+      <button
+        className="purplebtn"
+        onClick={[Function]}
+      >
+        Execute
+      </button>
+    </div>
+    <div
+      className="actiondesc"
+    >
+      <p>
+        Schema migration involves updating the database schema to a new version, typically to accommodate changes in application requirements, data structure, or performance optimization.
+      </p>
+    </div>
+  </div>
+  <div>
+    <p
+      className="font-bold"
+    >
+      Preview Table:
+    </p>
+    <select
+      aria-label="preview table"
+      onChange={[Function]}
+    >
+      <option
+        value=""
+      >
+        --Select a table--
+      </option>
+    </select>
+  </div>
+</div>
+`;
+
+exports[`SidePanel Component should not show remove database button for regular user 1`] = `
+<div
+  id="sidecontainer"
+>
+  <p
+    className="font-bold"
+  >
+    Test Project
+  </p>
+  <div
+    id="dbdropdown"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Database:
+    </p>
+    <div
+      className="selectdb"
+    >
+      <select
+        aria-label="choose a database"
+        onChange={[Function]}
+        value=""
+      >
+        <option
+          value=""
+        >
+          --Select a database--
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    id="chooseaction"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Action
+    </p>
+    <div>
+      <select
+        aria-label="choose an action"
+        onChange={[Function]}
+        value="Migrate"
+      >
+        <option
+          value="Migrate"
+        >
+          Migrate
+        </option>
+        <option
+          value="Repair"
+        >
+          Repair
+        </option>
+        <option
+          value="Undo"
+        >
+          Undo
+        </option>
+        <option
+          value="Clean"
+        >
+          Clean
+        </option>
+      </select>
+      <button
+        className="purplebtn"
+        onClick={[Function]}
+      >
+        Execute
+      </button>
+    </div>
+    <div
+      className="actiondesc"
+    >
+      <p>
+        Schema migration involves updating the database schema to a new version, typically to accommodate changes in application requirements, data structure, or performance optimization.
+      </p>
+    </div>
+  </div>
+  <div>
+    <p
+      className="font-bold"
+    >
+      Preview Table:
+    </p>
+    <select
+      aria-label="preview table"
+      onChange={[Function]}
+    >
+      <option
+        value=""
+      >
+        --Select a table--
+      </option>
+    </select>
+  </div>
+</div>
+`;
+
+exports[`SidePanel Component should render correctly for Admin/Owner 1`] = `
+<div
+  id="sidecontainer"
+>
+  <p
+    className="font-bold"
+  >
+    Test Project
+  </p>
+  <div
+    id="dbdropdown"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Database:
+    </p>
+    <div
+      className="selectdb"
+    >
+      <select
+        aria-label="choose a database"
+        onChange={[Function]}
+        value=""
+      >
+        <option
+          value=""
+        >
+          --Select a database--
+        </option>
+      </select>
+      <div
+        className="removedb"
+      >
+        <button
+          aria-label="remove database"
+          className="whitebtn"
+          onClick={[Function]}
+        >
+          <svg
+            aria-hidden="true"
+            className="svg-inline--fa fa-trash-can "
+            data-icon="trash-can"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            style={
+              {
+                "color": "black",
+              }
+            }
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"
+              fill="currentColor"
+              style={{}}
+            />
+          </svg>
+        </button>
+        <p
+          id="textbox"
+        >
+          Remove database
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="addDb"
+  >
+    <div
+      className="addDbBtn"
+    >
+      <button
+        aria-label="add database"
+        className="purplebtn btn"
+        onClick={[Function]}
+      >
+        <svg
+          aria-hidden="true"
+          className="svg-inline--fa fa-database "
+          data-icon="database"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          style={{}}
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M448 80v48c0 44.2-100.3 80-224 80S0 172.2 0 128V80C0 35.8 100.3 0 224 0S448 35.8 448 80zM393.2 214.7c20.8-7.4 39.9-16.9 54.8-28.6V288c0 44.2-100.3 80-224 80S0 332.2 0 288V186.1c14.9 11.8 34 21.2 54.8 28.6C99.7 230.7 159.5 240 224 240s124.3-9.3 169.2-25.3zM0 346.1c14.9 11.8 34 21.2 54.8 28.6C99.7 390.7 159.5 400 224 400s124.3-9.3 169.2-25.3c20.8-7.4 39.9-16.9 54.8-28.6V432c0 44.2-100.3 80-224 80S0 476.2 0 432V346.1z"
+            fill="currentColor"
+            style={{}}
+          />
+        </svg>
+         
+      </button>
+      <p
+        id="textbox"
+      >
+        Add database
+      </p>
+    </div>
+  </div>
+  <div
+    id="chooseaction"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Action
+    </p>
+    <div>
+      <select
+        aria-label="choose an action"
+        onChange={[Function]}
+        value="Migrate"
+      >
+        <option
+          value="Migrate"
+        >
+          Migrate
+        </option>
+        <option
+          value="Repair"
+        >
+          Repair
+        </option>
+        <option
+          value="Undo"
+        >
+          Undo
+        </option>
+        <option
+          value="Clean"
+        >
+          Clean
+        </option>
+      </select>
+      <button
+        className="purplebtn"
+        onClick={[Function]}
+      >
+        Execute
+      </button>
+    </div>
+    <div
+      className="actiondesc"
+    >
+      <p>
+        Schema migration involves updating the database schema to a new version, typically to accommodate changes in application requirements, data structure, or performance optimization.
+      </p>
+    </div>
+  </div>
+  <div>
+    <p
+      className="font-bold"
+    >
+      Preview Table:
+    </p>
+    <select
+      aria-label="preview table"
+      onChange={[Function]}
+    >
+      <option
+        value=""
+      >
+        --Select a table--
+      </option>
+    </select>
+  </div>
+</div>
+`;
+
+exports[`SidePanel Component should show remove database button for Admin/Owner 1`] = `
+<div
+  id="sidecontainer"
+>
+  <p
+    className="font-bold"
+  >
+    Test Project
+  </p>
+  <div
+    id="dbdropdown"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Database:
+    </p>
+    <div
+      className="selectdb"
+    >
+      <select
+        aria-label="choose a database"
+        onChange={[Function]}
+        value=""
+      >
+        <option
+          value=""
+        >
+          --Select a database--
+        </option>
+      </select>
+      <div
+        className="removedb"
+      >
+        <button
+          aria-label="remove database"
+          className="whitebtn"
+          onClick={[Function]}
+        >
+          <svg
+            aria-hidden="true"
+            className="svg-inline--fa fa-trash-can "
+            data-icon="trash-can"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            style={
+              {
+                "color": "black",
+              }
+            }
+            viewBox="0 0 448 512"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"
+              fill="currentColor"
+              style={{}}
+            />
+          </svg>
+        </button>
+        <p
+          id="textbox"
+        >
+          Remove database
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="addDb"
+  >
+    <div
+      className="addDbBtn"
+    >
+      <button
+        aria-label="add database"
+        className="purplebtn btn"
+        onClick={[Function]}
+      >
+        <svg
+          aria-hidden="true"
+          className="svg-inline--fa fa-database "
+          data-icon="database"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          style={{}}
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M448 80v48c0 44.2-100.3 80-224 80S0 172.2 0 128V80C0 35.8 100.3 0 224 0S448 35.8 448 80zM393.2 214.7c20.8-7.4 39.9-16.9 54.8-28.6V288c0 44.2-100.3 80-224 80S0 332.2 0 288V186.1c14.9 11.8 34 21.2 54.8 28.6C99.7 230.7 159.5 240 224 240s124.3-9.3 169.2-25.3zM0 346.1c14.9 11.8 34 21.2 54.8 28.6C99.7 390.7 159.5 400 224 400s124.3-9.3 169.2-25.3c20.8-7.4 39.9-16.9 54.8-28.6V432c0 44.2-100.3 80-224 80S0 476.2 0 432V346.1z"
+            fill="currentColor"
+            style={{}}
+          />
+        </svg>
+         
+      </button>
+      <p
+        id="textbox"
+      >
+        Add database
+      </p>
+    </div>
+  </div>
+  <div
+    id="chooseaction"
+  >
+    <p
+      className="font-bold"
+    >
+      Choose Action
+    </p>
+    <div>
+      <select
+        aria-label="choose an action"
+        onChange={[Function]}
+        value="Migrate"
+      >
+        <option
+          value="Migrate"
+        >
+          Migrate
+        </option>
+        <option
+          value="Repair"
+        >
+          Repair
+        </option>
+        <option
+          value="Undo"
+        >
+          Undo
+        </option>
+        <option
+          value="Clean"
+        >
+          Clean
+        </option>
+      </select>
+      <button
+        className="purplebtn"
+        onClick={[Function]}
+      >
+        Execute
+      </button>
+    </div>
+    <div
+      className="actiondesc"
+    >
+      <p>
+        Schema migration involves updating the database schema to a new version, typically to accommodate changes in application requirements, data structure, or performance optimization.
+      </p>
+    </div>
+  </div>
+  <div>
+    <p
+      className="font-bold"
+    >
+      Preview Table:
+    </p>
+    <select
+      aria-label="preview table"
+      onChange={[Function]}
+    >
+      <option
+        value=""
+      >
+        --Select a table--
+      </option>
+    </select>
+  </div>
+</div>
+`;
