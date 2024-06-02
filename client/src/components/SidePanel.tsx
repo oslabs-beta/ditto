@@ -30,6 +30,8 @@ const SidePanel: React.FC = () => {
 	const selectedAction = useSelector(
 		(state: { selectedAction: string }) => state.selectedAction
 	);
+	const currentProject = useSelector((state: any) => state.currentProject)
+	const userRole = useSelector((state: any) => state.userRole);
 	const [isOpen, setIsOpen] = useState(false);
 	const referenceElement = useRef<HTMLButtonElement>(null);
 	const popperElement = useRef<HTMLDivElement>(null);
@@ -150,6 +152,7 @@ const SidePanel: React.FC = () => {
 	return (
 		<div id="sidecontainer">
 			{/* database */}
+			<p className="font-bold">{currentProject}</p>
 			<div id="dbdropdown">
 				<p className="font-bold">Choose Database:</p>
 				<div className="selectdb">
@@ -176,6 +179,7 @@ const SidePanel: React.FC = () => {
 							</option>
 						))}
 					</select>
+					{userRole === 'Admin' || userRole === 'Owner' ? (
 					<div className="removedb">
 						<button
 							className="whitebtn"
@@ -216,10 +220,12 @@ const SidePanel: React.FC = () => {
 							</div>
 						)}
 					</div>
+					) : null}
 				</div>
 			</div>
 			{/* database */}
 			{/* connection string form */}
+			{userRole === 'Admin' || userRole === 'Owner' ? (
 			<div className="addDb">
 				<div className="addDbBtn">
 					<button
@@ -251,6 +257,7 @@ const SidePanel: React.FC = () => {
 					</form>
 				)}
 			</div>
+			) : null }
 			<div id="chooseaction">
 				<p className="font-bold">Choose Action</p>
 				<div>
