@@ -7,14 +7,14 @@ const OrganizationsPanel: React.FC = () => {
 	const handleLeave = () => {};
 	const handleGenerate = () => {};
 	return (
-		<div className="organizationsPanel">
+		<div className="projectsPanel">
 			{/* I want icons here eventually */}
 			<div className="chooseProject">
 				<button onClick={handleCreate}>Create</button>
 				<button onClick={handleJoin}>Join</button>
 				<button onClick={handleDelete}>Delete</button>
 				<button onClick={handleLeave}>Leave</button>
-				<select>Choose Organization</select>
+				<select>Choose Project</select>
 			</div>
 			<div className="generateCode">
 				<button onClick={handleGenerate}>Generate Access Code</button>

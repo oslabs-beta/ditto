@@ -9,7 +9,7 @@ import FAQPage from './pages/FAQPage';
 import MainPage from './pages/MainPage';
 import AddMigrationsPage from './pages/AddMigrationsPage';
 import UpdateMigrationsPage from './pages/UpdateMigrationsPage';
-import OrganizationsPage from './pages/OrganizationsPage';
+import ProjectsPage from './pages/ProjectsPage';
 import logo from './assets/logo.png';
 
 const App: React.FC = () => {
@@ -23,7 +23,7 @@ const App: React.FC = () => {
 				<Route path="/githubs/callbacks" element={<GitHubCallBack />} />
 				<Route path="/addMigrations" element={<AddMigrationsPage />} />
 				<Route path="/migration" element={<MigrationPage />} />
-				<Route path="/organizations" element={<OrganizationsPage />} />
+				<Route path="/projects" element={<ProjectsPage />} />
 				<Route path="/signup" element={<SignUpPage />} />
 				<Route path="/faq" element={<FAQPage />} />
 			</Routes>

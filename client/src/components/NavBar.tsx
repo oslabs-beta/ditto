@@ -18,7 +18,7 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const dispatch = useDispatch();
 	const navLinks: NavLink[] = [
 		{ path: '/faq', label: 'FAQ' },
-		{ path: '/organizations', label: 'Organizations' },
+		{ path: '/projects', label: 'Projects' },
 	];
 
 	if (sessionStorage.getItem('token')) {

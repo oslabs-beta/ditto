@@ -2,13 +2,13 @@ body {
 	height: 100%;
 }
 
-.organizationsPage {
+.projectsPage {
 	display: flex;
 	height: 100%;
 	padding: 90px 30px 0 30px;
 }
 
-.organizationsPanel {
+.projectsPanel {
 	border-right: 1px solid;
 	display: flex;
 	flex-direction: column;
@@ -29,4 +29,8 @@ body {
 		background-color: whitesmoke;
 		height: 40px;
 	}
+}
+
+.usersHeader {
+	display: flex;
 }
