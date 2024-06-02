@@ -10,6 +10,7 @@ router.get('/login', githubLogin);
 // }); //might need to change this status to an actual redirect to our main page? 
 
 router.get('/callback', githubCallback);
+//redirected here from github with auth code 
 
 router.get('/logout', logout);
 

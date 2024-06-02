@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Logo from '../assets/logo.png';
+import Logo from '../assets/logo.webp';
 import '../styles/LogoBtn.css';
 
 const LogoBtn = () => {
