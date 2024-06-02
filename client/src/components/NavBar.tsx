@@ -18,7 +18,6 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const dispatch = useDispatch();
 	const navLinks: NavLink[] = [
 		{ path: '/faq', label: 'FAQ' },
-		{ path: '/chatty', label: 'Chatty' }, // Add the new link
 		{ path: '/organizations', label: 'Organizations' },
 	];
 
