@@ -178,7 +178,7 @@ const MigrationScripts: React.FC = () => {
 					Add Migration
 				</button>
 			</div>
-			<div className="migrationstable">
+			<div className="migrationsTable">
 				<table>
 					<thead>
 						<tr>
