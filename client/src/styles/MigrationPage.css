@@ -235,10 +235,14 @@ select {
 	margin: 10px;
 }
 
-.migrationstable {
+.migrationsTable {
 	border: 1px solid;
 	border-radius: 7px;
 	height: 35vh;
+}
+
+.migrationsTable th,
+.migrationsTable td {
 }
 
 .popper {

@@ -8,6 +8,7 @@ import {
 	kickUser,
 	leaveCurrentProject,
 	selectProjectAndGetAllUsers,
+	storeAccessCode,
 } from '../controllers/projectController';
 
 const router = express.Router();
@@ -75,6 +76,15 @@ router.delete(
 	selectProjectAndGetAllUsers,
 	(_req: Request, res: Response, _next: NextFunction) => {
 		res.status(200).json(res.locals.users);
+	}
+);
+
+router.post(
+	`/generate`,
+	validateJWT,
+	storeAccessCode,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.code);
 	}
 );
 

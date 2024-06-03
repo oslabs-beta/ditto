@@ -8,6 +8,7 @@ import {
 	findProjectByCode,
 	joinProject,
 	leaveProject,
+	addCode,
 } from '../models/projects';
 
 export const createNewProject = async (
@@ -213,5 +214,32 @@ export const kickUser = async (
 			status: 400,
 			message: `Error in projectController leaveCurrentProject: ${error}`,
 		});
+	}
+};
+
+export const storeAccessCode = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { code, project_id, role } = req.body;
+	const userId = req.user?.id;
+	const project = await selectProject(project_id);
+	const ownerId = project.owner;
+	if (!userId) {
+		console.log('Unauthorized');
+		return res.sendStatus(401);
+	}
+	if (userId === ownerId) {
+		try {
+			const newCode = await addCode(code, project_id, userId);
+			res.locals.newCode = newCode;
+			return next();
+		} catch (error) {
+			return next({
+				status: 400,
+				message: `Error in projectController storeAccessCode: ${error}`,
+			});
+		}
 	}
 };
