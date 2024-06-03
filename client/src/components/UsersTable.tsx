@@ -6,15 +6,16 @@ import { useRouteId } from 'react-router/dist/lib/hooks';
 
 interface Users {
 	user_id: string;
-	user: string;
+	username: string;
 	role: string;
 }
 
 const UsersTable: React.FC = () => {
 	const userRole = useSelector((state: any) => state.userRole);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
+	const projectId = useSelector((state: any) => state.projectId);
 	const [users, setUsers] = useState<Users[]>([
-		{ user: 'ShanKhan', role: 'Admin', user_id: '12' },
+		{ username: 'ShanKhan', role: 'admin', user_id: '12' },
 	]);
 	const token = sessionStorage.getItem('token');
 	const roles = ['Owner', 'Admin', 'User'];
@@ -22,43 +23,38 @@ const UsersTable: React.FC = () => {
 		(state: { projectId: string }) => state.projectId
 	);
 
-	// useEffect(() => {
-	// 	const fetchMigrations = async () => {
-	// 		if (!selectedProject) {
-	// 			// dispatch(setSelectedUser(''));
-	// 		}
-	// 		const token = sessionStorage.getItem('token');
-	// 		try {
-	// 			const response = await fetch(`/migrationlog/all/${dbId}`, {
-	// 				// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
-	// 				method: 'GET',
-	// 				headers: {
-	// 					'Content-Type': 'application/json',
-	// 					Authorization: `Bearer ${token}`, // Replace with your JWT token logic
-	// 				},
-	// 			});
+	useEffect(() => {
+		const fetchUsers = async () => {
+			if (!selectedProject) {
+				// dispatch(setSelectedUser(''));
+			}
+			try {
+				const response = await fetch(`/project/allusers/${projectId}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				});
 
-	// 			if (!response.ok) {
-	// 				throw new Error(`HTTP error! status: ${response.status}`);
-	// 			}
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
 
-	// 			const result = await response.json();
-	// 			const sortedMigrations = result.sort(
-	// 				(a: Migration, b: Migration) =>
-	// 					parseInt(a.version) - parseInt(b.version)
-	// 			);
-	// 			setMigrations(sortedMigrations);
-	// 		} catch (error) {
-	// 			console.error('Error fetching migrations:', error);
-	// 		}
-	// 	};
+				const result = await response.json();
+				console.log('result: ', result); // props are username, user_id, role
+				setUsers(result);
+			} catch (error) {
+				console.error('Error fetching migrations:', error);
+			}
+		};
 
-	// 	if (selectedDatabase) {
-	// 		fetchMigrations();
-	// 	} else {
-	// 		setUsers([]);
-	// 	}
-	// }, []);
+		if (selectedProject) {
+			fetchUsers();
+		} else {
+			setUsers([]);
+		}
+	}, [selectedProject]);
 
 	const mapRoles = roles.map((role: string) => (
 		<option key={role} value={role}>
@@ -80,57 +76,52 @@ const UsersTable: React.FC = () => {
 					role: role,
 				}),
 			});
-
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-
-			const result = await response.json();
 		} catch (error) {
 			console.error('Error fetching migrations:', error);
 		}
-
-		const mappedUsersTable = users.map(user => (
-			<tbody key={user.user_id}>
-				<tr>
-					<td>{user.user}</td>
-					<td>
-						<select defaultValue={user.role}>{mapRoles}</select>
-					</td>
-				</tr>
-			</tbody>
-		));
-
-		return (
-			<div className="users">
-				<div className="usersHeader">
-					<fieldset>
-						<label>
-							<input value={selectedProject} />
-						</label>
-						<legend>Project</legend>
-					</fieldset>
-					<fieldset>
-						<label>
-							<input value={userRole} />
-						</label>
-						<legend>Role</legend>
-					</fieldset>
-				</div>
-				<div className="usersInfo">
-					<table>
-						<thead>
-							<tr>
-								<th>User</th>
-								<th>Role</th>
-							</tr>
-						</thead>
-						{mappedUsersTable}
-					</table>
-				</div>
-			</div>
-		);
 	};
+
+	const mappedUsersTable = users.map(user => (
+		<tbody key={user.user_id}>
+			<tr>
+				<td>{user.username}</td>
+				<select>
+					<option>
+						<td>{user.role}</td>
+					</option>
+				</select>
+			</tr>
+		</tbody>
+	));
+	return (
+		<div className="users">
+			<div className="usersHeader">
+				<fieldset>
+					<label>
+						<input value={selectedProject} />
+					</label>
+					<legend>Project</legend>
+				</fieldset>
+				<fieldset>
+					<label>
+						<input value={userRole} />
+					</label>
+					<legend>Role</legend>
+				</fieldset>
+			</div>
+			<div className="usersInfo">
+				<table>
+					<thead>
+						<tr>
+							<th>User</th>
+							<th>Role</th>
+						</tr>
+					</thead>
+					{mappedUsersTable}
+				</table>
+			</div>
+		</div>
+	);
 };
 
 export default UsersTable;

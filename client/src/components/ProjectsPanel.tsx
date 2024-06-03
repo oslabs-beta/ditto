@@ -14,6 +14,7 @@ import {
 	setUserRole,
 	setDatabases,
 } from '../store';
+// import addCode from '../../../server/src/models/projects';
 
 const OrganizationsPanel: React.FC = () => {
 	/* States */
@@ -21,7 +22,7 @@ const OrganizationsPanel: React.FC = () => {
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
 	const selectedProjectId = useSelector(
-		(state: { projectId: string }) => state.projectId
+		(state: { projectId: number }) => state.projectId
 	);
 	const databases = useSelector((state: any) => state.databases) || [];
 	const [projectName, setProjectName] = useState('');
@@ -80,6 +81,26 @@ const OrganizationsPanel: React.FC = () => {
 			const result = await response.json();
 			setProjectName('');
 			setShowInput(false);
+		}
+	};
+	/* POST (Store Code) Project */
+	const storeCode = async () => {
+		const response = await fetch('project/generate', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				code: accessCode,
+				project_id: selectedProjectId,
+				role: userRole,
+			}),
+		});
+		if (response.ok) {
+			const result = await response.json();
+			setAccessCode('');
+			setJoinInput(false);
 		}
 	};
 
@@ -153,15 +174,12 @@ const OrganizationsPanel: React.FC = () => {
 		e: React.ChangeEvent<HTMLSelectElement>
 	) => {
 		const selectedOption = e.target.selectedOptions[0].dataset.projectRole;
-		console.log(
-			'selectedOption: ',
-			e.target.selectedOptions[0].dataset.projectId
-		);
 		dispatch(
 			setProjectId(
 				!e.target.value ? '' : e.target.selectedOptions[0].dataset.projectId
 			)
 		);
+		console.log('projectiD: ', selectedProjectId);
 		dispatch(setSelectedProject(e.target.value));
 		dispatch(setUserRole(selectedOption));
 	};
@@ -251,9 +269,14 @@ const OrganizationsPanel: React.FC = () => {
 		else if (selectedProject && promptLeave) setPromptLeave(false);
 	};
 
-	const handleGenerate = () => {
+	const handleGenerate = async () => {
 		const accessCode = Math.random().toString(36).substring(7);
 		setAccessCode(accessCode);
+		await storeCode();
+	};
+
+	const handleCodeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setAccessCode(e.target.value);
 	};
 
 	return (
@@ -353,8 +376,15 @@ const OrganizationsPanel: React.FC = () => {
 			</div>
 			{(userRole === 'Owner' || userRole === 'Admin') && (
 				<div className="generateCode">
-					<button onClick={handleGenerate}>Generate Access Code</button>
-					<input type="text" value={accessCode} />
+					<form onSubmit={handleGenerate}>
+						<input
+							type="text"
+							value={accessCode}
+							onChange={handleCodeInputChange}
+							placeholder="access code"
+						/>
+						<button>Generate Code</button>
+					</form>
 				</div>
 			)}
 		</div>

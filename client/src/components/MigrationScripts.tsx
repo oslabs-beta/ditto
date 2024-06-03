@@ -63,6 +63,7 @@ const MigrationScripts: React.FC = () => {
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
 				);
+				console.log('sortedMigrations: ', sortedMigrations);
 				setMigrations(sortedMigrations);
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
@@ -178,7 +179,7 @@ const MigrationScripts: React.FC = () => {
 					Add Migration
 				</button>
 			</div>
-			<div className="migrationstable">
+			<div className="migrationsTable">
 				<table>
 					<thead>
 						<tr>

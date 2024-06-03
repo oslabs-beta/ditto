@@ -9,6 +9,7 @@ import {
 	joinProject,
 	leaveProject,
 	updateRole,
+	addCode,
 } from '../models/projects';
 
 export const createNewProject = async (
@@ -226,18 +227,42 @@ export const updateUserRole = async (
 	const userId = req.user?.id;
 	const { user, role } = req.body;
 
+	try {
+		await updateRole(Number(projectId), role, Number(user));
+		return next();
+	} catch (error) {
+		return next({
+			status: 400,
+			message: `Error in projectController storeAccessCode: ${error}`,
+		});
+	}
+};
+
+export const storeAccessCode = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { code, project_id, role } = req.body;
+	const userId = req.user?.id;
+	const project = await selectProject(project_id);
+	const ownerId = project.owner;
+
 	if (!userId) {
 		console.log('Unauthorized');
 		return res.sendStatus(401);
 	}
 
-	try {
-		await updateRole(Number(projectId), role, Number(user));
-		return next();
-	} catch (error) {
-		next({
-			status: 400,
-			message: `Error in projectController updateUserRole: ${error}`,
-		});
+	if (userId === ownerId) {
+		try {
+			const newCode = await addCode(code, project_id, userId);
+			res.locals.newCode = newCode;
+			return next();
+		} catch (error) {
+			return next({
+				status: 400,
+				message: `Error in projectController storeAccessCode: ${error}`,
+			});
+		}
 	}
 };
