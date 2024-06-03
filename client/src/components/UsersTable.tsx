@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setUserRole, setSelectedProject } from '../store';
 
@@ -14,6 +14,45 @@ const UsersTable: React.FC = () => {
 	const [users, setUsers] = useState<Users[]>([
 		{ user: 'ShanKhan', role: 'admin', user_id: '12' },
 	]);
+	const token = sessionStorage.getItem('token');
+
+	useEffect(() => {
+		const fetchMigrations = async () => {
+			if (!selectedProject) {
+				// dispatch(setSelectedUser(''));
+			}
+			const token = sessionStorage.getItem('token');
+			try {
+				const response = await fetch(`/migrationlog/all/${dbId}`, {
+					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`, // Replace with your JWT token logic
+					},
+				});
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+
+				const result = await response.json();
+				const sortedMigrations = result.sort(
+					(a: Migration, b: Migration) =>
+						parseInt(a.version) - parseInt(b.version)
+				);
+				setMigrations(sortedMigrations);
+			} catch (error) {
+				console.error('Error fetching migrations:', error);
+			}
+		};
+
+		if (selectedDatabase) {
+			fetchMigrations();
+		} else {
+			setUsers([]);
+		}
+	}, []);
 
 	const mappedUsersTable = users.map(user => (
 		<tbody key={user.user_id}>

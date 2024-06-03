@@ -58,10 +58,6 @@ const MigrationScripts: React.FC = () => {
 				}
 
 				const result = await response.json();
-				// result.sort(
-				// 	(a: { version: number }, b: { version: number }) =>
-				// 		a.version - b.version
-				// );
 				const sortedMigrations = result.sort(
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
