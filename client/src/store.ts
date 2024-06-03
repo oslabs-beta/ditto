@@ -131,7 +131,7 @@ export const setCurrentProject = (project: string) => ({
 	payload: project,
 });
 
-export const setUserRole = (role: string) => ({
+export const setUserRole = (role: string | undefined) => ({
 	type: SET_USER_ROLE,
 	payload: role,
 });
@@ -142,16 +142,16 @@ const initialState = {
 	token: '',
 	databases: [],
 	projects: [
-		{ project_id: '24', project_name: 'ShellScapePlanner' },
-		{ project_id: '11', project_name: 'DateNight' },
-		{ project_id: '67', project_name: 'Solibee' },
+		// { project_id: '24', project_name: 'ShellScapePlanner' },
+		// { project_id: '11', project_name: 'DateNight' },
+		// { project_id: '67', project_name: 'Solibee' },
 	],
 	migrationVersions: [],
 	selectedUser: '',
 	selectedTable: '',
 	selectedDatabase: '',
 	selectedMigration: '',
-	selectedProject: 'ShellScapePlanner',
+	selectedProject: '',
 	showInput: false,
 	dbName: '',
 	connectionString: '',

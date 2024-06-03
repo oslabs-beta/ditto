@@ -33,11 +33,9 @@ const OrganizationsPanel: React.FC = () => {
 	/* HTTP Requests */
 	/* GET Projects */
 	useEffect(() => {
-		console.log(projects);
-		console.log('mapped options: ', mapProjectOptions);
 		const fetchProjects = async () => {
 			try {
-				const response = await fetch('', {
+				const response = await fetch('/project/allprojects', {
 					// Needs endpoint
 					method: 'GET',
 					headers: {
@@ -48,18 +46,20 @@ const OrganizationsPanel: React.FC = () => {
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
-				const results = await response.json();
-				dispatch(setProjects(results));
+				const result = await response.json();
+				console.log(result);
+				dispatch(setProjects(result));
+				console.log('projects:', projects);
 			} catch (error) {
 				console.error('Error fetching projects:', error);
 			}
 		};
-		fetchProjects;
+		fetchProjects();
 	}, []);
 
 	/* POST (Create) Project */
 	const createProject = async () => {
-		const response = await fetch('', {
+		const response = await fetch('/project/create', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -145,19 +145,27 @@ const OrganizationsPanel: React.FC = () => {
 	/* Dropdown Logic */
 	const handleChooseProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		console.log(projects);
+		const selectedOption = e.target.selectedOptions[0].dataset.projectRole;
+		console.log('selectedOption: ', selectedOption);
 		dispatch(
 			setProjectId(
 				!e.target.value ? '' : e.target.selectedOptions[0].dataset.projectId
 			)
 		);
 		dispatch(setSelectedProject(e.target.value));
+		dispatch(setUserRole(selectedOption));
 	};
 
 	const mapProjectOptions = projects.map(
-		(project: { project_id: string; project_name: string }) => (
+		(project: {
+			project_id: string;
+			project_name: string;
+			role: string | undefined;
+		}) => (
 			<option
 				key={project.project_id}
 				value={project.project_name}
+				data-project-role={project.role}
 				data-project-id={project.project_id}
 			>
 				{project.project_name}

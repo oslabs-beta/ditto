@@ -55,7 +55,7 @@ const SidePanel: React.FC = () => {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`, // Replace with your JWT token logic
+						Authorization: `Bearer ${token}`,
 					},
 				});
 
