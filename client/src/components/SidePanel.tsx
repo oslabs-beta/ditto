@@ -48,31 +48,31 @@ const SidePanel: React.FC = () => {
 	const token = sessionStorage.getItem('token');
 	const actions = ['Migrate', 'Repair', 'Undo', 'Clean'];
 
-	useEffect(() => {
-		const fetchDatabases = async () => {
-			try {
-				const response = await fetch('/db/connectionStrings', {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
-					},
-				});
+	// useEffect(() => {
+	// 	const fetchDatabases = async () => {
+	// 		try {
+	// 			const response = await fetch('/db/connectionStrings', {
+	// 				method: 'GET',
+	// 				headers: {
+	// 					'Content-Type': 'application/json',
+	// 					Authorization: `Bearer ${token}`,
+	// 				},
+	// 			});
 
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
+	// 			if (!response.ok) {
+	// 				throw new Error(`HTTP error! status: ${response.status}`);
+	// 			}
 
-				const result = await response.json();
-				console.log('result: ', result);
-				dispatch(setDatabases(result));
-				console.log('databases: ', databases);
-			} catch (error) {
-				console.error('Error fetching databases:', error);
-			}
-		};
-		fetchDatabases();
-	}, []);
+	// 			const result = await response.json();
+	// 			console.log('result: ', result);
+	// 			dispatch(setDatabases(result));
+	// 			console.log('databases: ', databases);
+	// 		} catch (error) {
+	// 			console.error('Error fetching databases:', error);
+	// 		}
+	// 	};
+	// 	fetchDatabases();
+	// }, []);
 
 	const handleButtonClick = async (btnText: string | null) => {
 		if (btnText === 'adddb') {
@@ -189,13 +189,13 @@ const SidePanel: React.FC = () => {
 		dispatch(setSelectedMigration(''));
 	};
 
-	const mapDatabaseOptions = databases.map(
-		(db: { db_id: string; db_name: string }) => (
-			<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
-				{db.db_name}
-			</option>
-		)
-	);
+	// const mapDatabaseOptions = databases.map(
+	// 	(db: { db_id: string; db_name: string }) => (
+	// 		<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
+	// 			{db.db_name}
+	// 		</option>
+	// 	)
+	// );
 
 	/* Button Logic */
 	const handleTrashButton = () => {
@@ -219,7 +219,7 @@ const SidePanel: React.FC = () => {
 				<div className="selectdb">
 					<select value={selectedDatabase} onChange={handleChooseDatabase}>
 						<option value="">-- Select a database --</option>
-						{mapDatabaseOptions}
+						{/* {mapDatabaseOptions} */}
 					</select>
 					{userRole === 'Admin' || userRole === 'Owner' ? (
 						<div className="removedb">

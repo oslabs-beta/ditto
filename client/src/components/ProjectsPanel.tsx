@@ -19,6 +19,9 @@ const OrganizationsPanel: React.FC = () => {
 	const userRole = useSelector((state: any) => state.userRole);
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
+	const selectedProjectId = useSelector(
+		(state: { projectId: string }) => state.projectId
+	);
 	const [projectName, setProjectName] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [promptLeave, setPromptLeave] = useState(false);
@@ -80,14 +83,14 @@ const OrganizationsPanel: React.FC = () => {
 
 	/* POST (Join) Project */
 	const joinProject = async () => {
-		const response = await fetch('', {
+		const response = await fetch('project/join', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
-				project_name: projectName,
+				code: accessCode,
 			}),
 		});
 		if (response.ok) {
@@ -101,7 +104,7 @@ const OrganizationsPanel: React.FC = () => {
 	const deleteProject = async () => {
 		if (selectedProject) {
 			try {
-				const response = await fetch('', {
+				const response = await fetch(`project/delete/${selectedProjectId}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
@@ -266,16 +269,11 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Join Project:</p>
 							<input
 								type="text"
-								value={projectName}
-								onChange={handledbNameInputChange}
-								placeholder="Enter project name"
-							/>
-							<input
-								type="text"
-								value={accessCode}
+								// value={accessCode}
+								defaultValue={accessCode}
 								onChange={handledbNameInputChange}
 								placeholder="Enter access code"
-							/>
+							></input>
 							<button>+</button>
 						</form>
 					)}

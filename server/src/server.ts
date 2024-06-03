@@ -24,9 +24,11 @@ app.use(express.urlencoded({ extended: true }));
 const oneYear = 365 * 24 * 60 * 60 * 1000;
 
 const joinPath = path.join(__dirname, '../../client/dist');
-app.use(express.static(joinPath, {
-	maxAge: oneYear
-}));
+app.use(
+	express.static(joinPath, {
+		maxAge: oneYear,
+	})
+);
 
 app.get('/robots.txt', (req: Request, res: Response) => {
 	res.sendFile(path.join(joinPath, 'robots.txt'));
@@ -40,8 +42,8 @@ app.use('/migrationlog', migrationLogRoutes);
 
 app.use('/auth', authRoutes);
 
-app.use('/db', newDbRoutes);
-// app.use('/db', dbRoutes);
+// app.use('/db', newDbRoutes);
+app.use('/db', dbRoutes);
 
 app.use('/github', githubAuthRoutes);
 
