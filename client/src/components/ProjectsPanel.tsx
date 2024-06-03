@@ -32,6 +32,7 @@ const OrganizationsPanel: React.FC = () => {
 
 	/* HTTP Requests */
 	/* GET Projects */
+
 	useEffect(() => {
 		const fetchProjects = async () => {
 			try {
@@ -236,12 +237,12 @@ const OrganizationsPanel: React.FC = () => {
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
 
-					{(userRole === 'owner' || userRole === 'admin') && (
+					{(userRole === 'Owner' || userRole === 'Admin') && (
 						<button onClick={handlePopperDelete}>
 							<FontAwesomeIcon icon={faTrash} />
 						</button>
 					)}
-					{(userRole === 'owner' || userRole === 'admin') && (
+					{(userRole === 'Owner' || userRole === 'Admin') && (
 						<button onClick={handleLeave}>
 							<FontAwesomeIcon icon={faUserMinus} />
 						</button>
@@ -314,7 +315,7 @@ const OrganizationsPanel: React.FC = () => {
 					)}
 				</div>
 			</div>
-			{(userRole === 'owner' || userRole === 'admin') && (
+			{(userRole === 'Owner' || userRole === 'Admin') && (
 				<div className="generateCode">
 					<button onClick={handleGenerate}>Generate Access Code</button>
 					<input type="text" value={accessCode} />

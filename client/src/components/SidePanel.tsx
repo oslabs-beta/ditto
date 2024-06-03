@@ -221,7 +221,7 @@ const SidePanel: React.FC = () => {
 						<option value="">-- Select a database --</option>
 						{mapDatabaseOptions}
 					</select>
-					{userRole === 'admin' || userRole === 'owner' ? (
+					{userRole === 'Admin' || userRole === 'Owner' ? (
 						<div className="removedb">
 							<button
 								className="whitebtn"
@@ -255,7 +255,7 @@ const SidePanel: React.FC = () => {
 				</div>
 			</div>
 			{/* connection string form */}
-			{userRole === 'admin' || userRole === 'owner' ? (
+			{userRole === 'Admin' || userRole === 'Owner' ? (
 				<div className="addDb">
 					<div className="addDbBtn">
 						<button

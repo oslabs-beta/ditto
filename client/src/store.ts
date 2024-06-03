@@ -155,11 +155,12 @@ const initialState = {
 	showInput: false,
 	dbName: '',
 	connectionString: '',
+	projectId: '',
 	dbId: '',
 	description: '',
 	selectedAction: 'Migrate',
 	selectedScript: '',
-	userRole: 'admin',
+	userRole: '',
 	currentProject: '',
 };
 
@@ -191,6 +192,8 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, dbName: action.payload };
 		case SET_CONNECTION_STRING:
 			return { ...state, connectionString: action.payload };
+		case SET_PROJECT_ID:
+			return { ...state, projectId: action.payload };
 		case SET_DB_ID:
 			return { ...state, dbId: action.payload };
 		case SET_DESCRIPTION:
