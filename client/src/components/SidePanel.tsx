@@ -1,5 +1,6 @@
 // SidePanel.tsx
 import React, { useState, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -22,29 +23,62 @@ const SidePanel: React.FC = () => {
 	const dispatch = useDispatch();
 	const selectedTable = useSelector((state: any) => state.selectedTable);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
-	const showInput = useSelector((state: any) => state.showInput);
+
+	const selectedMigration = useSelector(
+		(state: any) => state.selectedMigration
+	);
+	const showInput = useSelector((state: any) => state.showInput); // we can probably get rid of this, since its only used in SidePanel
+
 	const dbName = useSelector((state: any) => state.dbName);
 	const connectionString = useSelector((state: any) => state.connectionString);
-	const databases = useSelector((state: any) => state.databases);
+	const databases = useSelector((state: any) => state.databases) || [];
 	const selectedDbId = useSelector((state: { dbId: string }) => state.dbId);
 	const selectedAction = useSelector(
 		(state: { selectedAction: string }) => state.selectedAction
 	);
-	const currentProject = useSelector((state: any) => state.currentProject)
+	const currentProject = useSelector((state: any) => state.currentProject);
 	const userRole = useSelector((state: any) => state.userRole);
 	const [isOpen, setIsOpen] = useState(false);
 	const referenceElement = useRef<HTMLButtonElement>(null);
 	const popperElement = useRef<HTMLDivElement>(null);
 	const dbId = useSelector((state: any) => state.dbId);
-	// const [migrations, setMigrationVersions] = useState<Migration[]>([]);
+	const selectedScript = useSelector(
+		(state: { selectedScript: string }) => state.selectedScript
+	);
+	const token = sessionStorage.getItem('token');
 	const actions = ['Migrate', 'Repair', 'Undo', 'Clean'];
+
+	useEffect(() => {
+		const fetchDatabases = async () => {
+			try {
+				const response = await fetch('/db/connectionStrings', {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				});
+
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
+
+				const result = await response.json();
+				console.log('result: ', result);
+				dispatch(setDatabases(result));
+				console.log('databases: ', databases);
+			} catch (error) {
+				console.error('Error fetching databases:', error);
+			}
+		};
+		fetchDatabases();
+	}, []);
 
 	const handleButtonClick = async (btnText: string | null) => {
 		if (btnText === 'adddb') {
 			dispatch(setShowInput(showInput ? false : true));
 		} else {
 			if (selectedDatabase) {
-				const token = sessionStorage.getItem('token');
 				try {
 					const response = await fetch(
 						`/db/deleteConnectionString/${selectedDbId}`,
@@ -131,9 +165,6 @@ const SidePanel: React.FC = () => {
 						connection_string: connectionString,
 					}),
 				});
-				// if response is ok we need backend to query for databases again so i can dispatch setdatabases here again
-				// Maybe backend can have a controller for querying for databases again. so fetch for getDBConnectionByUserId
-				// and set dispatch setDatabases here again
 				if (response.ok) {
 					const result = await response.json();
 					const databaseCopy = JSON.parse(JSON.stringify(databases));
@@ -149,115 +180,114 @@ const SidePanel: React.FC = () => {
 		}
 	};
 
+	/* Dropdown Logic */
+	const handleChooseDatabase = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		dispatch(
+			setdbId(!e.target.value ? '' : e.target.selectedOptions[0].dataset.dbId)
+		);
+		dispatch(setSelectedDatabase(e.target.value));
+		dispatch(setSelectedMigration(''));
+	};
+
+	const mapDatabaseOptions = databases.map(
+		(db: { db_id: string; db_name: string }) => (
+			<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
+				{db.db_name}
+			</option>
+		)
+	);
+
+	/* Button Logic */
+	const handleTrashButton = () => {
+		if (selectedDatabase && !isOpen) setIsOpen(true);
+		else if (selectedDatabase && isOpen) setIsOpen(false);
+	};
+
+	const handlePopperYes = () => {
+		dispatch(setSelectedDatabase(''));
+		dispatch(setSelectedScript(''));
+		handleButtonClick('deletedb');
+		setIsOpen(false);
+	};
+
 	return (
 		<div id="sidecontainer">
 			{/* database */}
 			<p className="font-bold">{currentProject}</p>
 			<div id="dbdropdown">
-				<p className="font-bold">Choose Database:</p>
+				<p className="font-bold">Choose Database</p>
 				<div className="selectdb">
-					<select
-						value={selectedDatabase}
-						aria-label="choose a database"
-						onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-							dispatch(
-								setdbId(
-									!e.target.value
-										? ''
-										: e.target.selectedOptions[0].dataset.dbId
-								)
-							);
-							dispatch(setSelectedDatabase(e.target.value));
-							dispatch(setSelectedMigration(''));
-						}}
-					>
-						{/* [ { db1: 30}, {db2: 40}] */}
-						<option value="">--Select a database--</option>
-						{databases.map((db: { db_id: string; db_name: string }) => (
-							<option key={db.db_id} value={db.db_name} data-db-id={db.db_id}>
-								{db.db_name}
-							</option>
-						))}
+					<select value={selectedDatabase} onChange={handleChooseDatabase}>
+						<option value="">-- Select a database --</option>
+						{mapDatabaseOptions}
 					</select>
 					{userRole === 'Admin' || userRole === 'Owner' ? (
-					<div className="removedb">
-						<button
-							className="whitebtn"
-							aria-label="remove database"
-							ref={referenceElement}
-							onClick={() => {
-								if (selectedDatabase && !isOpen) setIsOpen(true);
-								else if (selectedDatabase && isOpen) setIsOpen(false);
-							}}
-						>
-							<FontAwesomeIcon icon={faTrashAlt} style={{ color: 'black' }} />
-						</button>
-						{isOpen ? null : <p id="textbox">Remove database</p>}
-						{selectedDatabase && isOpen && (
-							<div className="popper" ref={popperElement}>
-								<p>Are you sure?</p>
-								<div className="popperbtns">
-									<button
-										className="whitebtn"
-										onClick={e => {
-											dispatch(setSelectedDatabase(''));
-											dispatch(setSelectedScript(''));
-											handleButtonClick('deletedb');
-											setIsOpen(false);
-										}}
-									>
-										Yes
-									</button>
-									<button
-										className="whitebtn"
-										onClick={() => {
-											setIsOpen(false);
-										}}
-									>
-										No
-									</button>
+						<div className="removedb">
+							<button
+								className="whitebtn"
+								aria-label="remove database"
+								ref={referenceElement}
+								onClick={handleTrashButton}
+							>
+								<FontAwesomeIcon icon={faTrashAlt} style={{ color: 'black' }} />
+							</button>
+							{isOpen ? null : <p id="textbox">Remove database</p>}
+							{selectedDatabase && isOpen && (
+								<div className="popper" ref={popperElement}>
+									<p>Are you sure?</p>
+									<div className="popperbtns">
+										<button className="whitebtn" onClick={handlePopperYes}>
+											Yes
+										</button>
+										<button
+											className="whitebtn"
+											onClick={() => {
+												setIsOpen(false);
+											}}
+										>
+											No
+										</button>
+									</div>
 								</div>
-							</div>
-						)}
-					</div>
+							)}
+						</div>
 					) : null}
 				</div>
 			</div>
-			{/* database */}
 			{/* connection string form */}
 			{userRole === 'Admin' || userRole === 'Owner' ? (
-			<div className="addDb">
-				<div className="addDbBtn">
-					<button
-						className="purplebtn btn"
-						aria-label="add database"
-						onClick={e => handleButtonClick('adddb')}
-					>
-						<FontAwesomeIcon icon={faDatabase} />{' '}
-					</button>
-					<p id="textbox">Add database</p>
-				</div>
-				{showInput && (
-					<form onSubmit={handleFormSubmit}>
-						<input
-							type="text"
-							value={dbName}
-							onChange={handledbNameInputChange}
-							placeholder="Enter database name"
-						/>
-						<input
-							type="text"
-							value={connectionString}
-							onChange={handleConnectionStringInputChange}
-							placeholder="Enter connection string"
-						/>
-						<button className="whitebtn addbtn font-bold" type="submit">
-							+
+				<div className="addDb">
+					<div className="addDbBtn">
+						<button
+							className="purplebtn btn"
+							aria-label="add database"
+							onClick={e => handleButtonClick('adddb')}
+						>
+							<FontAwesomeIcon icon={faDatabase} />{' '}
 						</button>
-					</form>
-				)}
-			</div>
-			) : null }
+						<p id="textbox">Add database</p>
+					</div>
+					{showInput && (
+						<form onSubmit={handleFormSubmit}>
+							<input
+								type="text"
+								value={dbName}
+								onChange={handledbNameInputChange}
+								placeholder="Enter database name"
+							/>
+							<input
+								type="text"
+								value={connectionString}
+								onChange={handleConnectionStringInputChange}
+								placeholder="Enter connection string"
+							/>
+							<button className="whitebtn addbtn font-bold" type="submit">
+								+
+							</button>
+						</form>
+					)}
+				</div>
+			) : null}
 			<div id="chooseaction">
 				<p className="font-bold">Choose Action</p>
 				<div>
@@ -268,7 +298,6 @@ const SidePanel: React.FC = () => {
 							dispatch(setSelectedAction(e.target.value));
 						}}
 					>
-						{/* [ { db1: 30}, {db2: 40}] */}
 						{actions.map((action: string) => (
 							<option key={action} value={action}>
 								{action}
@@ -320,10 +349,6 @@ const SidePanel: React.FC = () => {
 					onChange={e => dispatch(setSelectedTable(e.target.value))}
 				>
 					<option value="">--Select a table--</option>
-					{/* <option value="products">Products</option>
-					<option value="customers">Customers</option>
-					<option value="orders">Orders</option>
-				<option value="suppliers">Suppliers</option> */}
 				</select>
 			</div>
 		</div>

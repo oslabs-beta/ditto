@@ -58,10 +58,6 @@ const MigrationScripts: React.FC = () => {
 				}
 
 				const result = await response.json();
-				// result.sort(
-				// 	(a: { version: number }, b: { version: number }) =>
-				// 		a.version - b.version
-				// );
 				const sortedMigrations = result.sort(
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
@@ -79,14 +75,6 @@ const MigrationScripts: React.FC = () => {
 		}
 	}, [selectedDatabase, selectedMigration, migrationVersions]);
 
-	/* Add Migrations Button */
-	// const handleFormSubmit = (data: {
-	// 	version: string;
-	// 	description: string;
-	// 	script: string;
-	// }) => {
-	// 	console.log('Form Data:', data);
-	// };
 	/* Add Migrations Button */
 	const handleSubmit = () => {
 		dispatch(setScript(''));
@@ -184,11 +172,7 @@ const MigrationScripts: React.FC = () => {
 	return (
 		<div className="MigrationScriptsContainer">
 			<div className="scriptsheader">
-				{/* Add Migrations Button */}
-				<div className="selectedDB font-bold">
-					{selectedDatabase}
-					{/* <h1>{selectedDatabase}</h1> */}
-				</div>
+				<div className="selectedDB font-bold">{selectedDatabase}</div>
 				<button className="purplebtn" type="button" onClick={handleSubmit}>
 					Add Migration
 				</button>

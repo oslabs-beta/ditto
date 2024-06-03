@@ -17,10 +17,12 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const navLinks: NavLink[] = [{ path: '/faq', label: 'FAQ' }];
+	const navLinks: NavLink[] = [
+		{ path: '/faq', label: 'FAQ' },
+		{ path: '/projects', label: 'Projects' },
+	];
 
 	if (sessionStorage.getItem('token')) {
-		navLinks.pop();
 		navLinks.push({ path: '/migration', label: 'Migration' });
 	}
 

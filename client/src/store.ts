@@ -1,31 +1,42 @@
-// store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Define action types
 const SET_USER = 'SET_USER';
+const SET_PROJECTS = 'SET_PROJECTS';
 const SET_DATABASES = 'SET_DATABASES';
 const SET_MIGRATION_VERSIONS = 'SET_MIGRATION_VERSIONS';
-const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
+const SET_SELECTED_USER = 'SET_SELECTED_USER';
+const SET_SELECTED_PROJECT = 'SET_SELECTED_PROJECTS';
 const SET_SELECTED_DATABASE = 'SET_SELECTED_DATABASE';
 const SET_SELECTED_MIGRATION = 'SET_SELECTED_MIGRATION';
+const SET_SELECTED_TABLE = 'SET_SELECTED_TABLE';
 const SET_SHOW_INPUT = 'SET_SHOW_INPUT';
 const SET_DB_NAME = 'SET_DB_NAME';
 const SET_CONNECTION_STRING = 'SET_CONNECTION_STRING';
-const SET_TOKEN = 'SET_TOKEN'; // test
+const SET_TOKEN = 'SET_TOKEN';
 const SET_DB_ID = 'SET_DB_ID';
+const SET_PROJECT_ID = 'SET_PROJECT_ID';
 const SET_DESCRIPTION = 'SET_DESCRIPTION';
 const SET_SELECTED_ACTION = 'SET_SELECTED_ACTION';
 const SET_SELECTED_SCRIPT = 'SET_SELECTED_SCRIPT';
 const SET_SCRIPT = 'SET_SCRIPT';
 const RESET_STATE = 'RESET_STATE';
-const SET_CURRENT_PROJECT ='SET_CURRENT_PROJECT';
+
+const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT';
+
 const SET_USER_ROLE = 'SET_USER_ROLE';
 
-// Define action creators
 export const setUser = (user: string) => ({ type: SET_USER, payload: user });
+
+export const setProjects = (
+	projects: { projects_name: string; projects_id: string }[]
+) => ({
+	type: SET_PROJECTS,
+	payload: projects,
+});
+
 export const setDatabases = (
 	databases: { connection_string: string; db_name: string; db_id: string }[]
 ) => ({
@@ -43,10 +54,21 @@ export const setdbId = (dbId: string | undefined) => ({
 	payload: dbId,
 });
 
+export const setProjectId = (projectId: string | undefined) => ({
+	type: SET_PROJECT_ID,
+	payload: projectId,
+});
+
+export const setSelectedUser = (selectedUser: string) => ({
+	type: SET_SELECTED_USER,
+	payload: selectedUser,
+});
+
 export const setSelectedTable = (table: string) => ({
 	type: SET_SELECTED_TABLE,
 	payload: table,
 });
+
 export const setSelectedDatabase = (database: string) => ({
 	type: SET_SELECTED_DATABASE,
 	payload: database,
@@ -55,6 +77,12 @@ export const setSelectedMigration = (migration: string) => ({
 	type: SET_SELECTED_MIGRATION,
 	payload: migration,
 });
+
+export const setSelectedProject = (projects: string) => ({
+	type: SET_SELECTED_PROJECT,
+	payload: projects,
+});
+
 export const setShowInput = (show: boolean) => ({
 	type: SET_SHOW_INPUT,
 	payload: show,
@@ -63,12 +91,12 @@ export const setDbName = (dbName: string) => ({
 	type: SET_DB_NAME,
 	payload: dbName,
 });
+
 export const setConnectionString = (connectionString: string) => ({
 	type: SET_CONNECTION_STRING,
 	payload: connectionString,
 });
 
-//test
 export const setToken = (token: string) => ({
 	type: SET_TOKEN,
 	payload: token,
@@ -98,60 +126,74 @@ export const resetState = () => ({
 	type: RESET_STATE,
 });
 
-export const setCurrentProject = (project: string) => ({ 
+export const setCurrentProject = (project: string) => ({
 	type: SET_CURRENT_PROJECT,
 	payload: project,
- });
+});
 
- export const setUserRole = (role: string) => ({
+export const setUserRole = (role: string | undefined) => ({
 	type: SET_USER_ROLE,
 	payload: role,
- });
+});
 
 // Define initial state
 const initialState = {
 	user: '',
 	token: '',
 	databases: [],
+	projects: [
+		// { project_id: '24', project_name: 'ShellScapePlanner' },
+		// { project_id: '11', project_name: 'DateNight' },
+		// { project_id: '67', project_name: 'Solibee' },
+	],
 	migrationVersions: [],
+	selectedUser: '',
 	selectedTable: '',
 	selectedDatabase: '',
 	selectedMigration: '',
+	selectedProject: '',
 	showInput: false,
 	dbName: '',
 	connectionString: '',
+	projectId: '',
 	dbId: '',
 	description: '',
 	selectedAction: 'Migrate',
 	selectedScript: '',
-	currentProject: '',
 	userRole: '',
+	currentProject: '',
 };
 
-// Define reducers
 const rootReducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case SET_USER:
 			return { ...state, user: action.payload };
-		//test
 		case SET_TOKEN:
 			return { ...state, token: action.payload };
+		case SET_PROJECTS:
+			return { ...state, projects: action.payload };
 		case SET_DATABASES:
 			return { ...state, databases: action.payload };
 		case SET_MIGRATION_VERSIONS:
 			return { ...state, migrationVersions: action.payload };
+		case SET_SELECTED_USER:
+			return { ...state, selectedUser: action.payload };
 		case SET_SELECTED_TABLE:
 			return { ...state, selectedTable: action.payload };
 		case SET_SELECTED_DATABASE:
 			return { ...state, selectedDatabase: action.payload };
 		case SET_SELECTED_MIGRATION:
 			return { ...state, selectedMigration: action.payload };
+		case SET_SELECTED_PROJECT:
+			return { ...state, selectedProject: action.payload };
 		case SET_SHOW_INPUT:
 			return { ...state, showInput: action.payload };
 		case SET_DB_NAME:
 			return { ...state, dbName: action.payload };
 		case SET_CONNECTION_STRING:
 			return { ...state, connectionString: action.payload };
+		case SET_PROJECT_ID:
+			return { ...state, projectId: action.payload };
 		case SET_DB_ID:
 			return { ...state, dbId: action.payload };
 		case SET_DESCRIPTION:
@@ -174,7 +216,6 @@ const rootReducer = (state = initialState, action: any) => {
 	}
 };
 
-// Create Redux store
 const store = configureStore({
 	reducer: rootReducer,
 });
