@@ -12,7 +12,8 @@
 	height: 88vh;
 
 	select {
-		width: 200px;
+		display: flex;
+		width: 1000px;
 		text-align: center;
 		background-color: whitesmoke;
 		height: 40px;
@@ -21,6 +22,7 @@
 
 	button {
 		background-color: #b592f1;
+		align-items: center;
 		border: none;
 		border-radius: 7px;
 		padding: 8px 12px;
@@ -32,6 +34,12 @@
 
 	input {
 	}
+}
+
+.chooseProject {
+}
+
+.projectButtons {
 }
 
 .users {
@@ -67,6 +75,12 @@
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid;
 		}
 
 		select {
