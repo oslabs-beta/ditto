@@ -32,7 +32,7 @@ const MigrationPage: React.FC = () => {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
 				const data = await response.json();
-				dispatch(setDatabases(data.connectionStrings));
+				// dispatch(setDatabases(data.connectionStrings));
 			} catch (error) {
 				console.error(`Error fetching databases:`, error);
 			} finally {
