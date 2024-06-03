@@ -8,6 +8,7 @@ import {
 	findProjectByCode,
 	joinProject,
 	leaveProject,
+	updateRole,
 } from '../models/projects';
 
 export const createNewProject = async (
@@ -212,6 +213,31 @@ export const kickUser = async (
 		next({
 			status: 400,
 			message: `Error in projectController leaveCurrentProject: ${error}`,
+		});
+	}
+};
+
+export const updateUserRole = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { projectId } = req.params;
+	const userId = req.user?.id;
+	const { user, role } = req.body;
+
+	if (!userId) {
+		console.log('Unauthorized');
+		return res.sendStatus(401);
+	}
+
+	try {
+		await updateRole(Number(projectId), role, Number(user));
+		return next();
+	} catch (error) {
+		next({
+			status: 400,
+			message: `Error in projectController updateUserRole: ${error}`,
 		});
 	}
 };

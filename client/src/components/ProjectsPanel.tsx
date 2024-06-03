@@ -12,6 +12,7 @@ import {
 	setSelectedProject,
 	setProjectId,
 	setUserRole,
+	setDatabases,
 } from '../store';
 
 const OrganizationsPanel: React.FC = () => {
@@ -22,6 +23,7 @@ const OrganizationsPanel: React.FC = () => {
 	const selectedProjectId = useSelector(
 		(state: { projectId: string }) => state.projectId
 	);
+	const databases = useSelector((state: any) => state.databases) || [];
 	const [projectName, setProjectName] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [promptLeave, setPromptLeave] = useState(false);
@@ -147,10 +149,14 @@ const OrganizationsPanel: React.FC = () => {
 	};
 
 	/* Dropdown Logic */
-	const handleChooseProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		console.log(projects);
+	const handleChooseProject = async (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
 		const selectedOption = e.target.selectedOptions[0].dataset.projectRole;
-		console.log('selectedOption: ', selectedOption);
+		console.log(
+			'selectedOption: ',
+			e.target.selectedOptions[0].dataset.projectId
+		);
 		dispatch(
 			setProjectId(
 				!e.target.value ? '' : e.target.selectedOptions[0].dataset.projectId
@@ -158,6 +164,32 @@ const OrganizationsPanel: React.FC = () => {
 		);
 		dispatch(setSelectedProject(e.target.value));
 		dispatch(setUserRole(selectedOption));
+	};
+
+	const handleProjectChange = async (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		try {
+			const response = await fetch(
+				`/db/connectionStrings/${e.target.selectedOptions[0].dataset.projectId}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const result = await response.json();
+			dispatch(setDatabases(result));
+		} catch (error) {
+			console.error('Error fetching databases:', error);
+		}
 	};
 
 	const mapProjectOptions = projects.map(
@@ -228,7 +260,13 @@ const OrganizationsPanel: React.FC = () => {
 		<div className="projectsPanel">
 			<div className="chooseProject">
 				<p>Choose Project</p>
-				<select value={selectedProject} onChange={handleChooseProject}>
+				<select
+					value={selectedProject}
+					onChange={e => {
+						handleChooseProject(e);
+						handleProjectChange(e);
+					}}
+				>
 					<option value="">-- Select a Project --</option>
 					{mapProjectOptions}
 				</select>

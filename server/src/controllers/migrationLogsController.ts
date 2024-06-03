@@ -70,7 +70,8 @@ export const getMigrationLog = async (
 	}
 
 	try {
-		const log = await getMigrationLogQuery(migrationId, userId);
+		const log = await getMigrationLogQuery(migrationId);
+		console.log('log', log);
 		res.locals.migrationLog = log;
 		return next();
 	} catch (error) {
@@ -98,7 +99,7 @@ export const updateMigrationLog = async (
 	}
 
 	try {
-		const log = await getMigrationLogQuery(migrationId, userId);
+		const log = await getMigrationLogQuery(migrationId);
 		const result = await updateMigrationLogQuery(
 			parseInt(migrationId),
 			log.status !== script ? 'Pending' : log.status,
