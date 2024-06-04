@@ -56,60 +56,6 @@ export const addDBConnection = async (
 	return result[0] as DB;
 };
 
-// export const addDBConnectionToUser = async (
-// 	db_name: string,
-// 	db_id: number,
-// 	user_id: number
-// ): Promise<UserDB> => {
-// 	const queryString = `
-//     INSERT INTO user_db (db_name, db_id, user_id)
-//     VALUES ($1, $2, $3)
-//     RETURNING *;
-//     `;
-// 	const result = await db.query(queryString, [db_name, db_id, user_id]);
-// 	return result[0] as UserDB;
-// };
-
-// export const getDBConnectionByUserId = async (
-// 	userId: number
-// ): Promise<DBbyUserId[]> => {
-// 	const queryString = `
-//     SELECT databases.connection_string, user_db.db_name, databases.db_id
-// 		FROM databases
-// 		JOIN user_db ON databases.db_id = user_db.db_id
-// 		WHERE user_db.user_id = $1;
-//     `;
-// 	const result = await db.query(queryString, [userId]);
-// 	return result as DBbyUserId[];
-// };
-
-// export const getDBConnectionById = async (
-// 	userId: number,
-// 	dbId: number
-// ): Promise<DBbyDBId> => {
-// 	const queryString = `
-// 		SELECT connection_string, migration_id
-// 		FROM databases
-// 		JOIN user_db ON databases.db_id = user_db.db_id
-// 		WHERE user_db.user_id = $1 AND user_db.db_id = $2;
-// 		`;
-// 	const result = await db.query(queryString, [userId, dbId]);
-// 	return result[0] as DBbyDBId;
-// };
-
-// export const deleteDBConnectionById = async (
-// 	userId: number,
-// 	dbId: number
-// ): Promise<string> => {
-// 	const queryString = `
-// 		DELETE FROM user_db
-// 		WHERE user_id = $1 AND db_id = $2
-// 		RETURNING db_name;
-// 		`;
-// 	const result = await db.query(queryString, [userId, dbId]);
-// 	return result[0] as string;
-// };
-
 export const getPendingMigrations = async (
 	userId: number,
 	dbId: number
