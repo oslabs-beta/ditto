@@ -118,6 +118,7 @@ const MigrationScripts: React.FC = () => {
 					a.version - b.version
 			);
 			dispatch(setSelectedScript(''));
+			dispatch(setSelectedMigration(''));
 			setMigrations(migrationsArr);
 			// are we expecting response? we would have to json pars and confirm deletion or error
 			// dispatch migrationlog logic
