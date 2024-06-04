@@ -43,7 +43,7 @@ const Community: React.FC = () => {
             <a href={member.github} target="_blank" rel="noopener noreferrer" className="bioPicLink">
               <div className="bioPic">
                 <img src={member.image} alt={member.name} />
-                <p>{member.bio}</p>
+                <p className='bioSection'>{member.bio}</p>
               </div>
             </a>
           </li>

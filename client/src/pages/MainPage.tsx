@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Community from '../components/Community';
-import DocumentationPage from './DocumentationPage';
+import DocumentationPage from '../components/Documentation';
 import { Helmet } from 'react-helmet-async'
 import '../styles/pages/MainPage.css';
 

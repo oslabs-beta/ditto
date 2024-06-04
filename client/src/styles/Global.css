@@ -3,5 +3,11 @@ body {
 }
 
 .sectionTitle {
-  font-family: 'Quicksand';
+  font-family:'Courier New', Courier, monospace;
 }
+
+.text-container {
+	background-color: hsl(98, 82%, 41%);
+	font-family:'Courier New', Courier, monospace;
+}
+
