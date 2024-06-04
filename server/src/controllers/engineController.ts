@@ -2,12 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import { Pool } from 'pg';
 import db from '../db';
 import {
-	getDBConnectionByUserId,
 	getPendingMigrations,
 	updateMigrationStatus,
 	validateChecksum,
 	Migration,
 } from '../models/userDB';
+import { getDBConnectionByProjectId } from '../models/dbModels';
 
 export const createPool = (connectionString: string) => {
 	return new Pool({
@@ -42,7 +42,7 @@ export const executeMigration = async (
 	next: NextFunction
 ) => {
 	console.log('I made it to executeMigration');
-	let { dbId } = req.body;
+	let { dbId, projectId } = req.body;
 	const userId = req.user?.id;
 
 	if (!dbId || !userId) {
@@ -54,7 +54,7 @@ export const executeMigration = async (
 	dbId = Number(dbId);
 
 	try {
-		const connectionStrings = await getDBConnectionByUserId(userId); // get db connections from user
+		const connectionStrings = await getDBConnectionByProjectId(projectId); // get db connections from project
 		console.log('connectionStrings:', connectionStrings);
 		console.log('dbId:', dbId, 'typeof dbId:', typeof dbId);
 		connectionStrings.forEach(db => {
