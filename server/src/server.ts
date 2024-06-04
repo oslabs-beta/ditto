@@ -2,14 +2,12 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import migrationRoutes from './routes/migrationRoutes';
 import auditRoutes from './routes/auditRoutes';
 import authRoutes from './routes/authRoutes';
-import dbRoutes from './routes/dbRoutes';
 import migrationLogRoutes from './routes/migrationLogRoutes';
 import githubAuthRoutes from './routes/githubAuthRoutes';
 import newDbRoutes from './routes/newDbRoutes';
 import projectRoutes from './routes/projectRoutes';
 import cors from 'cors';
 import path from 'path';
-import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 

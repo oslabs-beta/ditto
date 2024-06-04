@@ -45,8 +45,9 @@ router.delete(
 	`/delete/:projectId`,
 	validateJWT,
 	deleteProjectById,
+	getAllProjectsByUserId,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(200).json(res.locals.deletedProject);
+		res.status(200).json(res.locals.projects);
 	}
 );
 
