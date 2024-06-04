@@ -1,3 +1,7 @@
+# Road Map
+
+- try implementing css.modules for styling to prevent css leakage in our react components
+
 # Our Store
 
 - user: the user that is logged in.

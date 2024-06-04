@@ -46,7 +46,6 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 								className="logo"
 								src={logo}
 								alt="Logo"
-								style={{ height: '50px' }}
 								onClick={() => navigate('/')}
 							/>
 						</li>
@@ -64,7 +63,7 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 						</button>
 					) : (
 						<button className="logOut" onClick={handleLogging}>
-							Log In
+							Sign In
 						</button>
 					)}
 				</div>

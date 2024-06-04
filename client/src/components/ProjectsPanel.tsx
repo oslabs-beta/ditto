@@ -151,7 +151,7 @@ const OrganizationsPanel: React.FC = () => {
 	const leaveProject = async () => {
 		if (selectedProject) {
 			try {
-				const response = await fetch('', {
+				const response = await fetch(`project/leave/${selectedProjectId}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
@@ -257,10 +257,15 @@ const OrganizationsPanel: React.FC = () => {
 		else if (selectedProject && isOpen) setIsOpen(false);
 	};
 
-	const handlePopperYes = () => {
+	const handlePopperYes = (btnText: string | null) => {
 		dispatch(setSelectedProject(''));
 		// We will dispatch for users table and make it an empty string to clear
-		deleteProject();
+		if (btnText === 'delete') {
+			deleteProject();
+		} else if (btnText === 'leave') {
+			leaveProject();
+			console.log('left successfully');
+		}
 		setIsOpen(false);
 	};
 
@@ -347,7 +352,7 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Delete Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={handlePopperYes}>Yes</button>
+								<button onClick={e => handlePopperYes('delete')}>Yes</button>
 								<button
 									onClick={() => {
 										setIsOpen(false);
@@ -364,7 +369,7 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Leave Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={handlePopperYes}>Yes</button>
+								<button onClick={e => handlePopperYes('leave')}>Yes</button>
 								<button
 									onClick={() => {
 										setPromptLeave(false);
