@@ -13,7 +13,6 @@ export const addDBConnectionString = async (
 	next: NextFunction
 ) => {
 	const { db_name, connection_string, projectId } = req.body;
-	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -61,7 +60,7 @@ export const getConnectionString = async (
 		const connectionStrings = await getDBConnectionByProjectId(
 			Number(projectId)
 		);
-		res.locals.connectionStrings = connectionStrings; // { connection_string, db_name }
+		res.locals.connectionStrings = connectionStrings; 
 		return next();
 	} catch (error) {
 		return next({
@@ -76,7 +75,6 @@ export const getConnectionStringById = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	//get DB ID from req params
 	const { dbId } = req.params;
 	const userId = req.user?.id;
 
@@ -92,7 +90,7 @@ export const getConnectionStringById = async (
 				message: 'Connection string not found',
 			});
 		}
-		res.locals.connectionString = connectionString; // { connection_string, migration_id (array) }
+		res.locals.connectionString = connectionString; 
 		return next();
 	} catch (error) {
 		return next({

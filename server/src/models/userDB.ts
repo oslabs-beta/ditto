@@ -4,7 +4,7 @@ import crypto from 'crypto';
 export interface DB {
 	db_id: number;
 	connection_string: string;
-	created_at: string; // does this need to match and if so double check
+	created_at: string; 
 	migration_id: number | null;
 }
 
@@ -64,11 +64,11 @@ export const getPendingMigrations = async (
 	SELECT * FROM migration_logs
 	WHERE user_id = $1 AND database_id = $2 AND status = 'Pending'
 	ORDER BY CAST(version AS INTEGER) ASC; 
-	`; // make sure version is set to an integer
+	`; 
 	console.log('pendingMigration queryString:', queryString);
 	const result = await db.query(queryString, [userId, dbId]);
 	console.log('pending Migration result:', result);
-	return result as Migration[]; // return result as an array of migrations
+	return result as Migration[]; 
 };
 
 export const updateMigrationStatus = async (
@@ -82,27 +82,27 @@ export const updateMigrationStatus = async (
 	RETURNING *;
 	`;
 	const result = await db.query(queryString, [status, migrationId]);
-	return result[0] as Migration; // return updated migration
+	return result[0] as Migration; 
 };
 
-export const validateChecksum = async (
-	migrationId: number,
-	checksum: string
-): Promise<boolean> => {
-	const queryString = `
-	SELECT checksum FROM migration_logs
-	WHERE migration_id = $1;
-	`;
-	const result = await db.query(queryString, [migrationId]);
-	if (result.length > 0) {
-		const storedChecksum = result[0].checksum;
-		return checksum === storedChecksum; // compare provided checksum with stored checksum
-	}
-	return false;
-};
+// export const validateChecksum = async (
+// 	migrationId: number,
+// 	checksum: string
+// ): Promise<boolean> => {
+// 	const queryString = `
+// 	SELECT checksum FROM migration_logs
+// 	WHERE migration_id = $1;
+// 	`;
+// 	const result = await db.query(queryString, [migrationId]);
+// 	if (result.length > 0) {
+// 		const storedChecksum = result[0].checksum;
+// 		return checksum === storedChecksum; 
+// 	}
+// 	return false;
+// };
 
-export const generateChecksum = (script: string): string => {
-	const hash = crypto.createHash('sha256');
-	hash.update(script);
-	return hash.digest('hex');
-};
+// export const generateChecksum = (script: string): string => {
+// 	const hash = crypto.createHash('sha256');
+// 	hash.update(script);
+// 	return hash.digest('hex');
+// };

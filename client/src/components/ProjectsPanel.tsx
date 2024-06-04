@@ -17,10 +17,8 @@ import {
 	setSelectedDatabase,
 	setdbId,
 } from '../store';
-// import addCode from '../../../server/src/models/projects';
 
 const OrganizationsPanel: React.FC = () => {
-	/* States */
 	const userRole = useSelector((state: any) => state.userRole);
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
@@ -36,17 +34,12 @@ const OrganizationsPanel: React.FC = () => {
 	const [accessCode, setAccessCode] = useState('');
 	const token = sessionStorage.getItem('token');
 
-	/* Built in Methods */
 	const dispatch = useDispatch();
-
-	/* HTTP Requests */
-	/* GET Projects */
 
 	useEffect(() => {
 		const fetchProjects = async () => {
 			try {
 				const response = await fetch('/project/allprojects', {
-					// Needs endpoint
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -85,7 +78,6 @@ const OrganizationsPanel: React.FC = () => {
 			setShowInput(false);
 		}
 	};
-	/* POST (Store Code) Project */
 	const storeCode = async (code: string) => {
 		const response = await fetch('project/generate', {
 			method: 'POST',
@@ -104,7 +96,6 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 
-	/* POST (Join) Project */
 	const joinProject = async () => {
 		const response = await fetch('project/join', {
 			method: 'POST',
@@ -118,13 +109,11 @@ const OrganizationsPanel: React.FC = () => {
 		});
 		if (response.ok) {
 			const result = await response.json();
-			console.log(result);
 			setAccessCode('');
 			setJoinInput(false);
 		}
 	};
 
-	/* DELETE Project */
 	const deleteProject = async () => {
 		if (selectedProject) {
 			try {
@@ -147,7 +136,6 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 
-	/* LEAVE Project */
 	const leaveProject = async () => {
 		if (selectedProject) {
 			try {
@@ -170,7 +158,6 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 
-	/* Dropdown Logic */
 	const handleChooseProject = async (
 		e: React.ChangeEvent<HTMLSelectElement>
 	) => {
@@ -230,7 +217,6 @@ const OrganizationsPanel: React.FC = () => {
 		)
 	);
 
-	/* Button Logic */
 	const handleCreate = () => {
 		setIsOpen(false);
 		setPromptLeave(false);
@@ -261,10 +247,7 @@ const OrganizationsPanel: React.FC = () => {
 
 	const handlePopperYes = () => {
 		dispatch(setSelectedProject(''));
-		// We will dispatch for users table and make it an empty string to clear
-
 		deleteProject();
-
 		setIsOpen(false);
 	};
 
@@ -320,7 +303,6 @@ const OrganizationsPanel: React.FC = () => {
 							<FontAwesomeIcon icon={faTrashCan} />
 						</button>
 					)}
-					{/* If you press create */}
 					{showInput && (
 						<form
 							onSubmit={e => {
@@ -338,7 +320,6 @@ const OrganizationsPanel: React.FC = () => {
 							<button>+</button>
 						</form>
 					)}
-					{/* If you press join */}
 					{joinInput && (
 						<form onSubmit={joinProject}>
 							<p>Join Project:</p>
@@ -350,7 +331,6 @@ const OrganizationsPanel: React.FC = () => {
 							<button>+</button>
 						</form>
 					)}
-					{/* Popper for Delete */}
 					{selectedProject && isOpen && (
 						<div>
 							<p>Delete Project:</p>
@@ -367,7 +347,6 @@ const OrganizationsPanel: React.FC = () => {
 							</div>
 						</div>
 					)}
-					{/* Popper for Leave */}
 					{selectedProject && promptLeave && (
 						<div>
 							<p>Leave Project:</p>

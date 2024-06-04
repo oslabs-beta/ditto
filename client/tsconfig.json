@@ -9,7 +9,7 @@
 		"types": ["@testing-library/jest-dom", "@types/node"],
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true, // Add this line
+		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},

@@ -18,7 +18,6 @@ export const createNewProject = async (
 	next: NextFunction
 ) => {
 	const { project_name } = req.body;
-	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -40,7 +39,7 @@ export const createNewProject = async (
 		}
 
 		const newProject = await createProject(project_name, userId);
-		res.locals.project = newProject; // {date_created, project_name, project_id, owner, code}
+		res.locals.project = newProject; 
 		return next();
 	} catch (error) {
 		return next({
@@ -62,7 +61,7 @@ export const getAllProjectsByUserId = async (
 	}
 	try {
 		const projects = await getProjectsByUserId(userId);
-		res.locals.projects = projects; // array of all projects columns
+		res.locals.projects = projects; 
 		return next();
 	} catch (error) {
 		return next({
@@ -77,7 +76,6 @@ export const selectProjectAndGetAllUsers = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	//get DB ID from req params
 	const { projectId } = req.params;
 	const userId = req.user?.id;
 
@@ -87,7 +85,7 @@ export const selectProjectAndGetAllUsers = async (
 	}
 	try {
 		const allUsers = await getAllUsers(Number(projectId));
-		res.locals.users = allUsers; // [{username, user_id, role}]
+		res.locals.users = allUsers; 
 		return next();
 	} catch (error) {
 		return next({

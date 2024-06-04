@@ -1,7 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
-import React from 'react';
-import ReactDOM from 'react-dom';
 
 const SET_USER = 'SET_USER';
 const SET_PROJECTS = 'SET_PROJECTS';
@@ -142,16 +139,12 @@ export const setUserId = (userId: string | number) => ({
 	payload: userId,
 });
 
-// Define initial state
+
 const initialState = {
 	user: '',
 	token: '',
 	databases: [],
-	projects: [
-		// { project_id: '24', project_name: 'ShellScapePlanner' },
-		// { project_id: '11', project_name: 'DateNight' },
-		// { project_id: '67', project_name: 'Solibee' },
-	],
+	projects: [],
 	migrationVersions: [],
 	selectedUser: '',
 	selectedTable: '',

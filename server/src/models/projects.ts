@@ -69,7 +69,7 @@ export const deleteProject = async (project_id: number, owner: number) => {
 	return result[0] as string;
 };
 
-// use this in frontend - don't need to be in middleware
+
 export const addCode = async (
 	code: string,
 	project_id: number,

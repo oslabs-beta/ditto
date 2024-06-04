@@ -1,9 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
-
 import ProjectsPage from './pages/ProjectsPage';
-
 import LoadingSpinner from './components/LoadingSpinner';
 import { HelmetProvider } from 'react-helmet-async';
 
