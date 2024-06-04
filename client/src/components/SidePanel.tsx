@@ -25,7 +25,7 @@ const SidePanel: React.FC = () => {
 	const showInput = useSelector((state: any) => state.showInput);
 	const dbName = useSelector((state: any) => state.dbName);
 	const connectionString = useSelector((state: any) => state.connectionString);
-	const databases = useSelector((state: any) => state.databases);
+	const databases = useSelector((state: any) => state.databases) || [];
 	const selectedDbId = useSelector((state: { dbId: string }) => state.dbId);
 	const selectedAction = useSelector(
 		(state: { selectedAction: string }) => state.selectedAction

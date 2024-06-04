@@ -134,6 +134,7 @@ select {
 }
 
 .actiondesc {
+	display: flex;
 	padding-top: 10px;
 	width: 350px;
 }
