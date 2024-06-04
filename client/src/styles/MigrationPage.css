@@ -1,6 +1,7 @@
 .migrationPage {
 	display: flex;
 	height: 100%;
+
 	padding: 60px 30px 0 30px;
 
 	.font-bold {
@@ -25,7 +26,9 @@
 	}
 
 	/* Side Panel */
-
+	.sidePanel {
+		width: 40%;
+	}
 	.sidecontainer {
 		border-right: solid rgb(207, 202, 202) 1px;
 		display: flex;

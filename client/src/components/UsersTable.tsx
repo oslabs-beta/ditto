@@ -19,13 +19,10 @@ const UsersTable: React.FC = () => {
 	const selectedProjectId = useSelector(
 		(state: { projectId: string }) => state.projectId
 	);
-	const projects = useSelector((state: any) => state.projects);
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const fetchUsers = async () => {
 			if (!selectedProject) {
-				// dispatch(setSelectedUser(''));
 			}
 			try {
 				const response = await fetch(`/project/allusers/${projectId}`, {

@@ -317,7 +317,7 @@ const OrganizationsPanel: React.FC = () => {
 					)}
 					{/* If you press create */}
 					{showInput && (
-						<form onSubmit={createProject}>
+						<form onSubmit={createProject} title="Create Project">
 							<p>Create Project:</p>
 							<input
 								type="text"
@@ -330,7 +330,7 @@ const OrganizationsPanel: React.FC = () => {
 					)}
 					{/* If you press join */}
 					{joinInput && (
-						<form onSubmit={joinProject}>
+						<form onSubmit={joinProject} title="Join Project">
 							<p>Join Project:</p>
 							<input
 								type="text"
@@ -347,8 +347,11 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Delete Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={e => handlePopperYes()}>Yes</button>
+								<button title="Accept Popper" onClick={e => handlePopperYes()}>
+									Yes
+								</button>
 								<button
+									title="Decline Popper"
 									onClick={() => {
 										setIsOpen(false);
 									}}
@@ -365,6 +368,7 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Are you sure?</p>
 							<div>
 								<button
+									title="Accept"
 									onClick={() => {
 										handlePopperYes();
 										leaveProject();
@@ -373,6 +377,7 @@ const OrganizationsPanel: React.FC = () => {
 									Yes
 								</button>
 								<button
+									title="Decline"
 									onClick={() => {
 										setPromptLeave(false);
 									}}
@@ -391,9 +396,9 @@ const OrganizationsPanel: React.FC = () => {
 							type="text"
 							value={accessCode}
 							onChange={handleCodeInputChange}
-							placeholder="access code"
+							placeholder="Access Code"
 						/>
-						<button>Generate Code</button>
+						<button title="Generate Access Code">Generate</button>
 					</form>
 				</div>
 			)}
