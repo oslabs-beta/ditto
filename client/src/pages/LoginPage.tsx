@@ -14,7 +14,6 @@ interface LoginFormData {
 }
 
 const LoginPage: React.FC = () => {
-	//regular login//
 	const [formData, setFormData] = useState<LoginFormData>({
 		username: '',
 		password: '',
@@ -30,7 +29,6 @@ const LoginPage: React.FC = () => {
 		});
 	};
 
-	/* Regular Login */
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>
 	): Promise<void> => {
@@ -39,7 +37,6 @@ const LoginPage: React.FC = () => {
 			console.log('Login with:', formData);
 
 			const response = await fetch('http://localhost:3001/auth/login', {
-				// /auth/login
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -49,17 +46,10 @@ const LoginPage: React.FC = () => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log('data: ', data);
-				console.log('formData.username: ', formData.username);
 				dispatch(setUser(formData.username));
 				dispatch(setUserId(data.userId));
-				// dispatch(setToken(data.token)); //test
-				const token = data.token; // session storage way
-				console.log('data.token: ', token);
-				// const dbResponse = await fetch('http://localhost:3001/db/')
-				sessionStorage.setItem('token', token); // session storage way
-
-				// get user's saved databases and update state
+				const token = data.token; 
+				sessionStorage.setItem('token', token); 
 
 				navigate('/projects');
 			} else {
@@ -69,13 +59,11 @@ const LoginPage: React.FC = () => {
 			console.error('An error occurred during login:', error);
 		}
 	};
-	/* Regular Login */
 
 	const handleLoginWithGitHub = (): void => {
 		window.location.href = 'http://localhost:3001/github/login';
-	}; // user clicks button to invoke this and redirect to github/login
+	}; 
 
-	/* GitHub Login */
 
 	const handleSignUp = (): void => {
 		sessionStorage.clear();

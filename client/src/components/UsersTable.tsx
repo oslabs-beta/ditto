@@ -27,9 +27,6 @@ const UsersTable: React.FC = () => {
 
 	useEffect(() => {
 		const fetchUsers = async () => {
-			if (!selectedProject) {
-				// dispatch(setSelectedUser(''));
-			}
 			try {
 				const response = await fetch(`/project/allusers/${projectId}`, {
 					method: 'GET',
@@ -125,7 +122,6 @@ const UsersTable: React.FC = () => {
 		if (roleComparison !== 0) {
 			return roleComparison;
 		}
-		// if roles are same, compare date joined
 		return (
 			new Date(a.date_joined).getTime() - new Date(b.date_joined).getTime()
 		);

@@ -20,8 +20,6 @@
 		font-weight: bold;
 	}
 
-	/* Projects Panel */
-
 	.projectsPanel {
 		border-right: solid rgb(207, 202, 202) 1px;
 		display: flex;

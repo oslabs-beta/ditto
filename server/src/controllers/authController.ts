@@ -16,7 +16,6 @@ export const validateJWT = (
 ) => {
 	const header = req.headers.authorization;
 	if (header) {
-		//store token (Bearer <token>) from header
 		const token = header.split(' ')[1];
 
 		jwt.verify(token, jwtSecret as jwt.Secret, (err, user) => {
@@ -24,7 +23,6 @@ export const validateJWT = (
 				console.log('error in validateJWT');
 				return res.sendStatus(403);
 			}
-			//attach decoded user info to req object
 			req.user = user as { id: number; username: string };
 			return next();
 		});
@@ -72,13 +70,13 @@ export const login = async (
 			console.log('Username does not exist');
 			return res.sendStatus(401);
 		}
-		//compare given pass with stored hashed pass
+
 		const match = await bcrypt.compare(password, user.password);
 		if (!match) {
 			console.log('Wrong password');
 			return res.sendStatus(401);
 		}
-		//generate JWT token with user iD and username valid for 1 hr
+
 		const token = jwt.sign(
 			{ id: user.user_id, username: user.username },
 			jwtSecret as jwt.Secret,

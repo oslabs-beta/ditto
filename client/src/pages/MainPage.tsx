@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Community from '../components/Community';
 import '../styles/MainPage.css';
-// import DocumentationPage from './DocumentationPage';
 import LandingPageBtns from '../components/LandingPageBtns';
 import Intro from '../components/Intro';
 

@@ -3,7 +3,7 @@ import db from '../db';
 export interface DB {
 	db_id: number;
 	connection_string: string;
-	created_at: string; // does this need to match and if so double check
+	created_at: string; 
 	migration_id: number | null;
 }
 
