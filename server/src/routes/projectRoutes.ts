@@ -8,6 +8,7 @@ import {
 	kickUser,
 	leaveCurrentProject,
 	selectProjectAndGetAllUsers,
+	updateUserRole,
 	storeAccessCode,
 } from '../controllers/projectController';
 
@@ -79,6 +80,15 @@ router.delete(
 	}
 );
 
+router.patch(
+	`/updaterole/:projectId`,
+	validateJWT,
+	updateUserRole,
+	selectProjectAndGetAllUsers,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.users);
+	}
+);
 router.post(
 	`/generate`,
 	validateJWT,

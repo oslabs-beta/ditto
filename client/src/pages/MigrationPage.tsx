@@ -17,21 +17,23 @@ const MigrationPage: React.FC = () => {
 		const loadDatabases = async () => {
 			const token = sessionStorage.getItem('token');
 			try {
-				const response = await fetch(
-					`/db/connectionStrings/${currentProject}`,
-					{
-						method: 'GET',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
+				if (currentProject) {
+					const response = await fetch(
+						`/db/connectionStrings/${currentProject}`,
+						{
+							method: 'GET',
+							headers: {
+								'Content-Type': 'application/json',
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
 
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					const data = await response.json();
 				}
-				const data = await response.json();
 				// dispatch(setDatabases(data.connectionStrings));
 			} catch (error) {
 				console.error(`Error fetching databases:`, error);
@@ -41,7 +43,7 @@ const MigrationPage: React.FC = () => {
 		};
 
 		loadDatabases();
-	}, [currentProject, dispatch]);
+	}, [currentProject]);
 
 	if (loading) {
 		return <LoadingSpinner />;

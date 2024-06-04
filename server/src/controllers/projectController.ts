@@ -8,6 +8,7 @@ import {
 	findProjectByCode,
 	joinProject,
 	leaveProject,
+	updateRole,
 	addCode,
 } from '../models/projects';
 
@@ -217,6 +218,26 @@ export const kickUser = async (
 	}
 };
 
+export const updateUserRole = async (
+	req: Request,
+	res: Response,
+	next: NextFunction
+) => {
+	const { projectId } = req.params;
+	const userId = req.user?.id;
+	const { user, role } = req.body;
+
+	try {
+		await updateRole(Number(projectId), role, Number(user));
+		return next();
+	} catch (error) {
+		return next({
+			status: 400,
+			message: `Error in projectController storeAccessCode: ${error}`,
+		});
+	}
+};
+
 export const storeAccessCode = async (
 	req: Request,
 	res: Response,
@@ -226,10 +247,12 @@ export const storeAccessCode = async (
 	const userId = req.user?.id;
 	const project = await selectProject(project_id);
 	const ownerId = project.owner;
+
 	if (!userId) {
 		console.log('Unauthorized');
 		return res.sendStatus(401);
 	}
+
 	if (userId === ownerId) {
 		try {
 			const newCode = await addCode(code, project_id, userId);

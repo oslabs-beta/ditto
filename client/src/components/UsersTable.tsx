@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setUserRole, setSelectedProject } from '../store';
+import { useRevalidator } from 'react-router-dom';
+import { useRouteId } from 'react-router/dist/lib/hooks';
 
 interface Users {
 	user_id: string;
@@ -12,10 +14,12 @@ const UsersTable: React.FC = () => {
 	const userRole = useSelector((state: any) => state.userRole);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
 	const projectId = useSelector((state: any) => state.projectId);
-	const [users, setUsers] = useState<Users[]>([
-		{ username: 'ShanKhan', role: 'admin', user_id: '12' },
-	]);
+	const [users, setUsers] = useState<Users[]>([]);
 	const token = sessionStorage.getItem('token');
+	const roles = ['Owner', 'Admin', 'User'];
+	const selectedProjectId = useSelector(
+		(state: { projectId: string }) => state.projectId
+	);
 
 	useEffect(() => {
 		const fetchUsers = async () => {
@@ -50,15 +54,52 @@ const UsersTable: React.FC = () => {
 		}
 	}, [selectedProject]);
 
+	const handleRoleChange = async (userId: string, role: string) => {
+		const token = sessionStorage.getItem('token');
+		console.log('in role change');
+		try {
+			const response = await fetch(`/project/updaterole/${selectedProjectId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					user: userId,
+					role: role,
+				}),
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			const result = await response.json();
+			console.log('result: ', result); // props are username, user_id, role
+			setUsers(result);
+		} catch (error) {
+			console.error('Error fetching migrations:', error);
+		}
+	};
+
+	const mapRoles = roles.map((role: string) => (
+		<option key={role} value={role}>
+			{role}
+		</option>
+	));
+
 	const mappedUsersTable = users.map(user => (
 		<tbody key={user.user_id}>
 			<tr>
 				<td>{user.username}</td>
-				<select>
-					<option>
-						<td>{user.role}</td>
-					</option>
-				</select>
+				<td>
+					<select
+						defaultValue={user.role}
+						onChange={e => handleRoleChange(user.user_id, e.target.value)}
+					>
+						{mapRoles}
+					</select>
+					<button>Kick</button>
+				</td>
 			</tr>
 		</tbody>
 	));
@@ -95,100 +136,3 @@ const UsersTable: React.FC = () => {
 };
 
 export default UsersTable;
-
-// possible edit
-// import React, { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
-
-// interface Users {
-//   user_id: string;
-//   user: string;
-//   role: string;
-// }
-
-// const UsersTable: React.FC = () => {
-//   const userRole = useSelector((state: any) => state.userRole);
-//   const selectedProject = useSelector((state: any) => state.selectedProject);
-//   const projectId = useSelector((state: any) => state.projectId);
-//   const [users, setUsers] = useState<Users[]>([
-//     { user: 'ShanKhan', role: 'admin', user_id: '12' },
-//   ]);
-//   const token = sessionStorage.getItem('token');
-
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       try {
-//         const response = await fetch(`/project/allusers/${projectId}`, {
-//           method: 'GET',
-//           headers: {
-//             'Content-Type': 'application/json',
-//             Authorization: `Bearer ${token}`,
-//           },
-//         });
-
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-
-//         const result = await response.json();
-//         const sortedUsers = result.sort((a: Users, b: Users) =>
-//           a.user.localeCompare(b.user)
-//         );
-//         setUsers(sortedUsers);
-//       } catch (error) {
-//         console.error('Error fetching users:', error);
-//       }
-//     };
-
-//     if (projectId) {
-//       fetchUsers();
-//     } else {
-//       setUsers([]);
-//     }
-//   }, [projectId, token]);
-
-//   return (
-//     <div className="users">
-//       <div className="usersHeader">
-//         <fieldset>
-//           <label>
-//             <input value={selectedProject || ''} readOnly />
-//           </label>
-//           <legend>Project</legend>
-//         </fieldset>
-//         <fieldset>
-//           <label>
-//             <input value={userRole || ''} readOnly />
-//           </label>
-//           <legend>Role</legend>
-//         </fieldset>
-//       </div>
-//       <div className="usersInfo">
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>User</th>
-//               <th>Role</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {users.map(user => (
-//               <tr key={user.user_id}>
-//                 <td>{user.user}</td>
-//                 <td>
-//                   <select defaultValue={user.role}>
-//                     <option value="admin">Admin</option>
-//                     <option value="user">User</option>
-//                     <option value="viewer">Viewer</option>
-//                   </select>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UsersTable;

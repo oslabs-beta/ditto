@@ -36,7 +36,10 @@ const SidePanel: React.FC = () => {
 	const selectedAction = useSelector(
 		(state: { selectedAction: string }) => state.selectedAction
 	);
-	const currentProject = useSelector((state: any) => state.currentProject);
+	const selectedProject = useSelector((state: any) => state.selectedProject);
+	const selectedProjectId = useSelector(
+		(state: { projectId: string }) => state.projectId
+	);
 	const userRole = useSelector((state: any) => state.userRole);
 	const [isOpen, setIsOpen] = useState(false);
 	const referenceElement = useRef<HTMLButtonElement>(null);
@@ -45,34 +48,37 @@ const SidePanel: React.FC = () => {
 	const selectedScript = useSelector(
 		(state: { selectedScript: string }) => state.selectedScript
 	);
+	const projectId = useSelector(
+		(state: { projectId: string }) => state.projectId
+	);
 	const token = sessionStorage.getItem('token');
 	const actions = ['Migrate', 'Repair', 'Undo', 'Clean'];
 
-	useEffect(() => {
-		const fetchDatabases = async () => {
-			try {
-				const response = await fetch('/db/connectionStrings', {
-					method: 'GET',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
-					},
-				});
+	// useEffect(() => {
+	// 	const fetchDatabases = async () => {
+	// 		try {
+	// 			const response = await fetch('/db/connectionStrings', {
+	// 				method: 'GET',
+	// 				headers: {
+	// 					'Content-Type': 'application/json',
+	// 					Authorization: `Bearer ${token}`,
+	// 				},
+	// 			});
 
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
-				}
+	// 			if (!response.ok) {
+	// 				throw new Error(`HTTP error! status: ${response.status}`);
+	// 			}
 
-				const result = await response.json();
-				console.log('result: ', result);
-				dispatch(setDatabases(result));
-				console.log('databases: ', databases);
-			} catch (error) {
-				console.error('Error fetching databases:', error);
-			}
-		};
-		fetchDatabases();
-	}, []);
+	// 			const result = await response.json();
+	// 			console.log('result: ', result);
+	// 			dispatch(setDatabases(result));
+	// 			console.log('databases: ', databases);
+	// 		} catch (error) {
+	// 			console.error('Error fetching databases:', error);
+	// 		}
+	// 	};
+	// 	fetchDatabases();
+	// }, []);
 
 	const handleButtonClick = async (btnText: string | null) => {
 		if (btnText === 'adddb') {
@@ -81,7 +87,7 @@ const SidePanel: React.FC = () => {
 			if (selectedDatabase) {
 				try {
 					const response = await fetch(
-						`/db/deleteConnectionString/${selectedDbId}`,
+						`/db/deleteConnectionString/${selectedDbId}/${projectId}`,
 						{
 							method: 'DELETE',
 							headers: {
@@ -148,6 +154,7 @@ const SidePanel: React.FC = () => {
 	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(setDbName(e.target.value));
 	};
+
 	/* For Adding Database */
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -163,6 +170,7 @@ const SidePanel: React.FC = () => {
 					body: JSON.stringify({
 						db_name: dbName,
 						connection_string: connectionString,
+						projectId: selectedProjectId,
 					}),
 				});
 				if (response.ok) {
@@ -187,6 +195,7 @@ const SidePanel: React.FC = () => {
 		);
 		dispatch(setSelectedDatabase(e.target.value));
 		dispatch(setSelectedMigration(''));
+		dispatch(setSelectedScript(''));
 	};
 
 	const mapDatabaseOptions = databases.map(
@@ -213,7 +222,7 @@ const SidePanel: React.FC = () => {
 	return (
 		<div id="sidecontainer">
 			{/* database */}
-			<p className="font-bold">{currentProject}</p>
+			<p className="font-bold">{selectedProject}</p>
 			<div id="dbdropdown">
 				<p className="font-bold">Choose Database</p>
 				<div className="selectdb">
