@@ -14,6 +14,7 @@ import {
 	setUserRole,
 	setDatabases,
 } from '../store';
+import '../styles/pages/ProjectsPage.css';
 // import addCode from '../../../server/src/models/projects';
 
 const OrganizationsPanel: React.FC = () => {

@@ -5,10 +5,10 @@ const DocumentationPage: React.FC = () => {
   return(
     <div>
       <div className='text-container'>
-        <p className='scrolling-text'>
+        <p className='docTxt'>
           <strong>D.I.T.T.O</strong> (<em>Data Integration and Transfer Tool for Organizations</em>) is a desktop
           application for managing SQL migration scripts tailored for Postgres databases on AWS.
-          This is achieved through meticulous implementation of:
+          This is made possibly by the meticulous implementation of:
           </p>
           <div className='list'>
             <ol>

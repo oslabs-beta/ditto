@@ -17,7 +17,7 @@ const Community: React.FC = () => {
     {
       name: 'Jay Cho',
       image: Jay,
-      bio: 'Jay Cho, after pivoting from mechanical engineering invested countless hours alongside Jea Lee and Jeff Kim in laying the foundation of this tool.',
+      bio: 'Jay Cho, after pivoting from mechanical engineering, invested countless hours alongside Jea Lee and Jeff Kim in laying the foundation of this tool.',
       github: 'https://github.com/jayc-gh'
     },
     {

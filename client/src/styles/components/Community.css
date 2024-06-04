@@ -17,7 +17,7 @@ ul {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  background-color: #7851a9;
+  background-color: black;
   opacity: 50%;
   padding: 20px;
   border-radius: 4px;
@@ -33,6 +33,7 @@ ul {
 
 .bioPic p {
   margin: 0;
+  color: white;
   border-radius: 50%;
   font-size: 16px;
 }

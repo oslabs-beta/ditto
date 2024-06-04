@@ -2,12 +2,34 @@ body {
   background-color: #7851a9;
 }
 
+@font-face {
+  font-family: "Harabara Mais";
+  src: url('../assets/fonts/Harabara Mais.otf') format('opentype');
+}
+
+@font-face {
+  font-family: "Biography";
+  src: url('../assets/fonts/Biography.otf') format('opentype');
+}
+
+@font-face {
+  font-family: "Informative";
+  src: url('../assets/fonts/Informative.otf') format('opentype');
+}
+
 .sectionTitle {
-  font-family:'Courier New', Courier, monospace;
+  font-family: "Harabara Mais";
+}
+
+.bioSection {
+  font-family: "Biography";
 }
 
 .text-container {
-	background-color: hsl(98, 82%, 41%);
-	font-family:'Courier New', Courier, monospace;
+  background-color: hsl(98, 82%, 41%);
+  font-family: 'Courier New', Courier, monospace;
 }
 
+.docTxt {
+  font-family: "Informative";
+}
