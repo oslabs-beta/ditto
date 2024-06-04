@@ -13,6 +13,9 @@ import {
 	setProjectId,
 	setUserRole,
 	setDatabases,
+	setMigrationVersions,
+	setSelectedDatabase,
+	setdbId,
 } from '../store';
 // import addCode from '../../../server/src/models/projects';
 
@@ -202,6 +205,9 @@ const OrganizationsPanel: React.FC = () => {
 
 			const result = await response.json();
 			dispatch(setDatabases(result));
+			dispatch(setMigrationVersions([]));
+			dispatch(setSelectedDatabase(''));
+			dispatch(setdbId(''));
 		} catch (error) {
 			console.error('Error fetching databases:', error);
 		}
