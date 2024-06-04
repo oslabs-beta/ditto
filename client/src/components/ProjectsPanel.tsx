@@ -118,6 +118,7 @@ const OrganizationsPanel: React.FC = () => {
 		});
 		if (response.ok) {
 			const result = await response.json();
+			console.log(result);
 			setAccessCode('');
 			setJoinInput(false);
 		}
@@ -241,12 +242,6 @@ const OrganizationsPanel: React.FC = () => {
 		setProjectName(e.target.value);
 	};
 
-	const handleJoinCodeInputChange = (
-		e: React.ChangeEvent<HTMLInputElement>
-	) => {
-		setProjectName(e.target.value);
-	};
-
 	const handleJoin = () => {
 		setIsOpen(false);
 		setPromptLeave(false);
@@ -311,14 +306,13 @@ const OrganizationsPanel: React.FC = () => {
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
 
+					<button onClick={handleLeave}>
+						<FontAwesomeIcon icon={faUserMinus} />
+					</button>
+
 					{(userRole === 'Owner' || userRole === 'Admin') && (
 						<button onClick={handlePopperDelete}>
 							<FontAwesomeIcon icon={faTrash} />
-						</button>
-					)}
-					{(userRole === 'Owner' || userRole === 'Admin') && (
-						<button onClick={handleLeave}>
-							<FontAwesomeIcon icon={faUserMinus} />
 						</button>
 					)}
 					{/* If you press create */}

@@ -60,7 +60,7 @@ const LoginPage: React.FC = () => {
 
 				// get user's saved databases and update state
 
-				navigate('/migration');
+				navigate('/projects');
 			} else {
 				console.error('Login failed:', await response.json());
 			}
