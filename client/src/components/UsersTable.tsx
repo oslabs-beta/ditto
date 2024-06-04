@@ -22,6 +22,7 @@ const UsersTable: React.FC = () => {
 	const selectedProjectId = useSelector(
 		(state: { projectId: string }) => state.projectId
 	);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const fetchUsers = async () => {
