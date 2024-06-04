@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CodeEditor from './CodeEditor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {
 	setdbId,
 	setSelectedMigration,
@@ -43,6 +45,7 @@ const MigrationScripts: React.FC = () => {
 				dispatch(setSelectedScript(''));
 			}
 			const token = sessionStorage.getItem('token');
+
 			try {
 				const response = await fetch(`/migrationlog/all/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
@@ -58,14 +61,11 @@ const MigrationScripts: React.FC = () => {
 				}
 
 				const result = await response.json();
-				// result.sort(
-				// 	(a: { version: number }, b: { version: number }) =>
-				// 		a.version - b.version
-				// );
 				const sortedMigrations = result.sort(
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
 				);
+				console.log('sortedMigrations: ', sortedMigrations);
 				setMigrations(sortedMigrations);
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
@@ -79,14 +79,6 @@ const MigrationScripts: React.FC = () => {
 		}
 	}, [selectedDatabase, selectedMigration, migrationVersions]);
 
-	/* Add Migrations Button */
-	// const handleFormSubmit = (data: {
-	// 	version: string;
-	// 	description: string;
-	// 	script: string;
-	// }) => {
-	// 	console.log('Form Data:', data);
-	// };
 	/* Add Migrations Button */
 	const handleSubmit = () => {
 		dispatch(setScript(''));
@@ -128,6 +120,7 @@ const MigrationScripts: React.FC = () => {
 					a.version - b.version
 			);
 			dispatch(setSelectedScript(''));
+			dispatch(setSelectedMigration(''));
 			setMigrations(migrationsArr);
 			// are we expecting response? we would have to json pars and confirm deletion or error
 			// dispatch migrationlog logic
@@ -135,10 +128,6 @@ const MigrationScripts: React.FC = () => {
 			console.error('Error fetching migrations:', error);
 		}
 	};
-
-	// const handleCodeChange = (newCode: string) => {
-	// 	setCode(newCode);
-	// };
 
 	const handleRunScript = async (e: React.FormEvent) => {
 		e.preventDefault;
@@ -184,16 +173,19 @@ const MigrationScripts: React.FC = () => {
 	return (
 		<div className="MigrationScriptsContainer">
 			<div className="scriptsheader">
-				{/* Add Migrations Button */}
-				<div className="selectedDB font-bold">
-					{selectedDatabase}
-					{/* <h1>{selectedDatabase}</h1> */}
-				</div>
+				{/* <div className="selectedDB font-bold">{selectedDatabase}</div> */}
+
+				<fieldset>
+					<label>
+						<input value={selectedDatabase} />
+					</label>
+					<legend>Database</legend>
+				</fieldset>
 				<button className="purplebtn" type="button" onClick={handleSubmit}>
 					Add Migration
 				</button>
 			</div>
-			<div className="migrationstable">
+			<div className="migrationsTable">
 				<table>
 					<thead>
 						<tr>
@@ -203,6 +195,7 @@ const MigrationScripts: React.FC = () => {
 							<th className="executedat">Date Migrated (ET)</th>
 						</tr>
 					</thead>
+
 					{migrations.map(migration => (
 						<tbody key={migration.migration_id}>
 							<tr
@@ -221,13 +214,30 @@ const MigrationScripts: React.FC = () => {
 								<td className="version">{migration.version}</td>
 								<td className="desc">{migration.description}</td>
 								<td className="status">{migration.status}</td>
-								<td className="executedat">{migration.executed_at}</td>
+								<div className="dateMigratedColumn">
+									<td className="executedat">{migration.executed_at}</td>
+
+									<button
+										className="purplebtn"
+										type="button"
+										onClick={handleUpdateSubmit}
+									>
+										<FontAwesomeIcon icon={faEdit} />
+									</button>
+									<button
+										className="whitebtn"
+										type="button"
+										onClick={handleDeleteSubmit}
+									>
+										<FontAwesomeIcon icon={faTrashCan} />
+									</button>
+								</div>
 							</tr>
 						</tbody>
 					))}
 				</table>
 			</div>
-			<div className="updatedeletebtn">
+			{/* <div className="updatedeletebtn">
 				<button
 					className="purplebtn"
 					type="button"
@@ -238,10 +248,15 @@ const MigrationScripts: React.FC = () => {
 				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
 					Delete
 				</button>
-			</div>
+			</div> */}
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
-					<CodeEditor code={selectedScript} inMigration={true} />
+					<fieldset>
+						<label>
+							<CodeEditor code={selectedScript} inMigration={true} />
+						</label>
+						<legend>Script</legend>
+					</fieldset>
 				</div>
 			</div>
 		</div>

@@ -59,25 +59,8 @@ const LoginPage: React.FC = () => {
 				sessionStorage.setItem('token', token); // session storage way
 
 				// get user's saved databases and update state
-				try {
-					const response = await fetch('/db/connectionStrings', {
-						method: 'GET',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`, // Replace with your JWT token logic
-						},
-					});
 
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
-					}
-
-					const result = await response.json();
-					dispatch(setDatabases(result));
-				} catch (error) {
-					console.error('Error fetching databases:', error);
-				}
-				navigate('/migration');
+				navigate('/projects');
 			} else {
 				console.error('Login failed:', await response.json());
 			}
@@ -102,9 +85,12 @@ const LoginPage: React.FC = () => {
 		<div className="container">
 			<Helmet>
 				<title>Login to Ditto</title>
-				<meta name="description" content="Log in to Ditto to access and manage your PostgreSQL database migrations."/>
+				<meta
+					name="description"
+					content="Log in to Ditto to access and manage your PostgreSQL database migrations."
+				/>
 			</Helmet>
-			<h1 className="login">Log In</h1>
+			<h1 className="login">Sign In</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<input
 					type="text"

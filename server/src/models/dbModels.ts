@@ -85,6 +85,7 @@ export const deleteDBConnectionById = async (
 	projectId: number,
 	dbId: number
 ): Promise<string> => {
+	console.log(projectId, dbId);
 	const queryString = `
 		DELETE FROM project_db
 		WHERE project_id = $1 AND db_id = $2

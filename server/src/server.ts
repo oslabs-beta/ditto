@@ -2,14 +2,12 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import migrationRoutes from './routes/migrationRoutes';
 import auditRoutes from './routes/auditRoutes';
 import authRoutes from './routes/authRoutes';
-import dbRoutes from './routes/dbRoutes';
 import migrationLogRoutes from './routes/migrationLogRoutes';
 import githubAuthRoutes from './routes/githubAuthRoutes';
 import newDbRoutes from './routes/newDbRoutes';
 import projectRoutes from './routes/projectRoutes';
 import cors from 'cors';
 import path from 'path';
-import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -24,9 +22,11 @@ app.use(express.urlencoded({ extended: true }));
 const oneYear = 365 * 24 * 60 * 60 * 1000;
 
 const joinPath = path.join(__dirname, '../../client/dist');
-app.use(express.static(joinPath, {
-	maxAge: oneYear
-}));
+app.use(
+	express.static(joinPath, {
+		maxAge: oneYear,
+	})
+);
 
 app.get('/robots.txt', (req: Request, res: Response) => {
 	res.sendFile(path.join(joinPath, 'robots.txt'));

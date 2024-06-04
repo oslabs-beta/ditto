@@ -33,7 +33,6 @@ const UpdateMigrationsPage: React.FC = () => {
 	useEffect(() => {
 		const getMigrationLog = async () => {
 			const token = sessionStorage.getItem('token');
-			console.log(migrationId);
 			const response = await fetch(`/migrationlog/${migrationId}`, {
 				method: 'GET',
 				headers: {
@@ -42,6 +41,7 @@ const UpdateMigrationsPage: React.FC = () => {
 				},
 			});
 			const log = await response.json();
+			console.log('log', log);
 			setVersion(log.version);
 			setDescription(log.description);
 			setScript(log.script);
@@ -74,7 +74,6 @@ const UpdateMigrationsPage: React.FC = () => {
 
 	return (
 		<div className="addUpdateMigrationsPage">
-			<h1>Update Migrations</h1>
 			<form onSubmit={handleSubmit}>
 				<div className="versionDescription">
 					<fieldset className="version">

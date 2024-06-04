@@ -8,6 +8,8 @@ import {
 	kickUser,
 	leaveCurrentProject,
 	selectProjectAndGetAllUsers,
+	updateUserRole,
+	storeAccessCode,
 } from '../controllers/projectController';
 
 const router = express.Router();
@@ -43,8 +45,9 @@ router.delete(
 	`/delete/:projectId`,
 	validateJWT,
 	deleteProjectById,
+	getAllProjectsByUserId,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(200).json(res.locals.deletedProject);
+		res.status(200).json(res.locals.projects);
 	}
 );
 
@@ -75,6 +78,24 @@ router.delete(
 	selectProjectAndGetAllUsers,
 	(_req: Request, res: Response, _next: NextFunction) => {
 		res.status(200).json(res.locals.users);
+	}
+);
+
+router.patch(
+	`/updaterole/:projectId`,
+	validateJWT,
+	updateUserRole,
+	selectProjectAndGetAllUsers,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.users);
+	}
+);
+router.post(
+	`/generate`,
+	validateJWT,
+	storeAccessCode,
+	(_req: Request, res: Response, _next: NextFunction) => {
+		res.status(200).json(res.locals.code);
 	}
 );
 

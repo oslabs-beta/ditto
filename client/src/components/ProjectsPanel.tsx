@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faHammer,
 	faUserPlus,
-	faTrash,
+	faTrashCan,
 	faUserMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -12,13 +12,19 @@ import {
 	setSelectedProject,
 	setProjectId,
 	setUserRole,
+	setDatabases,
 } from '../store';
+// import addCode from '../../../server/src/models/projects';
 
 const OrganizationsPanel: React.FC = () => {
 	/* States */
 	const userRole = useSelector((state: any) => state.userRole);
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
+	const selectedProjectId = useSelector(
+		(state: { projectId: number }) => state.projectId
+	);
+	const databases = useSelector((state: any) => state.databases) || [];
 	const [projectName, setProjectName] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [promptLeave, setPromptLeave] = useState(false);
@@ -32,12 +38,11 @@ const OrganizationsPanel: React.FC = () => {
 
 	/* HTTP Requests */
 	/* GET Projects */
+
 	useEffect(() => {
-		console.log(projects);
-		console.log('mapped options: ', mapProjectOptions);
 		const fetchProjects = async () => {
 			try {
-				const response = await fetch('', {
+				const response = await fetch('/project/allprojects', {
 					// Needs endpoint
 					method: 'GET',
 					headers: {
@@ -48,18 +53,18 @@ const OrganizationsPanel: React.FC = () => {
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
-				const results = await response.json();
-				dispatch(setProjects(results));
+				const result = await response.json();
+				dispatch(setProjects(result));
 			} catch (error) {
 				console.error('Error fetching projects:', error);
 			}
 		};
-		fetchProjects;
+		fetchProjects();
 	}, []);
 
 	/* POST (Create) Project */
 	const createProject = async () => {
-		const response = await fetch('', {
+		const response = await fetch('/project/create', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -76,17 +81,18 @@ const OrganizationsPanel: React.FC = () => {
 			setShowInput(false);
 		}
 	};
-
-	/* POST (Join) Project */
-	const joinProject = async () => {
-		const response = await fetch('', {
+	/* POST (Store Code) Project */
+	const storeCode = async (code: string) => {
+		const response = await fetch('project/generate', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
-				project_name: projectName,
+				code: code,
+				project_id: selectedProjectId,
+				role: userRole,
 			}),
 		});
 		if (response.ok) {
@@ -96,11 +102,31 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 
+	/* POST (Join) Project */
+	const joinProject = async () => {
+		const response = await fetch('project/join', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				code: accessCode,
+			}),
+		});
+		if (response.ok) {
+			const result = await response.json();
+			console.log(result);
+			setAccessCode('');
+			setJoinInput(false);
+		}
+	};
+
 	/* DELETE Project */
 	const deleteProject = async () => {
 		if (selectedProject) {
 			try {
-				const response = await fetch('', {
+				const response = await fetch(`project/delete/${selectedProjectId}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
@@ -123,7 +149,7 @@ const OrganizationsPanel: React.FC = () => {
 	const leaveProject = async () => {
 		if (selectedProject) {
 			try {
-				const response = await fetch('', {
+				const response = await fetch(`/project/leave/${selectedProjectId}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
@@ -143,21 +169,55 @@ const OrganizationsPanel: React.FC = () => {
 	};
 
 	/* Dropdown Logic */
-	const handleChooseProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		console.log(projects);
+	const handleChooseProject = async (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const selectedOption = e.target.selectedOptions[0].dataset.projectRole;
 		dispatch(
 			setProjectId(
 				!e.target.value ? '' : e.target.selectedOptions[0].dataset.projectId
 			)
 		);
 		dispatch(setSelectedProject(e.target.value));
+		dispatch(setUserRole(selectedOption));
+	};
+
+	const handleProjectChange = async (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		try {
+			const response = await fetch(
+				`/db/connectionStrings/${e.target.selectedOptions[0].dataset.projectId}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const result = await response.json();
+			dispatch(setDatabases(result));
+		} catch (error) {
+			console.error('Error fetching databases:', error);
+		}
 	};
 
 	const mapProjectOptions = projects.map(
-		(project: { project_id: string; project_name: string }) => (
+		(project: {
+			project_id: string;
+			project_name: string;
+			role: string | undefined;
+		}) => (
 			<option
 				key={project.project_id}
 				value={project.project_name}
+				data-project-role={project.role}
 				data-project-id={project.project_id}
 			>
 				{project.project_name}
@@ -173,7 +233,9 @@ const OrganizationsPanel: React.FC = () => {
 		setShowInput(showInput ? false : true);
 	};
 
-	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleProjectNameInputChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		setProjectName(e.target.value);
 	};
 
@@ -195,11 +257,13 @@ const OrganizationsPanel: React.FC = () => {
 	const handlePopperYes = () => {
 		dispatch(setSelectedProject(''));
 		// We will dispatch for users table and make it an empty string to clear
+
 		deleteProject();
+
 		setIsOpen(false);
 	};
 
-	const handleLeave = () => {
+	const handleLeave = async () => {
 		setIsOpen(false);
 		setShowInput(false);
 		setJoinInput(false);
@@ -207,35 +271,48 @@ const OrganizationsPanel: React.FC = () => {
 		else if (selectedProject && promptLeave) setPromptLeave(false);
 	};
 
-	const handleGenerate = () => {
-		const accessCode = Math.random().toString(36).substring(7);
-		setAccessCode(accessCode);
+	const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const code = Math.random().toString(36).substring(7);
+		setAccessCode(code);
+		await storeCode(code);
+	};
+
+	const handleCodeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setAccessCode(e.target.value);
+		console.log(accessCode);
 	};
 
 	return (
 		<div className="projectsPanel">
 			<div className="chooseProject">
-				<p>Choose Project</p>
-				<select value={selectedProject} onChange={handleChooseProject}>
-					<option value="">-- Select a Project --</option>
+				<p className="font-bold">Project</p>
+				<select
+					value={selectedProject}
+					onChange={e => {
+						handleChooseProject(e);
+						handleProjectChange(e);
+					}}
+				>
+					<option value="">Select</option>
 					{mapProjectOptions}
 				</select>
 				<div className="projectButtons">
-					<button onClick={handleCreate}>
+					<button onClick={handleCreate} title="Create Project">
 						<FontAwesomeIcon icon={faHammer} />
 					</button>
-					<button onClick={handleJoin}>
+
+					<button onClick={handleJoin} title="Join Project">
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
 
-					{(userRole === 'owner' || userRole === 'admin') && (
-						<button onClick={handlePopperDelete}>
-							<FontAwesomeIcon icon={faTrash} />
-						</button>
-					)}
-					{(userRole === 'owner' || userRole === 'admin') && (
-						<button onClick={handleLeave}>
-							<FontAwesomeIcon icon={faUserMinus} />
+					<button onClick={handleLeave} title="Leave Project">
+						<FontAwesomeIcon icon={faUserMinus} />
+					</button>
+
+					{(userRole === 'Owner' || userRole === 'Admin') && (
+						<button onClick={handlePopperDelete} title="Delete Project">
+							<FontAwesomeIcon icon={faTrashCan} />
 						</button>
 					)}
 					{/* If you press create */}
@@ -245,7 +322,7 @@ const OrganizationsPanel: React.FC = () => {
 							<input
 								type="text"
 								value={projectName}
-								onChange={handledbNameInputChange}
+								onChange={handleProjectNameInputChange}
 								placeholder="Enter project name"
 							/>
 							<button>+</button>
@@ -257,16 +334,10 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Join Project:</p>
 							<input
 								type="text"
-								value={projectName}
-								onChange={handledbNameInputChange}
-								placeholder="Enter project name"
-							/>
-							<input
-								type="text"
 								value={accessCode}
-								onChange={handledbNameInputChange}
+								onChange={handleCodeInputChange}
 								placeholder="Enter access code"
-							/>
+							></input>
 							<button>+</button>
 						</form>
 					)}
@@ -276,7 +347,7 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Delete Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={handlePopperYes}>Yes</button>
+								<button onClick={e => handlePopperYes()}>Yes</button>
 								<button
 									onClick={() => {
 										setIsOpen(false);
@@ -293,7 +364,14 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Leave Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={handlePopperYes}>Yes</button>
+								<button
+									onClick={() => {
+										handlePopperYes();
+										leaveProject();
+									}}
+								>
+									Yes
+								</button>
 								<button
 									onClick={() => {
 										setPromptLeave(false);
@@ -306,10 +384,17 @@ const OrganizationsPanel: React.FC = () => {
 					)}
 				</div>
 			</div>
-			{(userRole === 'owner' || userRole === 'admin') && (
-				<div className="generateCode">
-					<button onClick={handleGenerate}>Generate Access Code</button>
-					<input type="text" value={accessCode} />
+			{(userRole === 'Owner' || userRole === 'Admin') && (
+				<div className="generateCode" title="Generate Access Code">
+					<form onSubmit={handleGenerate}>
+						<input
+							type="text"
+							value={accessCode}
+							onChange={handleCodeInputChange}
+							placeholder="access code"
+						/>
+						<button>Generate Code</button>
+					</form>
 				</div>
 			)}
 		</div>

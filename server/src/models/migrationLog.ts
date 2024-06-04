@@ -79,15 +79,15 @@ export const deleteMigrationLogQuery = async (
 };
 
 export const getMigrationLogQuery = async (
-	migrationId: string | number,
-	userId: string | number
+	migrationId: string | number
 ): Promise<migrationLog> => {
+	console.log(migrationId);
 	const queryString = `
 	SELECT *
 	FROM migration_logs
-	WHERE migration_id = $1 AND user_id = $2;
+	WHERE migration_id = $1;
 	`;
-	const result = await db.query(queryString, [migrationId, userId]);
+	const result = await db.query(queryString, [migrationId]);
 	return result[0] as migrationLog;
 };
 
