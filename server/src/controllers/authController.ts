@@ -84,7 +84,7 @@ export const login = async (
 			jwtSecret as jwt.Secret,
 			{ expiresIn: '1h' }
 		);
-		res.locals.token = token;
+		res.locals.auth = { token, userId: user.user_id };
 		return next();
 	} catch (error) {
 		return next({

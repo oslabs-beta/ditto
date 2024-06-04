@@ -25,7 +25,7 @@ export const githubCallback = async (
 	next: NextFunction
 ) => {
 	const code = req.query.code as string;
-	console.log('code:', code, 'typeof code:', typeof code)
+	console.log('code:', code, 'typeof code:', typeof code);
 	if (!code) {
 		return res.status(400).json({ error: 'No code provided' });
 	}
@@ -49,7 +49,7 @@ export const githubCallback = async (
 		);
 		//get token from response
 		const accessToken = tokenResponse.data.access_token;
-			console.log('accesstoken:' , accessToken)
+		console.log('accesstoken:', accessToken);
 		if (!accessToken) {
 			return res.status(400).json({ error: 'No access token received' });
 		}
@@ -61,7 +61,7 @@ export const githubCallback = async (
 		});
 
 		const userData = userResponse.data;
-		console.log('userData:', userData)
+		console.log('userData:', userData);
 		let user = await findUser(userData.login);
 		if (!user) {
 			user = await createOAuthUser(userData.login);
@@ -72,12 +72,11 @@ export const githubCallback = async (
 			jwtSecret as jwt.Secret,
 			{ expiresIn: '1h' }
 		);
-			console.log('token:', token, 'typeof token:', typeof token)
-		const frontendUrl = `http://localhost:3000/githubs/callbacks?token=${token}`;
+		const frontendUrl = `http://localhost:3000/githubauthorized?token=${token}`;
 		// const frontendUrl = `http://localhost:3000/migration`
 		//check endpoint for front end main page
 		res.redirect(frontendUrl);
-		console.log("i am redirecting to front end")
+		console.log('i am redirecting to front end');
 	} catch (error) {
 		return next({
 			message: `Error in githubAuthController githubCallback ${error}`,
@@ -92,4 +91,4 @@ export const logout = (req: Request, res: Response) => {
 		}
 		res.redirect('/');
 	});
-}; // no longer using session so change this 
+}; // no longer using session so change this
