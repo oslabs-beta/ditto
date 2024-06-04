@@ -299,20 +299,20 @@ const OrganizationsPanel: React.FC = () => {
 					{mapProjectOptions}
 				</select>
 				<div className="projectButtons">
-					<button onClick={handleCreate} title="Create Project">
+					<button onClick={handleCreate} id="Create Project">
 						<FontAwesomeIcon icon={faHammer} />
 					</button>
 
-					<button onClick={handleJoin} title="Join Project">
+					<button onClick={handleJoin} id="Join Project">
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
 
-					<button onClick={handleLeave} title="Leave Project">
+					<button onClick={handleLeave} id="Leave Project">
 						<FontAwesomeIcon icon={faUserMinus} />
 					</button>
 
 					{(userRole === 'Owner' || userRole === 'Admin') && (
-						<button onClick={handlePopperDelete} title="Delete Project">
+						<button onClick={handlePopperDelete} id="Delete Project">
 							<FontAwesomeIcon icon={faTrashCan} />
 						</button>
 					)}
@@ -386,7 +386,7 @@ const OrganizationsPanel: React.FC = () => {
 				</div>
 			</div>
 			{(userRole === 'Owner' || userRole === 'Admin') && (
-				<div className="generateCode" title="Generate Access Code">
+				<div className="generateCode" id="Generate Access Code">
 					<form onSubmit={handleGenerate}>
 						<input
 							type="text"

@@ -40,8 +40,26 @@ button {
 }
 
 .chooseProject {
-	border-bottom: 5px solid;
-	border-left: 5px solid;
+	border-top: 1vh solid;
+	border-left: 1vh solid;
+	border-bottom: 1vh solid;
+	border-right: 1vh solid;
+}
+
+#Join\ Project {
+
+}
+
+#Leave\ Project {
+
+}
+
+#Delete\ Project {
+
+}
+
+#Generate\ Access\ Code {
+	
 }
 
 .users {
