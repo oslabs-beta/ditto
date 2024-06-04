@@ -8,6 +8,7 @@ import {
 	setSelectedMigration,
 	setSelectedScript,
 	setScript,
+	setMigrationVersions,
 } from '../store';
 
 interface Migration {
@@ -52,7 +53,7 @@ const MigrationScripts: React.FC = () => {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`, 
+						Authorization: `Bearer ${token}`,
 					},
 				});
 
