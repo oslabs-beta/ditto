@@ -1,5 +1,6 @@
 import { User } from '../src/models/user';
 import 'express-session';
+import { Request } from 'express';
 
 declare global {
 	namespace Express {

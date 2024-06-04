@@ -163,38 +163,10 @@ select {
 	margin-bottom: 20px;
 }
 
-.table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-.th {
-	border: 1px solid #ccc;
-	padding: 8px;
-	text-align: left;
-	background-color: #f2f2f2;
-}
-
-.td {
-	border: 1px solid #ccc;
-	padding: 8px;
-}
-
 .title {
 	text-align: left;
 	margin-bottom: 10px;
 	font-size: 1.2em;
-}
-
-.MigrationScriptsContainer {
-	margin-left: 1.5%;
-}
-
-.scriptsheader {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 10px;
 }
 
 .selectedDB {
@@ -208,6 +180,17 @@ select {
 	justify-content: center;
 	font-size: 27px;
 	background-color: #dacbf3;
+}
+
+.scriptsheader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 10px;
+}
+
+.MigrationScriptsContainer {
+	margin-left: 1.5%;
 }
 
 .MigrationScriptsContainer table {
@@ -252,10 +235,14 @@ select {
 	margin: 10px;
 }
 
-.migrationstable {
+.migrationsTable {
 	border: 1px solid;
 	border-radius: 7px;
 	height: 35vh;
+}
+
+.migrationsTable th,
+.migrationsTable td {
 }
 
 .popper {

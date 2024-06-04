@@ -9,6 +9,7 @@ import {
 	removeDBMigration,
 } from '../models/migrationLog';
 import { generateChecksum } from '../models/userDB';
+
 /*
 1. user puts in description, version, and script (req.body)
 2. create a migration log when they click on 'save'
@@ -29,12 +30,8 @@ export const createMigrationLog = async (
 	const { dbId } = req.params;
 	const { version, script, description } = req.body;
 	if (!userId) {
-		return next({
-			status: 401,
-			message: 'Unauthorized',
-		});
+		return res.sendStatus(401);
 	}
-	console.log('in mlog');
 	try {
 		const checksum = generateChecksum(script);
 		const result = await createMigrationLogQuery(
@@ -42,11 +39,9 @@ export const createMigrationLog = async (
 			parseInt(dbId),
 			version,
 			script,
-			// executedAt,
 			checksum,
 			description ? description : ''
 		);
-		console.log('creation migration log');
 		await addDBMigration(parseInt(dbId), result.migration_id);
 		console.log('Successfully added migration_id into databases table');
 		res.locals.migrationLog = result;
@@ -75,7 +70,8 @@ export const getMigrationLog = async (
 	}
 
 	try {
-		const log = await getMigrationLogQuery(migrationId, userId);
+		const log = await getMigrationLogQuery(migrationId);
+		console.log('log', log);
 		res.locals.migrationLog = log;
 		return next();
 	} catch (error) {
@@ -103,7 +99,7 @@ export const updateMigrationLog = async (
 	}
 
 	try {
-		const log = await getMigrationLogQuery(migrationId, userId);
+		const log = await getMigrationLogQuery(migrationId);
 		const result = await updateMigrationLogQuery(
 			parseInt(migrationId),
 			log.status !== script ? 'Pending' : log.status,

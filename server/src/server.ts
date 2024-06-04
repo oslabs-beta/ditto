@@ -5,6 +5,8 @@ import authRoutes from './routes/authRoutes';
 import dbRoutes from './routes/dbRoutes';
 import migrationLogRoutes from './routes/migrationLogRoutes';
 import githubAuthRoutes from './routes/githubAuthRoutes';
+import newDbRoutes from './routes/newDbRoutes';
+import projectRoutes from './routes/projectRoutes';
 import cors from 'cors';
 import path from 'path';
 import session from 'express-session';
@@ -19,16 +21,18 @@ app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const joinPath = path.join(__dirname, '../../client/dist');
-app.use(express.static(joinPath));
+const oneYear = 365 * 24 * 60 * 60 * 1000;
 
-// app.use(
-// 	session({
-// 		secret: process.env.SESSION_SECRET as string,
-// 		resave: false,
-// 		saveUninitialized: false,
-// 	})
-// );
+const joinPath = path.join(__dirname, '../../client/dist');
+app.use(
+	express.static(joinPath, {
+		maxAge: oneYear,
+	})
+);
+
+app.get('/robots.txt', (req: Request, res: Response) => {
+	res.sendFile(path.join(joinPath, 'robots.txt'));
+});
 
 app.use('/migration', migrationRoutes);
 
@@ -38,9 +42,12 @@ app.use('/migrationlog', migrationLogRoutes);
 
 app.use('/auth', authRoutes);
 
-app.use('/db', dbRoutes);
+app.use('/db', newDbRoutes);
+// app.use('/db', dbRoutes);
 
 app.use('/github', githubAuthRoutes);
+
+app.use('/project', projectRoutes);
 
 // catch all route handler
 app.use('*', (req: Request, res: Response) => {

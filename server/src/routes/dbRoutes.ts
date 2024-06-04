@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import {
 	addDBConnectionString,
 	getConnectionString,
-	getConnectionStringById,
 	deleteConnectionStringById,
 } from '../controllers/dbController';
 import { validateJWT } from '../controllers/authController';
@@ -25,16 +24,6 @@ router.get(
 		res.status(200).json(res.locals.connectionStrings);
 	}
 );
-
-// router.get(
-// 	`/getConnectionString/:dbId`,
-// 	validateJWT,
-// 	getConnectionStringById,
-// 	(_req: Request, res: Response, _next: NextFunction) => {
-// 		res.status(200).json(res.locals.connectionString);
-// 	}
-// );
-// go see migrationLogRoutes
 
 router.delete(
 	`/deleteConnectionString/:dbId`,

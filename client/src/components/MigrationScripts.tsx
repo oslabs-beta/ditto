@@ -43,6 +43,7 @@ const MigrationScripts: React.FC = () => {
 				dispatch(setSelectedScript(''));
 			}
 			const token = sessionStorage.getItem('token');
+
 			try {
 				const response = await fetch(`/migrationlog/all/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
@@ -58,14 +59,11 @@ const MigrationScripts: React.FC = () => {
 				}
 
 				const result = await response.json();
-				// result.sort(
-				// 	(a: { version: number }, b: { version: number }) =>
-				// 		a.version - b.version
-				// );
 				const sortedMigrations = result.sort(
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
 				);
+				console.log('sortedMigrations: ', sortedMigrations);
 				setMigrations(sortedMigrations);
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
@@ -79,14 +77,6 @@ const MigrationScripts: React.FC = () => {
 		}
 	}, [selectedDatabase, selectedMigration, migrationVersions]);
 
-	/* Add Migrations Button */
-	// const handleFormSubmit = (data: {
-	// 	version: string;
-	// 	description: string;
-	// 	script: string;
-	// }) => {
-	// 	console.log('Form Data:', data);
-	// };
 	/* Add Migrations Button */
 	const handleSubmit = () => {
 		dispatch(setScript(''));
@@ -184,16 +174,12 @@ const MigrationScripts: React.FC = () => {
 	return (
 		<div className="MigrationScriptsContainer">
 			<div className="scriptsheader">
-				{/* Add Migrations Button */}
-				<div className="selectedDB font-bold">
-					{selectedDatabase}
-					{/* <h1>{selectedDatabase}</h1> */}
-				</div>
+				<div className="selectedDB font-bold">{selectedDatabase}</div>
 				<button className="purplebtn" type="button" onClick={handleSubmit}>
 					Add Migration
 				</button>
 			</div>
-			<div className="migrationstable">
+			<div className="migrationsTable">
 				<table>
 					<thead>
 						<tr>

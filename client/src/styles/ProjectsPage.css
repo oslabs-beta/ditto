@@ -1,0 +1,92 @@
+.projectsPage {
+	display: flex;
+	height: 100%;
+	padding: 90px 30px 0 30px;
+}
+
+.projectsPanel {
+	border-right: 1px solid;
+	display: flex;
+	flex-direction: column;
+	width: 25%;
+	height: 88vh;
+
+	select {
+		display: flex;
+		width: 200px;
+		text-align: center;
+		background-color: whitesmoke;
+		height: 40px;
+		margin-bottom: 2%;
+	}
+
+	button {
+		background-color: #b592f1;
+		align-items: center;
+		border: none;
+		border-radius: 7px;
+		padding: 8px 12px;
+		color: whitesmoke;
+		cursor: pointer;
+		height: 35px;
+		margin: 2% 2% 10% 0%;
+	}
+
+	input {
+	}
+}
+
+.chooseProject {
+}
+
+.projectButtons {
+}
+
+.users {
+	flex: 1;
+	margin-bottom: 20px;
+	.usersHeader {
+		display: flex;
+		align-items: center;
+		padding-bottom: 10px;
+	}
+	.usersInfo {
+		border: 1px solid;
+		border-radius: 7px;
+		height: 35vh;
+
+		table {
+			text-align: left;
+			width: 100%;
+			border-spacing: 0;
+		}
+
+		th {
+			padding: 14px 40px;
+			border-right: none;
+			background-color: #dacbf3;
+		}
+
+		td {
+			padding: 5px 40px;
+			border-top: 1px solid;
+			border-right: none;
+			max-width: 150px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid;
+		}
+
+		select {
+			width: 200px;
+			text-align: center;
+			background-color: whitesmoke;
+		}
+	}
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.webp';
 import '../styles/NavBar.css';
 import { resetState } from '../store';
 
@@ -17,10 +17,12 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const navLinks: NavLink[] = [{ path: '/faq', label: 'FAQ' }];
+	const navLinks: NavLink[] = [
+		{ path: '/faq', label: 'FAQ' },
+		{ path: '/projects', label: 'Projects' },
+	];
 
 	if (sessionStorage.getItem('token')) {
-		navLinks.pop();
 		navLinks.push({ path: '/migration', label: 'Migration' });
 	}
 
