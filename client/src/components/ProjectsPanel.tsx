@@ -292,7 +292,7 @@ const OrganizationsPanel: React.FC = () => {
 	return (
 		<div className="projectsPanel">
 			<div className="chooseProject">
-				<p>Choose Project</p>
+				<p className="font-bold">Choose Project</p>
 				<select
 					value={selectedProject}
 					onChange={e => {
@@ -304,19 +304,20 @@ const OrganizationsPanel: React.FC = () => {
 					{mapProjectOptions}
 				</select>
 				<div className="projectButtons">
-					<button onClick={handleCreate}>
+					<button onClick={handleCreate} title="Create Project">
 						<FontAwesomeIcon icon={faHammer} />
 					</button>
-					<button onClick={handleJoin}>
+
+					<button onClick={handleJoin} title="Join Project">
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
 
-					<button onClick={handleLeave}>
+					<button onClick={handleLeave} title="Leave Project">
 						<FontAwesomeIcon icon={faUserMinus} />
 					</button>
 
 					{(userRole === 'Owner' || userRole === 'Admin') && (
-						<button onClick={handlePopperDelete}>
+						<button onClick={handlePopperDelete} title="Delete Project">
 							<FontAwesomeIcon icon={faTrashCan} />
 						</button>
 					)}
@@ -383,7 +384,7 @@ const OrganizationsPanel: React.FC = () => {
 				</div>
 			</div>
 			{(userRole === 'Owner' || userRole === 'Admin') && (
-				<div className="generateCode">
+				<div className="generateCode" title="Generate Access Code">
 					<form onSubmit={handleGenerate}>
 						<input
 							type="text"

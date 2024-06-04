@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CodeEditor from './CodeEditor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {
 	setdbId,
 	setSelectedMigration,
@@ -126,10 +128,6 @@ const MigrationScripts: React.FC = () => {
 		}
 	};
 
-	// const handleCodeChange = (newCode: string) => {
-	// 	setCode(newCode);
-	// };
-
 	const handleRunScript = async (e: React.FormEvent) => {
 		e.preventDefault;
 
@@ -174,7 +172,14 @@ const MigrationScripts: React.FC = () => {
 	return (
 		<div className="MigrationScriptsContainer">
 			<div className="scriptsheader">
-				<div className="selectedDB font-bold">{selectedDatabase}</div>
+				{/* <div className="selectedDB font-bold">{selectedDatabase}</div> */}
+
+				<fieldset>
+					<label>
+						<input value={selectedDatabase} />
+					</label>
+					<legend>Database</legend>
+				</fieldset>
 				<button className="purplebtn" type="button" onClick={handleSubmit}>
 					Add Migration
 				</button>
@@ -189,6 +194,7 @@ const MigrationScripts: React.FC = () => {
 							<th className="executedat">Date Migrated (ET)</th>
 						</tr>
 					</thead>
+
 					{migrations.map(migration => (
 						<tbody key={migration.migration_id}>
 							<tr
@@ -207,13 +213,30 @@ const MigrationScripts: React.FC = () => {
 								<td className="version">{migration.version}</td>
 								<td className="desc">{migration.description}</td>
 								<td className="status">{migration.status}</td>
-								<td className="executedat">{migration.executed_at}</td>
+								<div className="dateMigratedColumn">
+									<td className="executedat">{migration.executed_at}</td>
+
+									<button
+										className="purplebtn"
+										type="button"
+										onClick={handleUpdateSubmit}
+									>
+										<FontAwesomeIcon icon={faEdit} />
+									</button>
+									<button
+										className="whitebtn"
+										type="button"
+										onClick={handleDeleteSubmit}
+									>
+										<FontAwesomeIcon icon={faTrashCan} />
+									</button>
+								</div>
 							</tr>
 						</tbody>
 					))}
 				</table>
 			</div>
-			<div className="updatedeletebtn">
+			{/* <div className="updatedeletebtn">
 				<button
 					className="purplebtn"
 					type="button"
@@ -224,10 +247,15 @@ const MigrationScripts: React.FC = () => {
 				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
 					Delete
 				</button>
-			</div>
+			</div> */}
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
-					<CodeEditor code={selectedScript} inMigration={true} />
+					<fieldset>
+						<label>
+							<CodeEditor code={selectedScript} inMigration={true} />
+						</label>
+						<legend>Script</legend>
+					</fieldset>
 				</div>
 			</div>
 		</div>

@@ -93,17 +93,20 @@ const UsersTable: React.FC = () => {
 		<tbody key={user.user_id}>
 			<tr>
 				<td>{user.username}</td>
+
 				<td>
-					<select
-						defaultValue={user.role}
-						onChange={e => handleRoleChange(user.user_id, e.target.value)}
-					>
-						{mapRoles}
-					</select>
-					<button>
-						{' '}
-						<FontAwesomeIcon icon={faUserMinus} />
-					</button>
+					<div id="roleColumn">
+						<select
+							defaultValue={user.role}
+							onChange={e => handleRoleChange(user.user_id, e.target.value)}
+						>
+							{mapRoles}
+						</select>
+						<button>
+							{' '}
+							<FontAwesomeIcon icon={faUserMinus} />
+						</button>
+					</div>
 				</td>
 			</tr>
 		</tbody>

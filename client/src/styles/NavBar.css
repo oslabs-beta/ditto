@@ -4,6 +4,26 @@ body {
 		text-decoration: none;
 		color: rgb(29, 19, 35);
 	}
+	font-family: Arial, sans-serif;
+}
+
+fieldset {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 10px;
+
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	font-size: 16px;
+	font-family: Arial, sans-serif;
+}
+
+legend {
+	font-weight: bold;
+	padding: 0 10px;
+	color: #333;
+	background-color: #dacbf3;
+	border-bottom: 2px solid #ddd;
+	border-radius: 4px;
 }
 
 select {
@@ -28,6 +48,24 @@ select:focus {
 	outline: none;
 	border-color: #007bff;
 	box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#textbox {
+	font-size: 12px;
+	color: rgba(0, 0, 0, 0.562);
+	padding-left: 5px;
+	opacity: 0;
+	visibility: hidden;
+	transition:
+		opacity 0.5s ease-in-out,
+		visibility 0.5s ease-in-out;
+}
+
+.purplebtn:hover + #textbox,
+.whitebtn:hover + #textbox {
+	opacity: 1;
+	visibility: visible;
+	transition-delay: 0.25s;
 }
 
 .logo {
@@ -56,7 +94,7 @@ select:focus {
 		button {
 			padding: 10px 20px;
 			font-size: 12px;
-			/* font-weight: bold; */
+			font-weight: bold;
 			color: #fff;
 			background-color: #b592f1;
 			border: 2px solid #b592f1;

@@ -6,11 +6,7 @@
 }
 
 .addUpdateMigrationsPage {
-	padding: 90px 20px 0 20px;
-	h1 {
-		border-bottom: solid rgb(207, 202, 202);
-		margin: 0px;
-	}
+	padding: 70px 20px 0 20px;
 }
 
 .versionDescription {

@@ -7,6 +7,7 @@ import {
 	faTrashCan,
 	faDatabase,
 	faScroll,
+	faSquarePlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -58,32 +59,6 @@ const SidePanel: React.FC = () => {
 	);
 	const token = sessionStorage.getItem('token');
 	const actions = ['Migrate', 'Repair', 'Undo', 'Clean'];
-
-	// useEffect(() => {
-	// 	const fetchDatabases = async () => {
-	// 		try {
-	// 			const response = await fetch('/db/connectionStrings', {
-	// 				method: 'GET',
-	// 				headers: {
-	// 					'Content-Type': 'application/json',
-	// 					Authorization: `Bearer ${token}`,
-	// 				},
-	// 			});
-
-	// 			if (!response.ok) {
-	// 				throw new Error(`HTTP error! status: ${response.status}`);
-	// 			}
-
-	// 			const result = await response.json();
-	// 			console.log('result: ', result);
-	// 			dispatch(setDatabases(result));
-	// 			console.log('databases: ', databases);
-	// 		} catch (error) {
-	// 			console.error('Error fetching databases:', error);
-	// 		}
-	// 	};
-	// 	fetchDatabases();
-	// }, []);
 
 	const handleButtonClick = async (btnText: string | null) => {
 		if (btnText === 'adddb') {
