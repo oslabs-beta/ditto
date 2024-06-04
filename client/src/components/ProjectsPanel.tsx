@@ -292,7 +292,7 @@ const OrganizationsPanel: React.FC = () => {
 	return (
 		<div className="projectsPanel">
 			<div className="chooseProject">
-				<p className="font-bold">Choose Project</p>
+				<p className="font-bold">Project</p>
 				<select
 					value={selectedProject}
 					onChange={e => {
@@ -300,7 +300,7 @@ const OrganizationsPanel: React.FC = () => {
 						handleProjectChange(e);
 					}}
 				>
-					<option value="">-- Select a Project --</option>
+					<option value="">Select</option>
 					{mapProjectOptions}
 				</select>
 				<div className="projectButtons">

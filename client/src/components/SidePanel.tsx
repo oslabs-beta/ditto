@@ -204,10 +204,10 @@ const SidePanel: React.FC = () => {
 			{/* database */}
 			<p className="font-bold">{selectedProject}</p>
 			<div id="dbdropdown">
-				<p className="font-bold">Choose Database</p>
+				<p className="font-bold">Database</p>
 				<div className="selectdb">
 					<select value={selectedDatabase} onChange={handleChooseDatabase}>
-						<option value="">-- Select a database --</option>
+						<option value="">Select</option>
 						{mapDatabaseOptions}
 					</select>
 				</div>
@@ -280,7 +280,7 @@ const SidePanel: React.FC = () => {
 				</form>
 			)}
 			<div id="chooseaction">
-				<p className="font-bold">Choose Action</p>
+				<p className="font-bold">Action</p>
 				<div className="dropAndBtn">
 					<select
 						value={selectedAction}
@@ -333,13 +333,13 @@ const SidePanel: React.FC = () => {
 				</div>
 			</div>
 			<div className="previewTable">
-				<p className="font-bold">Preview Table:</p>
+				<p className="font-bold">Preview Table</p>
 				<select
 					value={selectedTable}
 					aria-label="preview table"
 					onChange={e => dispatch(setSelectedTable(e.target.value))}
 				>
-					<option value="">--Select a table--</option>
+					<option value="">Select</option>
 				</select>
 			</div>
 		</div>

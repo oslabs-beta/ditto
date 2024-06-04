@@ -2,254 +2,234 @@
 	display: flex;
 	height: 100%;
 	padding: 60px 30px 0 30px;
-}
 
-p {
-	margin: 0.5em 0;
-}
-
-.font-bold {
-	font-weight: 700;
-}
-
-button {
-	background-color: #b592f1;
-	align-items: center;
-	border: none;
-	border-radius: 7px;
-
-	color: whitesmoke;
-	cursor: pointer;
-	height: 35px;
-	align-self: center;
-	font-size: 12px;
-	font-weight: bold;
-}
-
-button:hover {
-	background-color: #9561f0;
-	border-color: #9561f0;
-}
-
-/* Side Panel */
-
-.sidePanel {
-	border-right: solid rgb(207, 202, 202) 1px;
-	display: flex;
-	width: 16%;
-	height: 88vh;
-}
-
-.sidecontainer {
-	select {
-		width: 90%;
-		padding: 10px;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		appearance: none;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		background-color: #fff;
-		background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="currentColor" stroke-width="1.1" d="M6 8l4 4 4-4"/></svg>');
-		background-repeat: no-repeat;
-		background-position: right 10px center;
-		background-size: 10px;
-		font-size: 16px;
-		color: #333;
-		cursor: pointer;
+	.font-bold {
+		font-weight: bold;
 	}
 
-	.addDeleteButtons {
-		display: flex;
-		flex-direction: row;
-		width: 25%;
-	}
-	.removedb {
-		display: flex;
-		flex-direction: column;
-		align-self: flex-start;
-	}
-	.addDbBtn {
-		display: flex;
-		flex-direction: column;
-		align-self: flex-start;
-	}
-
-	.purplebtn,
-	.whitebtn {
+	button {
 		background-color: #b592f1;
 		align-items: center;
 		border: none;
 		border-radius: 7px;
-		padding: 8px 12px;
 		color: whitesmoke;
 		cursor: pointer;
 		height: 35px;
-		align-self: flex-start;
-		margin: 3px 2px 10% 0%;
-	}
-
-	.purplebtn:hover,
-	.whitebtn:hover {
-		background-color: #9561f0;
-	}
-
-	.addDb .purplebtn:hover + #textbox,
-	.removedb .whitebtn:hover + #textbox {
-		opacity: 1;
-		visibility: visible;
-		transition-delay: 0.25s;
-	}
-
-	.selectdb {
-		display: flex;
-		align-items: center;
-	}
-
-	.addDb {
-		height: 50px;
-		display: flex;
-		flex-direction: row;
-
-		.addbtn {
-			font-size: 1em;
-			padding: 2px 7px;
-		}
-	}
-
-	.actiondesc {
-		overflow: auto;
-		word-wrap: break-word;
-		font-size: x-small;
-	}
-
-	.dropAndBtn {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.popper {
-		display: flex;
-		flex-direction: column;
-		background-color: #f6e3ffb9;
-		width: 120px;
-		justify-content: center;
-		align-items: center;
-		border-radius: 7px;
-		margin-top: 5px;
 		align-self: center;
-		position: absolute;
-		z-index: 999;
-		left: 325px;
+		font-size: 12px;
+		font-weight: bold;
 	}
 
-	.popperbtns .whitebtn {
-		margin: 5px 5px 10px 5px;
+	p {
+		margin: 0.5em 0;
 	}
-}
 
-/* Migration Scripts */
+	/* Side Panel */
 
-.content {
-	/* display: flex;
-	flex-direction: column;
-	width: 75%;
-	padding: 10px; */
-	display: flex;
-	height: 100%;
-	width: 100%;
-	padding: 60px 30px 0 30px;
-}
-
-/* .migrationTableContainer {
-	flex: 1;
-	margin-bottom: 20px;
-} */
-
-.title {
-	text-align: left;
-	margin-bottom: 10px;
-	font-size: 1.2em;
-}
-
-.selectedDB {
-	display: flex;
-	height: 40px;
-	border: 1px solid;
-	border-radius: 7px;
-	margin: 5px 0px;
-	width: 300px;
-	align-items: center;
-	justify-content: center;
-	font-size: 27px;
-	background-color: #dacbf3;
-}
-
-.MigrationScriptsContainer {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	margin-left: 15px;
-	padding: 10px;
-
-	.scriptsheader {
+	.sidecontainer {
+		border-right: solid rgb(207, 202, 202) 1px;
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-	.migrationsTable {
-		border: 1px solid #ddd;
-		border-radius: 7px;
-		height: 35vh;
-		max-width: 100%;
-		overflow-x: auto;
+		flex-direction: column;
+		width: 100%;
+		max-width: 34%;
+		height: 88vh;
 
-		table {
-			width: 98%;
-			border-collapse: collapse;
-			margin: 10px 5px 10px 10px;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-			font-size: 16px;
-			font-family: Arial, sans-serif;
+		select {
+			width: 90%;
 		}
 
-		table,
-		th,
-		td {
-			border: 1px solid #ddd;
-			border-radius: 4px;
+		.addDeleteButtons {
+			display: flex;
+			flex-direction: row;
+			width: 25%;
+		}
+		.removedb {
+			display: flex;
+			flex-direction: column;
+			align-self: flex-start;
+		}
+		.addDbBtn {
+			display: flex;
+			flex-direction: column;
+			align-self: flex-start;
 		}
 
-		th,
-		td {
-			padding: 12px 15px;
-			text-align: left;
+		.purplebtn,
+		.whitebtn {
+			background-color: #b592f1;
+			align-items: center;
+			border: none;
+			border-radius: 7px;
+			padding: 8px 12px;
+			color: whitesmoke;
+			cursor: pointer;
+			height: 35px;
+			align-self: flex-start;
+			margin: 3px 2px 10% 0%;
 		}
 
-		th {
-			background-color: #dacbf3;
-			color: #333;
-			font-weight: bold;
-			border-bottom: 2px solid #ddd;
+		.purplebtn:hover,
+		.whitebtn:hover {
+			background-color: #9561f0;
 		}
 
-		td {
-			background-color: #fff;
-			color: #666;
-			border-bottom: 1px solid #ddd;
-			max-width: 150px;
-			overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
+		.addDb .purplebtn:hover + #textbox,
+		.removedb .whitebtn:hover + #textbox {
+			opacity: 1;
+			visibility: visible;
+			transition-delay: 0.25s;
+		}
 
-			dateMigratedColumn {
-				display: flex;
-				justify-content: space-between;
+		.selectdb {
+			display: flex;
+			align-items: center;
+		}
+
+		.addDb {
+			height: 50px;
+			display: flex;
+			flex-direction: row;
+
+			.addbtn {
+				font-size: 1em;
+				padding: 2px 7px;
 			}
 		}
 
-		tr:nth-child(even) {
-			background-color: #f9f9f9;
+		.actiondesc {
+			overflow: auto;
+			word-wrap: break-word;
+			font-size: x-small;
+		}
+
+		.dropAndBtn {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.popper {
+			display: flex;
+			flex-direction: column;
+			background-color: #f6e3ffb9;
+			width: 120px;
+			justify-content: center;
+			align-items: center;
+			border-radius: 7px;
+			margin-top: 5px;
+			align-self: center;
+			position: absolute;
+			z-index: 999;
+			left: 325px;
+		}
+
+		.popperbtns .whitebtn {
+			margin: 5px 5px 10px 5px;
+		}
+	}
+
+	/* Migration Scripts */
+
+	.content {
+		/* display: flex;
+		flex-direction: column;
+		width: 75%;
+		padding: 10px; */
+		display: flex;
+		height: 100%;
+		width: 100%;
+		padding: 60px 30px 0 30px;
+	}
+
+	/* .migrationTableContainer {
+		flex: 1;
+		margin-bottom: 20px;
+	} */
+
+	.title {
+		text-align: left;
+		margin-bottom: 10px;
+		font-size: 1.2em;
+	}
+
+	.selectedDB {
+		display: flex;
+		height: 40px;
+		border: 1px solid;
+		border-radius: 7px;
+		margin: 5px 0px;
+		width: 300px;
+		align-items: center;
+		justify-content: center;
+		font-size: 27px;
+		background-color: #dacbf3;
+	}
+
+	.MigrationScriptsContainer {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-left: 15px;
+		padding: 10px;
+
+		.scriptsheader {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.migrationsTable {
+			border: 1px solid #ddd;
+			border-radius: 7px;
+			height: 35vh;
+			max-width: 100%;
+			overflow-x: auto;
+
+			table {
+				width: 98%;
+				border-collapse: collapse;
+				margin: 10px 5px 10px 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				font-size: 16px;
+				font-family: Arial, sans-serif;
+			}
+
+			table,
+			th,
+			td {
+				border: 1px solid #ddd;
+				border-radius: 4px;
+			}
+
+			th,
+			td {
+				padding: 12px 15px;
+				text-align: left;
+			}
+
+			th {
+				background-color: #dacbf3;
+				color: #333;
+				font-weight: bold;
+				border-bottom: 2px solid #ddd;
+			}
+
+			td {
+				background-color: #fff;
+				color: #666;
+				border-bottom: 1px solid #ddd;
+				max-width: 150px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+
+				dateMigratedColumn {
+					display: flex;
+					justify-content: space-between;
+				}
+			}
+
+			tr:nth-child(even) {
+				background-color: #f9f9f9;
+			}
 		}
 
 		/* margin-left: 1.5%;
