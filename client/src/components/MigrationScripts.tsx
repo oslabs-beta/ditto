@@ -173,8 +173,6 @@ const MigrationScripts: React.FC = () => {
 	return (
 		<div className="MigrationScriptsContainer">
 			<div className="scriptsheader">
-				{/* <div className="selectedDB font-bold">{selectedDatabase}</div> */}
-
 				<fieldset>
 					<label>
 						<input value={selectedDatabase} />
@@ -197,25 +195,67 @@ const MigrationScripts: React.FC = () => {
 					</thead>
 
 					{migrations.map(migration => (
-						<tbody key={migration.migration_id}>
+						<tbody
+							key={migration.migration_id}
+							style={{
+								backgroundColor:
+									selectedMigration === migration.migration_id
+										? '#b592f1'
+										: 'transparent',
+							}}
+						>
 							<tr
 								id={migration.migration_id}
 								className="migrationversions"
 								onClick={() =>
 									handleHighlight(migration.migration_id, migration.script)
 								}
-								style={{
-									backgroundColor:
-										selectedMigration === migration.migration_id
-											? '#b592f1'
-											: 'transparent',
-								}}
 							>
-								<td className="version">{migration.version}</td>
-								<td className="desc">{migration.description}</td>
-								<td className="status">{migration.status}</td>
-								<div className="dateMigratedColumn">
-									<td className="executedat">{migration.executed_at}</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="version"
+								>
+									{migration.version}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="desc"
+								>
+									{migration.description}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="status"
+								>
+									{migration.status}
+								</td>
+								<tbody className="dateMigratedColumn">
+									<td
+										className="executedat"
+										style={{
+											backgroundColor:
+												selectedMigration === migration.migration_id
+													? '#b592f1'
+													: 'transparent',
+										}}
+									>
+										{migration.executed_at}
+									</td>
 
 									<button
 										className="purplebtn"
@@ -231,24 +271,12 @@ const MigrationScripts: React.FC = () => {
 									>
 										<FontAwesomeIcon icon={faTrashCan} />
 									</button>
-								</div>
+								</tbody>
 							</tr>
 						</tbody>
 					))}
 				</table>
 			</div>
-			{/* <div className="updatedeletebtn">
-				<button
-					className="purplebtn"
-					type="button"
-					onClick={handleUpdateSubmit}
-				>
-					Update
-				</button>
-				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
-					Delete
-				</button>
-			</div> */}
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
 					<fieldset>

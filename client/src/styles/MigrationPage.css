@@ -1,11 +1,11 @@
 .migrationPage {
 	display: flex;
 	height: 100%;
-
-	padding: 60px 30px 0 30px;
+	padding: 30px 0px 0 0px;
 
 	.font-bold {
 		font-weight: bold;
+		margin-top: 5px;
 	}
 
 	button {
@@ -27,15 +27,13 @@
 
 	/* Side Panel */
 	.sidePanel {
-		width: 40%;
-	}
-	.sidecontainer {
 		border-right: solid rgb(207, 202, 202) 1px;
 		display: flex;
 		flex-direction: column;
-		width: 100%;
-		max-width: 34%;
+		width: 21%;
+		max-width: 40%;
 		height: 88vh;
+		overflow-x: auto;
 
 		select {
 			width: 90%;
@@ -131,23 +129,6 @@
 	}
 
 	/* Migration Scripts */
-
-	.content {
-		/* display: flex;
-		flex-direction: column;
-		width: 75%;
-		padding: 10px; */
-		display: flex;
-		height: 100%;
-		width: 100%;
-		padding: 60px 30px 0 30px;
-	}
-
-	/* .migrationTableContainer {
-		flex: 1;
-		margin-bottom: 20px;
-	} */
-
 	.title {
 		text-align: left;
 		margin-bottom: 10px;
@@ -235,36 +216,6 @@
 			}
 		}
 
-		/* margin-left: 1.5%;
-	table {
-		text-align: left;
-		width: 100%;
-		border-spacing: 0;
-	}
-	th {
-		padding: 14px 40px;
-		border-right: none;
-		background-color: #dacbf3;
-	}
-	td {
-		padding: 5px 40px;
-		border-top: 1px solid;
-		border-right: none;
-		max-width: 150px;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-	} */
-
-		/* .version,
-	.status {
-		width: 15%;
-	}
-
-	.desc {
-		width: 40%;
-	} */
-
 		.updatedeletebtn {
 			display: flex;
 			margin-bottom: 15px;
@@ -275,12 +226,6 @@
 			height: 35px;
 			margin: 10px 10px 10px 0px;
 		}
-
-		/* .migrationsTable {
-		border: 1px solid;
-		border-radius: 7px;
-		height: 35vh;
-	} */
 	}
 }
 

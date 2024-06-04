@@ -203,7 +203,7 @@ const SidePanel: React.FC = () => {
 	};
 
 	return (
-		<div className="sidecontainer">
+		<div className="sidePanel">
 			{/* database */}
 			<p className="font-bold">{selectedProject}</p>
 			<div id="dbdropdown">
