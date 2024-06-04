@@ -14,7 +14,7 @@ router.post(
 	'/login',
 	login,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(200).json(res.locals.token);
+		res.status(200).json(res.locals.auth);
 	}
 );
 

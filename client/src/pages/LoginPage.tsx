@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser, setDatabases } from '../store';
+import { setUser, setUserId } from '../store';
 import { Helmet } from 'react-helmet-async';
 import githubIcon from '/client/src/assets/img/github-mark.png';
 import '/client/src/styles/LoginPage.css';
@@ -52,8 +52,9 @@ const LoginPage: React.FC = () => {
 				console.log('data: ', data);
 				console.log('formData.username: ', formData.username);
 				dispatch(setUser(formData.username));
+				dispatch(setUserId(data.userId));
 				// dispatch(setToken(data.token)); //test
-				const token = data; // session storage way
+				const token = data.token; // session storage way
 				console.log('data.token: ', token);
 				// const dbResponse = await fetch('http://localhost:3001/db/')
 				sessionStorage.setItem('token', token); // session storage way

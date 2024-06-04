@@ -18,8 +18,9 @@ router.post(
 	'/create',
 	validateJWT,
 	createNewProject,
+	getAllProjectsByUserId,
 	(_req: Request, res: Response, _next: NextFunction) => {
-		res.status(201).json(res.locals.project);
+		res.status(201).json(res.locals.projects);
 	}
 );
 
