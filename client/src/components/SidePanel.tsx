@@ -3,8 +3,12 @@ import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { faDatabase } from '@fortawesome/free-solid-svg-icons';
+import {
+	faTrashCan,
+	faDatabase,
+	faScroll,
+} from '@fortawesome/free-solid-svg-icons';
+
 import {
 	setSelectedTable,
 	setSelectedDatabase,
@@ -221,7 +225,7 @@ const SidePanel: React.FC = () => {
 	};
 
 	return (
-		<div id="sidecontainer">
+		<div className="sidecontainer">
 			{/* database */}
 			<p className="font-bold">{selectedProject}</p>
 			<div id="dbdropdown">
@@ -231,76 +235,78 @@ const SidePanel: React.FC = () => {
 						<option value="">-- Select a database --</option>
 						{mapDatabaseOptions}
 					</select>
-					{userRole === 'Admin' || userRole === 'Owner' ? (
-						<div className="removedb">
-							<button
-								className="whitebtn"
-								aria-label="remove database"
-								ref={referenceElement}
-								onClick={handleTrashButton}
-							>
-								<FontAwesomeIcon icon={faTrashAlt} style={{ color: 'black' }} />
-							</button>
-							{isOpen ? null : <p id="textbox">Remove database</p>}
-							{selectedDatabase && isOpen && (
-								<div className="popper" ref={popperElement}>
-									<p>Are you sure?</p>
-									<div className="popperbtns">
-										<button className="whitebtn" onClick={handlePopperYes}>
-											Yes
-										</button>
-										<button
-											className="whitebtn"
-											onClick={() => {
-												setIsOpen(false);
-											}}
-										>
-											No
-										</button>
-									</div>
-								</div>
-							)}
-						</div>
-					) : null}
 				</div>
 			</div>
-			{/* connection string form */}
-			{userRole === 'Admin' || userRole === 'Owner' ? (
-				<div className="addDb">
-					<div className="addDbBtn">
-						<button
-							className="purplebtn btn"
-							aria-label="add database"
-							onClick={e => handleButtonClick('adddb')}
-						>
-							<FontAwesomeIcon icon={faDatabase} />{' '}
-						</button>
-						<p id="textbox">Add database</p>
-					</div>
-					{showInput && (
-						<form onSubmit={handleFormSubmit}>
-							<input
-								type="text"
-								value={dbName}
-								onChange={handledbNameInputChange}
-								placeholder="Enter database name"
-							/>
-							<input
-								type="text"
-								value={connectionString}
-								onChange={handleConnectionStringInputChange}
-								placeholder="Enter connection string"
-							/>
-							<button className="whitebtn addbtn font-bold" type="submit">
-								+
+			<div className="addDeleteButtons">
+				{userRole === 'Admin' || userRole === 'Owner' ? (
+					<div className="addDb">
+						<div className="addDbBtn">
+							<button
+								className="purplebtn btn"
+								aria-label="add database"
+								onClick={e => handleButtonClick('adddb')}
+							>
+								<FontAwesomeIcon icon={faDatabase} />{' '}
 							</button>
-						</form>
-					)}
-				</div>
-			) : null}
+							<p id="textbox">Add database</p>
+						</div>
+
+						{userRole === 'Admin' || userRole === 'Owner' ? (
+							<div className="removedb">
+								<button
+									className="whitebtn"
+									aria-label="remove database"
+									ref={referenceElement}
+									onClick={handleTrashButton}
+								>
+									<FontAwesomeIcon icon={faTrashCan} />
+								</button>
+								{isOpen ? null : <p id="textbox">Remove database</p>}
+								{selectedDatabase && isOpen && (
+									<div className="popper" ref={popperElement}>
+										<p>Are you sure?</p>
+										<div className="popperbtns">
+											<button className="whitebtn" onClick={handlePopperYes}>
+												Yes
+											</button>
+											<button
+												className="whitebtn"
+												onClick={() => {
+													setIsOpen(false);
+												}}
+											>
+												No
+											</button>
+										</div>
+									</div>
+								)}
+							</div>
+						) : null}
+					</div>
+				) : null}
+			</div>
+			{showInput && (
+				<form onSubmit={handleFormSubmit}>
+					<input
+						type="text"
+						value={dbName}
+						onChange={handledbNameInputChange}
+						placeholder="Enter database name"
+					/>
+					<input
+						type="text"
+						value={connectionString}
+						onChange={handleConnectionStringInputChange}
+						placeholder="Enter connection string"
+					/>
+					<button className="whitebtn addbtn font-bold" type="submit">
+						+
+					</button>
+				</form>
+			)}
 			<div id="chooseaction">
 				<p className="font-bold">Choose Action</p>
-				<div>
+				<div className="dropAndBtn">
 					<select
 						value={selectedAction}
 						aria-label="choose an action"
@@ -318,7 +324,7 @@ const SidePanel: React.FC = () => {
 						className="purplebtn"
 						onClick={() => handleExecute(selectedAction)}
 					>
-						Execute
+						<FontAwesomeIcon icon={faScroll} />
 					</button>
 				</div>
 				<div className="actiondesc">
@@ -351,7 +357,7 @@ const SidePanel: React.FC = () => {
 					) : null}
 				</div>
 			</div>
-			<div>
+			<div className="previewTable">
 				<p className="font-bold">Preview Table:</p>
 				<select
 					value={selectedTable}

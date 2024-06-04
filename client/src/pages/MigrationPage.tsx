@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import CodeEditor from '../components/CodeEditor';
+import { useSelector } from 'react-redux';
 import SidePanel from '../components/SidePanel';
 import MigrationScripts from '../components/MigrationScripts';
 import { Helmet } from 'react-helmet-async';
 import LoadingSpinner from '../components/LoadingSpinner';
 import '/client/src/styles/MigrationPage.css';
-import { setSelectedDatabase, setDatabases } from '../store';
 
 const MigrationPage: React.FC = () => {
-	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(true);
 	const currentProject = useSelector((state: any) => state.currentProject);
 
@@ -34,7 +31,6 @@ const MigrationPage: React.FC = () => {
 					}
 					const data = await response.json();
 				}
-				// dispatch(setDatabases(data.connectionStrings));
 			} catch (error) {
 				console.error(`Error fetching databases:`, error);
 			} finally {

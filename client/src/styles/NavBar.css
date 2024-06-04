@@ -6,6 +6,30 @@ body {
 	}
 }
 
+select {
+	width: 50%;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-color: #fff;
+	background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="currentColor" stroke-width="1.1" d="M6 8l4 4 4-4"/></svg>');
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 10px;
+	font-size: 16px;
+	color: #333;
+	cursor: pointer;
+}
+
+select:focus {
+	outline: none;
+	border-color: #007bff;
+	box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
 .logo {
 	cursor: pointer;
 

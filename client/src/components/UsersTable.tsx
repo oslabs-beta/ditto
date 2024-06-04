@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { setUserRole, setSelectedProject } from '../store';
 import { useRevalidator } from 'react-router-dom';
 import { useRouteId } from 'react-router/dist/lib/hooks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserMinus } from '@fortawesome/free-solid-svg-icons';
 
 interface Users {
 	user_id: string;
@@ -98,7 +100,10 @@ const UsersTable: React.FC = () => {
 					>
 						{mapRoles}
 					</select>
-					<button>Kick</button>
+					<button>
+						{' '}
+						<FontAwesomeIcon icon={faUserMinus} />
+					</button>
 				</td>
 			</tr>
 		</tbody>

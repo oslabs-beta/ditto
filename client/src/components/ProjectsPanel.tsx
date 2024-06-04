@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faHammer,
 	faUserPlus,
-	faTrash,
+	faTrashCan,
 	faUserMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -317,7 +317,7 @@ const OrganizationsPanel: React.FC = () => {
 
 					{(userRole === 'Owner' || userRole === 'Admin') && (
 						<button onClick={handlePopperDelete}>
-							<FontAwesomeIcon icon={faTrash} />
+							<FontAwesomeIcon icon={faTrashCan} />
 						</button>
 					)}
 					{/* If you press create */}
