@@ -14,9 +14,7 @@ const UsersTable: React.FC = () => {
 	const userRole = useSelector((state: any) => state.userRole);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
 	const projectId = useSelector((state: any) => state.projectId);
-	const [users, setUsers] = useState<Users[]>([
-		{ username: 'ShanKhan', role: 'admin', user_id: '12' },
-	]);
+	const [users, setUsers] = useState<Users[]>([]);
 	const token = sessionStorage.getItem('token');
 	const roles = ['Owner', 'Admin', 'User'];
 	const selectedProjectId = useSelector(
@@ -56,14 +54,9 @@ const UsersTable: React.FC = () => {
 		}
 	}, [selectedProject]);
 
-	const mapRoles = roles.map((role: string) => (
-		<option key={role} value={role}>
-			{role}
-		</option>
-	));
-
 	const handleRoleChange = async (userId: string, role: string) => {
 		const token = sessionStorage.getItem('token');
+		console.log('in role change');
 		try {
 			const response = await fetch(`/project/updaterole/${selectedProjectId}`, {
 				method: 'PATCH',
@@ -76,23 +69,41 @@ const UsersTable: React.FC = () => {
 					role: role,
 				}),
 			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			const result = await response.json();
+			console.log('result: ', result); // props are username, user_id, role
+			setUsers(result);
 		} catch (error) {
 			console.error('Error fetching migrations:', error);
 		}
 	};
 
+	const mapRoles = roles.map((role: string) => (
+		<option key={role} value={role}>
+			{role}
+		</option>
+	));
+
 	const mappedUsersTable = users.map(user => (
 		<tbody key={user.user_id}>
 			<tr>
 				<td>{user.username}</td>
-				<select>
-					<option>
-						<td>{user.role}</td>
-					</option>
-				</select>
+				<td>
+					<select
+						defaultValue={user.role}
+						onChange={e => handleRoleChange(user.user_id, e.target.value)}
+					>
+						{mapRoles}
+					</select>
+					<button>Kick</button>
+				</td>
 			</tr>
 		</tbody>
 	));
+
 	return (
 		<div className="users">
 			<div className="usersHeader">
