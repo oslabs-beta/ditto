@@ -1,10 +1,10 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+import '../styles/components/LoadingSpinner.css';
 
 const LoadingSpinner: React.FC = () => (
-  <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+  <div className='spinnerContainer'>
     <div className="spinner-border text-primary" role="status">
-      <span className="sr-only">Loading...</span>
+      <span className="visually-hidden">Loading...</span>
     </div>
   </div>
 );

@@ -39,6 +39,6 @@ ul {
 
 .bioPic p {
   margin: 0;
+  border-radius: 50%;
   font-size: 16px;
-  color: #333;
 }

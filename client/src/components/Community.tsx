@@ -2,7 +2,7 @@ import * as React from 'react';
 import Jea from '/client/src/assets/img/teamPNG/Jea.webp'; 
 import Jay from '/client/src/assets/img/teamPNG/Jay.webp';
 import Jeff from '/client/src/assets/img/teamPNG/Jeff.webp';
-import Shaan from '/client/src/assets/img/teamPNG/Shaan.webp';
+import Shaan from '/client/src/assets/img/teamPNG/Shaan.png';
 import '/client/src/styles/components/Community.css';
 
 const Community: React.FC = () => {
@@ -28,7 +28,7 @@ const Community: React.FC = () => {
     {
       name: 'Shaan Khan',
       image: Shaan,
-      bio: 'Shaan Khan found a place in coding following an unsuccessful career in Hollywood after the hiring freeze of attractive actors.',
+      bio: 'Shaan Khan explored coding after an initial interest in Python. He moved on to learn JavaScript and React, subsequently joining the team in 2024.',
       github: 'https://github.com/shaanmalkovich'
     }
   ];
@@ -46,7 +46,7 @@ const Community: React.FC = () => {
               </div>
             </a>
           </li>
-        ))}
+        ))};
       </ul>
     </div>
   );
