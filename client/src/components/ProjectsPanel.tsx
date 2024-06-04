@@ -82,7 +82,7 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 	/* POST (Store Code) Project */
-	const storeCode = async () => {
+	const storeCode = async (code: string) => {
 		const response = await fetch('project/generate', {
 			method: 'POST',
 			headers: {
@@ -90,7 +90,7 @@ const OrganizationsPanel: React.FC = () => {
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
-				code: accessCode,
+				code: code,
 				project_id: selectedProjectId,
 				role: userRole,
 			}),
@@ -207,7 +207,15 @@ const OrganizationsPanel: React.FC = () => {
 		setShowInput(showInput ? false : true);
 	};
 
-	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleProjectNameInputChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		setProjectName(e.target.value);
+	};
+
+	const handleJoinCodeInputChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		setProjectName(e.target.value);
 	};
 
@@ -241,14 +249,16 @@ const OrganizationsPanel: React.FC = () => {
 		else if (selectedProject && promptLeave) setPromptLeave(false);
 	};
 
-	const handleGenerate = async () => {
-		const accessCode = Math.random().toString(36).substring(7);
-		setAccessCode(accessCode);
-		await storeCode();
+	const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const code = Math.random().toString(36).substring(7);
+		setAccessCode(code);
+		await storeCode(code);
 	};
 
 	const handleCodeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setAccessCode(e.target.value);
+		console.log(accessCode);
 	};
 
 	return (
@@ -284,7 +294,7 @@ const OrganizationsPanel: React.FC = () => {
 							<input
 								type="text"
 								value={projectName}
-								onChange={handledbNameInputChange}
+								onChange={handleProjectNameInputChange}
 								placeholder="Enter project name"
 							/>
 							<button>+</button>
@@ -296,9 +306,8 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Join Project:</p>
 							<input
 								type="text"
-								// value={accessCode}
-								defaultValue={accessCode}
-								onChange={handledbNameInputChange}
+								value={accessCode}
+								onChange={handleCodeInputChange}
 								placeholder="Enter access code"
 							></input>
 							<button>+</button>

@@ -18,6 +18,7 @@ import {
 	setSelectedScript,
 	setMigrationVersions,
 } from '../store';
+// import '../styles/SidePanel.css';
 
 const SidePanel: React.FC = () => {
 	const dispatch = useDispatch();
