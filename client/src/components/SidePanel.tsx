@@ -100,7 +100,10 @@ const SidePanel: React.FC = () => {
 							'Content-Type': 'application/json',
 							Authorization: `Bearer ${token}`,
 						},
-						body: JSON.stringify({ dbId: Number(dbId) }),
+						body: JSON.stringify({
+							dbId: Number(dbId),
+							projectId: Number(projectId),
+						}),
 					});
 
 					if (!response.ok) {

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { setUserRole, setSelectedProject } from '../store';
-import { useRevalidator } from 'react-router-dom';
-import { useRouteId } from 'react-router/dist/lib/hooks';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMinus } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,6 +19,8 @@ const UsersTable: React.FC = () => {
 	const selectedProjectId = useSelector(
 		(state: { projectId: string }) => state.projectId
 	);
+	const projects = useSelector((state: any) => state.projects);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const fetchUsers = async () => {
@@ -42,10 +41,9 @@ const UsersTable: React.FC = () => {
 				}
 
 				const result = await response.json();
-				console.log('result: ', result); // props are username, user_id, role
 				setUsers(result);
 			} catch (error) {
-				console.error('Error fetching migrations:', error);
+				console.error('Error fetching users:', error);
 			}
 		};
 
@@ -58,7 +56,6 @@ const UsersTable: React.FC = () => {
 
 	const handleRoleChange = async (userId: string, role: string) => {
 		const token = sessionStorage.getItem('token');
-		console.log('in role change');
 		try {
 			const response = await fetch(`/project/updaterole/${selectedProjectId}`, {
 				method: 'PATCH',
@@ -76,10 +73,9 @@ const UsersTable: React.FC = () => {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			const result = await response.json();
-			console.log('result: ', result); // props are username, user_id, role
 			setUsers(result);
 		} catch (error) {
-			console.error('Error fetching migrations:', error);
+			console.error('Error updating user role:', error);
 		}
 	};
 
@@ -89,27 +85,48 @@ const UsersTable: React.FC = () => {
 		</option>
 	));
 
-	const mappedUsersTable = users.map(user => (
-		<tbody key={user.user_id}>
-			<tr>
-				<td>{user.username}</td>
+	const handleKick = async (userId: string) => {
+		const token = sessionStorage.getItem('token');
+		try {
+			const response = await fetch(
+				`/project/kick/${selectedProjectId}/${userId}`,
+				{
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
 
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			const result = await response.json();
+			setUsers(result);
+		} catch (error) {
+			console.error('Error leaving project:', error);
+		}
+	};
+
+	const mappedUsersTable = users.map(user => (
+		<tr key={user.user_id}>
+			<td>{user.username}</td>
+			<div id="roleColumn">
 				<td>
-					<div id="roleColumn">
-						<select
-							defaultValue={user.role}
-							onChange={e => handleRoleChange(user.user_id, e.target.value)}
-						>
-							{mapRoles}
-						</select>
-						<button>
-							{' '}
-							<FontAwesomeIcon icon={faUserMinus} />
-						</button>
-					</div>
+					<select
+						value={user.role}
+						onChange={e => handleRoleChange(user.user_id, e.target.value)}
+					>
+						{mapRoles}
+					</select>
+					<button onClick={() => handleKick(user.user_id)}>
+						{' '}
+						<FontAwesomeIcon icon={faUserMinus} />
+					</button>
 				</td>
-			</tr>
-		</tbody>
+			</div>
+		</tr>
 	));
 
 	return (
@@ -136,7 +153,7 @@ const UsersTable: React.FC = () => {
 							<th>Role</th>
 						</tr>
 					</thead>
-					{mappedUsersTable}
+					<tbody>{mappedUsersTable}</tbody>
 				</table>
 			</div>
 		</div>
