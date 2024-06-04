@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faHammer,
 	faUserPlus,
-	faTrash,
+	faTrashCan,
 	faUserMinus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -82,7 +82,7 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 	/* POST (Store Code) Project */
-	const storeCode = async () => {
+	const storeCode = async (code: string) => {
 		const response = await fetch('project/generate', {
 			method: 'POST',
 			headers: {
@@ -90,7 +90,7 @@ const OrganizationsPanel: React.FC = () => {
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
-				code: accessCode,
+				code: code,
 				project_id: selectedProjectId,
 				role: userRole,
 			}),
@@ -116,6 +116,7 @@ const OrganizationsPanel: React.FC = () => {
 		});
 		if (response.ok) {
 			const result = await response.json();
+			console.log(result);
 			setAccessCode('');
 			setJoinInput(false);
 		}
@@ -232,7 +233,9 @@ const OrganizationsPanel: React.FC = () => {
 		setShowInput(showInput ? false : true);
 	};
 
-	const handledbNameInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleProjectNameInputChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		setProjectName(e.target.value);
 	};
 
@@ -254,7 +257,9 @@ const OrganizationsPanel: React.FC = () => {
 	const handlePopperYes = () => {
 		dispatch(setSelectedProject(''));
 		// We will dispatch for users table and make it an empty string to clear
+
 		deleteProject();
+
 		setIsOpen(false);
 	};
 
@@ -266,20 +271,22 @@ const OrganizationsPanel: React.FC = () => {
 		else if (selectedProject && promptLeave) setPromptLeave(false);
 	};
 
-	const handleGenerate = async () => {
-		const accessCode = Math.random().toString(36).substring(7);
-		setAccessCode(accessCode);
-		await storeCode();
+	const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const code = Math.random().toString(36).substring(7);
+		setAccessCode(code);
+		await storeCode(code);
 	};
 
 	const handleCodeInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setAccessCode(e.target.value);
+		console.log(accessCode);
 	};
 
 	return (
 		<div className="projectsPanel">
 			<div className="chooseProject">
-				<p>Choose Project</p>
+				<p className="font-bold">Project</p>
 				<select
 					value={selectedProject}
 					onChange={e => {
@@ -287,25 +294,25 @@ const OrganizationsPanel: React.FC = () => {
 						handleProjectChange(e);
 					}}
 				>
-					<option value="">-- Select a Project --</option>
+					<option value="">Select</option>
 					{mapProjectOptions}
 				</select>
 				<div className="projectButtons">
-					<button onClick={handleCreate}>
+					<button onClick={handleCreate} title="Create Project">
 						<FontAwesomeIcon icon={faHammer} />
 					</button>
-					<button onClick={handleJoin}>
+
+					<button onClick={handleJoin} title="Join Project">
 						<FontAwesomeIcon icon={faUserPlus} />
 					</button>
 
+					<button onClick={handleLeave} title="Leave Project">
+						<FontAwesomeIcon icon={faUserMinus} />
+					</button>
+
 					{(userRole === 'Owner' || userRole === 'Admin') && (
-						<button onClick={handlePopperDelete}>
-							<FontAwesomeIcon icon={faTrash} />
-						</button>
-					)}
-					{(userRole === 'Owner' || userRole === 'Admin') && (
-						<button onClick={handleLeave}>
-							<FontAwesomeIcon icon={faUserMinus} />
+						<button onClick={handlePopperDelete} title="Delete Project">
+							<FontAwesomeIcon icon={faTrashCan} />
 						</button>
 					)}
 					{/* If you press create */}
@@ -315,7 +322,7 @@ const OrganizationsPanel: React.FC = () => {
 							<input
 								type="text"
 								value={projectName}
-								onChange={handledbNameInputChange}
+								onChange={handleProjectNameInputChange}
 								placeholder="Enter project name"
 							/>
 							<button>+</button>
@@ -327,9 +334,8 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Join Project:</p>
 							<input
 								type="text"
-								// value={accessCode}
-								defaultValue={accessCode}
-								onChange={handledbNameInputChange}
+								value={accessCode}
+								onChange={handleCodeInputChange}
 								placeholder="Enter access code"
 							></input>
 							<button>+</button>
@@ -341,7 +347,7 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Delete Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={handlePopperYes}>Yes</button>
+								<button onClick={e => handlePopperYes()}>Yes</button>
 								<button
 									onClick={() => {
 										setIsOpen(false);
@@ -379,7 +385,7 @@ const OrganizationsPanel: React.FC = () => {
 				</div>
 			</div>
 			{(userRole === 'Owner' || userRole === 'Admin') && (
-				<div className="generateCode">
+				<div className="generateCode" title="Generate Access Code">
 					<form onSubmit={handleGenerate}>
 						<input
 							type="text"

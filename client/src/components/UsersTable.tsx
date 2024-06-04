@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserMinus } from '@fortawesome/free-solid-svg-icons';
 
 interface Users {
 	user_id: string;
@@ -110,15 +112,20 @@ const UsersTable: React.FC = () => {
 	const mappedUsersTable = users.map(user => (
 		<tr key={user.user_id}>
 			<td>{user.username}</td>
-			<td>
-				<select
-					value={user.role}
-					onChange={e => handleRoleChange(user.user_id, e.target.value)}
-				>
-					{mapRoles}
-				</select>
-				<button onClick={() => handleKick(user.user_id)}>Kick</button>
-			</td>
+			<div id="roleColumn">
+				<td>
+					<select
+						value={user.role}
+						onChange={e => handleRoleChange(user.user_id, e.target.value)}
+					>
+						{mapRoles}
+					</select>
+					<button onClick={() => handleKick(user.user_id)}>
+						{' '}
+						<FontAwesomeIcon icon={faUserMinus} />
+					</button>
+				</td>
+			</div>
 		</tr>
 	));
 

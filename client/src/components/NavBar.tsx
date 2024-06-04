@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import logo from '../assets/logo.webp';
 import '../styles/NavBar.css';
 import { resetState } from '../store';
 
@@ -18,7 +17,7 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const navLinks: NavLink[] = [
-		{ path: '/faq', label: 'FAQ' },
+		// { path: '/faq', label: 'FAQ' },
 		{ path: '/projects', label: 'Projects' },
 	];
 
@@ -46,7 +45,6 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 								className="logo"
 								src={logo}
 								alt="Logo"
-								style={{ height: '50px' }}
 								onClick={() => navigate('/')}
 							/>
 						</li>
@@ -64,7 +62,7 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 						</button>
 					) : (
 						<button className="logOut" onClick={handleLogging}>
-							Log In
+							Sign In
 						</button>
 					)}
 				</div>

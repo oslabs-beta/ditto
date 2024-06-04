@@ -1,150 +1,287 @@
-body {
-	height: 100%;
-}
-
 .migrationPage {
 	display: flex;
 	height: 100%;
-	padding: 90px 30px 0 30px;
+	padding: 60px 30px 0 30px;
+
+	.font-bold {
+		font-weight: bold;
+	}
+
+	button {
+		background-color: #b592f1;
+		align-items: center;
+		border: none;
+		border-radius: 7px;
+		color: whitesmoke;
+		cursor: pointer;
+		height: 35px;
+		align-self: center;
+		font-size: 12px;
+		font-weight: bold;
+	}
+
+	p {
+		margin: 0.5em 0;
+	}
+
+	/* Side Panel */
+
+	.sidecontainer {
+		border-right: solid rgb(207, 202, 202) 1px;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		max-width: 34%;
+		height: 88vh;
+
+		select {
+			width: 90%;
+		}
+
+		.addDeleteButtons {
+			display: flex;
+			flex-direction: row;
+			width: 25%;
+		}
+		.removedb {
+			display: flex;
+			flex-direction: column;
+			align-self: flex-start;
+		}
+		.addDbBtn {
+			display: flex;
+			flex-direction: column;
+			align-self: flex-start;
+		}
+
+		.purplebtn,
+		.whitebtn {
+			background-color: #b592f1;
+			align-items: center;
+			border: none;
+			border-radius: 7px;
+			padding: 8px 12px;
+			color: whitesmoke;
+			cursor: pointer;
+			height: 35px;
+			align-self: flex-start;
+			margin: 3px 2px 10% 0%;
+		}
+
+		.purplebtn:hover,
+		.whitebtn:hover {
+			background-color: #9561f0;
+		}
+
+		.addDb .purplebtn:hover + #textbox,
+		.removedb .whitebtn:hover + #textbox {
+			opacity: 1;
+			visibility: visible;
+			transition-delay: 0.25s;
+		}
+
+		.selectdb {
+			display: flex;
+			align-items: center;
+		}
+
+		.addDb {
+			height: 50px;
+			display: flex;
+			flex-direction: row;
+
+			.addbtn {
+				font-size: 1em;
+				padding: 2px 7px;
+			}
+		}
+
+		.actiondesc {
+			overflow: auto;
+			word-wrap: break-word;
+			font-size: x-small;
+		}
+
+		.dropAndBtn {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.popper {
+			display: flex;
+			flex-direction: column;
+			background-color: #f6e3ffb9;
+			width: 120px;
+			justify-content: center;
+			align-items: center;
+			border-radius: 7px;
+			margin-top: 5px;
+			align-self: center;
+			position: absolute;
+			z-index: 999;
+			left: 325px;
+		}
+
+		.popperbtns .whitebtn {
+			margin: 5px 5px 10px 5px;
+		}
+	}
+
+	/* Migration Scripts */
+
+	.content {
+		/* display: flex;
+		flex-direction: column;
+		width: 75%;
+		padding: 10px; */
+		display: flex;
+		height: 100%;
+		width: 100%;
+		padding: 60px 30px 0 30px;
+	}
+
+	/* .migrationTableContainer {
+		flex: 1;
+		margin-bottom: 20px;
+	} */
+
+	.title {
+		text-align: left;
+		margin-bottom: 10px;
+		font-size: 1.2em;
+	}
+
+	.selectedDB {
+		display: flex;
+		height: 40px;
+		border: 1px solid;
+		border-radius: 7px;
+		margin: 5px 0px;
+		width: 300px;
+		align-items: center;
+		justify-content: center;
+		font-size: 27px;
+		background-color: #dacbf3;
+	}
+
+	.MigrationScriptsContainer {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-left: 15px;
+		padding: 10px;
+
+		.scriptsheader {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.migrationsTable {
+			border: 1px solid #ddd;
+			border-radius: 7px;
+			height: 35vh;
+			max-width: 100%;
+			overflow-x: auto;
+
+			table {
+				width: 98%;
+				border-collapse: collapse;
+				margin: 10px 5px 10px 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				font-size: 16px;
+				font-family: Arial, sans-serif;
+			}
+
+			table,
+			th,
+			td {
+				border: 1px solid #ddd;
+				border-radius: 4px;
+			}
+
+			th,
+			td {
+				padding: 12px 15px;
+				text-align: left;
+			}
+
+			th {
+				background-color: #dacbf3;
+				color: #333;
+				font-weight: bold;
+				border-bottom: 2px solid #ddd;
+			}
+
+			td {
+				background-color: #fff;
+				color: #666;
+				border-bottom: 1px solid #ddd;
+				max-width: 150px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+
+				dateMigratedColumn {
+					display: flex;
+					justify-content: space-between;
+				}
+			}
+
+			tr:nth-child(even) {
+				background-color: #f9f9f9;
+			}
+		}
+
+		/* margin-left: 1.5%;
+	table {
+		text-align: left;
+		width: 100%;
+		border-spacing: 0;
+	}
+	th {
+		padding: 14px 40px;
+		border-right: none;
+		background-color: #dacbf3;
+	}
+	td {
+		padding: 5px 40px;
+		border-top: 1px solid;
+		border-right: none;
+		max-width: 150px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	} */
+
+		/* .version,
+	.status {
+		width: 15%;
+	}
+
+	.desc {
+		width: 40%;
+	} */
+
+		.updatedeletebtn {
+			display: flex;
+			margin-bottom: 15px;
+		}
+
+		.updatedeletebtn > * {
+			width: 70px;
+			height: 35px;
+			margin: 10px 10px 10px 0px;
+		}
+
+		/* .migrationsTable {
+		border: 1px solid;
+		border-radius: 7px;
+		height: 35vh;
+	} */
+	}
 }
 
-p {
-	margin: 0.5em 0;
-}
-
-.sidePanel {
-	border-right: 1px solid;
-	display: flex;
-	width: 25%;
-	height: 88vh;
-}
-
-#sidecontainer select {
-	width: 200px;
-	text-align: center;
-	background-color: whitesmoke;
-	height: 40px;
-}
-
-.font-bold {
-	font-weight: 700;
-}
-
-.addDbBtn,
-.removedb {
-	display: flex;
-	align-items: center;
-}
-
-.removedb .whitebtn {
-	padding: 8px 10px;
-}
-
-#textbox {
-	font-size: 12px;
-	color: rgba(0, 0, 0, 0.562);
-	padding-left: 5px;
-	opacity: 0;
-	visibility: hidden;
-	transition:
-		opacity 0.5s ease-in-out,
-		visibility 0.5s ease-in-out;
-}
-
-.removedb .whitebtn:hover + #textbox {
-	opacity: 1;
-	visibility: visible;
-	transition-delay: 0.25s;
-}
-
-.addDb .purplebtn:hover + #textbox {
-	opacity: 1;
-	visibility: visible;
-	transition-delay: 0.25s;
-}
-
-.purplebtn {
-	background-color: #b592f1;
-	border: none;
-	border-radius: 7px;
-	padding: 8px 12px;
-	color: whitesmoke;
-	cursor: pointer;
-	height: 35px;
-}
-
-.purplebtn:hover {
-	background-color: #9561f0;
-}
-
-.whitebtn {
-	background-color: rgb(228, 228, 228);
-	border: none;
-	border-radius: 7px;
-	padding-left: 12px;
-	padding-right: 12px;
-	color: black;
-	cursor: pointer;
-}
-
-.whitebtn:hover {
-	background-color: rgb(209, 209, 209);
-}
-
-.addDb form > * {
-	margin-right: 10px;
-}
-
-.selectdb {
-	display: flex;
-	align-items: center;
-}
-
-.selectdb button {
-	font-size: 12px;
-	margin-left: 30px;
-	padding: 0 10px;
-}
-
-.addDb {
-	margin: 15px 0 40px 0;
-	height: 50px;
-}
-
-.addbtn {
-	font-size: 1em;
-	padding: 2px 7px;
-}
-
-.addDb .btn {
-	margin: 5px 0;
-}
-
-select {
-	padding: 5px;
-	border-radius: 7px;
-}
-
-#chooseaction button {
-	margin-left: 30px;
-}
-
-#chooseaction {
-	height: 200px;
-}
-
-.actiondesc {
-	padding-top: 10px;
-	width: 350px;
-}
-
-.content {
-	display: flex;
-	flex-direction: column;
-	width: 75%;
-	padding: 10px;
-}
-
+/* Code Editor */
 .codeEditorContainer {
 	display: flex;
 	flex-direction: column;
@@ -156,110 +293,4 @@ select {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-}
-
-.migrationTableContainer {
-	flex: 1;
-	margin-bottom: 20px;
-}
-
-.title {
-	text-align: left;
-	margin-bottom: 10px;
-	font-size: 1.2em;
-}
-
-.selectedDB {
-	display: flex;
-	height: 40px;
-	border: 1px solid;
-	border-radius: 7px;
-	margin: 5px 0px;
-	width: 300px;
-	align-items: center;
-	justify-content: center;
-	font-size: 27px;
-	background-color: #dacbf3;
-}
-
-.scriptsheader {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 10px;
-}
-
-.MigrationScriptsContainer {
-	margin-left: 1.5%;
-}
-
-.MigrationScriptsContainer table {
-	text-align: left;
-	width: 100%;
-	border-spacing: 0;
-}
-
-.MigrationScriptsContainer th {
-	padding: 14px 40px;
-	border-right: none;
-	background-color: #dacbf3;
-}
-
-.MigrationScriptsContainer td {
-	padding: 5px 40px;
-	border-top: 1px solid;
-	border-right: none;
-	max-width: 150px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-
-.version,
-.status {
-	width: 15%;
-}
-
-.desc {
-	width: 40%;
-}
-
-.updatedeletebtn {
-	display: flex;
-	margin-bottom: 15px;
-}
-
-.updatedeletebtn > * {
-	width: 70px;
-	height: 35px;
-	margin: 10px;
-}
-
-.migrationsTable {
-	border: 1px solid;
-	border-radius: 7px;
-	height: 35vh;
-}
-
-.migrationsTable th,
-.migrationsTable td {
-}
-
-.popper {
-	display: flex;
-	flex-direction: column;
-	background-color: #f6e3ffb9;
-	width: 120px;
-	justify-content: center;
-	align-items: center;
-	border-radius: 7px;
-	margin-top: 5px;
-	align-self: center;
-	position: absolute;
-	z-index: 999;
-	left: 325px;
-}
-
-.popperbtns .whitebtn {
-	margin: 5px 5px 10px 5px;
 }
