@@ -1,0 +1,47 @@
+.FAQ {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.FAQBox {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.faqTitle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.faqTitle h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+
+.FAQul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.FAQli {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.FAQli strong {
+  color: #007bff;
+}
+
+.FAQli em {
+  font-style: normal;
+  font-weight: bold;
+}

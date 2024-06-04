@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
+import './styles/Global.css';
 
 import ProjectsPage from './pages/ProjectsPage';
 
