@@ -1,5 +1,6 @@
 import * as React from 'react';
 import '../styles/pages/FAQPage.css';
+import '../../src/styles/Global.css';
 
 const FAQPage: React.FC = () => {
   return (

@@ -12,7 +12,7 @@ const MainPage: React.FC = () => {
 				<meta name="description" content="Welcome to Ditto, a powerful tool for managing and tracking PostgreSQL database migrations."/>
 			</Helmet>
 			<div className="landing">
-				<h1>Welcome to DITTO</h1>
+				<h1 className='sectionTitle'>Welcome to DITTO</h1>
 			</div>
 			<div>
 				<DocumentationPage />

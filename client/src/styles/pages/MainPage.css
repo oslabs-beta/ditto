@@ -1,4 +1,5 @@
 .content-container {
+	background-color: #7246a7;
 	padding-top: 100px;
 	display: flex;
 	flex-direction: column;
@@ -7,4 +8,8 @@
 
 .content-container img {
 	margin-right: 20px; /* Add some space between the gif and the Community component */
+}
+
+.text-container {
+	background-color: rgb(23, 78, 209);
 }

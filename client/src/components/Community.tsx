@@ -4,6 +4,7 @@ import Jay from '/client/src/assets/img/teamPNG/Jay.webp';
 import Jeff from '/client/src/assets/img/teamPNG/Jeff.webp';
 import Shaan from '/client/src/assets/img/teamPNG/Shaan.png';
 import '/client/src/styles/components/Community.css';
+import '../styles/Global.css';
 
 const Community: React.FC = () => {
   const members = [
@@ -35,7 +36,7 @@ const Community: React.FC = () => {
 
   return (
     <div className='bio'>
-      <h1>Meet the team!</h1>
+      <h1 className='sectionTitle'>The Team</h1>
       <ul>
         {members.map(member => (
           <li key={member.name}>
