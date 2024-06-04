@@ -28,9 +28,12 @@ const MigrationScripts: React.FC = () => {
 	const dbId = useSelector((state: any) => state.dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 	const username = useSelector((state: any) => state.user); // user
-	const [migrations, setMigrations] = useState<Migration[]>([]);
+	// const [migrations, setMigrationVersions] = useState<Migration[]>([]);
 	const selectedMigration = useSelector(
 		(state: { selectedMigration: string }) => state.selectedMigration
+	);
+	const migrationsArray = useSelector(
+		(state: { migrationVersions: Migration[] }) => state.migrationVersions
 	);
 	const selectedScript = useSelector(
 		(state: { selectedScript: string }) => state.selectedScript
@@ -66,7 +69,7 @@ const MigrationScripts: React.FC = () => {
 						parseInt(a.version) - parseInt(b.version)
 				);
 				console.log('sortedMigrations: ', sortedMigrations);
-				setMigrations(sortedMigrations);
+				dispatch(setMigrationVersions(sortedMigrations));
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
 			}
@@ -75,9 +78,9 @@ const MigrationScripts: React.FC = () => {
 		if (selectedDatabase) {
 			fetchMigrations();
 		} else {
-			setMigrations([]);
+			dispatch(setMigrationVersions([]));
 		}
-	}, [selectedDatabase, selectedMigration, migrationVersions]);
+	}, [selectedDatabase, selectedMigration]);
 
 	/* Add Migrations Button */
 	const handleSubmit = () => {
@@ -121,7 +124,7 @@ const MigrationScripts: React.FC = () => {
 			);
 			dispatch(setSelectedScript(''));
 			dispatch(setSelectedMigration(''));
-			setMigrations(migrationsArr);
+			dispatch(setMigrationVersions(migrationsArr));
 			// are we expecting response? we would have to json pars and confirm deletion or error
 			// dispatch migrationlog logic
 		} catch (error) {
@@ -152,10 +155,10 @@ const MigrationScripts: React.FC = () => {
 			console.log('result:', result);
 			if (Array.isArray(result)) {
 				console.log(result);
-				setMigrations(result);
+				dispatch(setMigrationVersions(result));
 			} else {
 				console.error('Expected array but got:', result);
-				setMigrations([]);
+				dispatch(setMigrationVersions([]));
 			}
 			console.log(result);
 		} catch (error) {
@@ -196,7 +199,7 @@ const MigrationScripts: React.FC = () => {
 						</tr>
 					</thead>
 
-					{migrations.map(migration => (
+					{migrationsArray.map(migration => (
 						<tbody key={migration.migration_id}>
 							<tr
 								id={migration.migration_id}
