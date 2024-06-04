@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser, setToken } from '../store';
+import { setUser, setToken, setUserId } from '../store';
 
 interface DecodedToken {
 	id: number;
@@ -14,6 +14,7 @@ const GitHubCallback: React.FC = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		console.log('in callback');
 		const params = new URLSearchParams(location.search);
 		console.log('params:', params);
 		const token = params.get('token');
@@ -26,8 +27,9 @@ const GitHubCallback: React.FC = () => {
 			const payload = JSON.parse(atob(token.split('.')[1])); //decode the JWT payload. Header. Payload. Signature. [1] gives us payload
 			console.log('payload:', payload);
 			dispatch(setUser(payload.username)); //dispatch users username from JWT payload
+			dispatch(setUserId(payload.id));
 
-			navigate('/migration');
+			navigate('/projects');
 		} else {
 			console.error('Access token not found');
 		}

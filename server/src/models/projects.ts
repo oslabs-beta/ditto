@@ -122,7 +122,7 @@ export const leaveProject = async (
 
 export const getAllUsers = async (project_id: number): Promise<string[]> => {
 	const queryString = `
-  SELECT u.username, u.user_id, up.role
+  SELECT u.username, u.user_id, up.role, date_joined
   FROM user_projects AS up
   JOIN users AS u ON up.user_id = u.user_id
   WHERE up.project_id = $1;

@@ -79,6 +79,7 @@ const OrganizationsPanel: React.FC = () => {
 		if (response.ok) {
 			const result = await response.json();
 			setProjectName('');
+			dispatch(setProjects(result));
 			setShowInput(false);
 		}
 	};
@@ -97,8 +98,6 @@ const OrganizationsPanel: React.FC = () => {
 			}),
 		});
 		if (response.ok) {
-			const result = await response.json();
-			setAccessCode('');
 			setJoinInput(false);
 		}
 	};
@@ -318,7 +317,12 @@ const OrganizationsPanel: React.FC = () => {
 					)}
 					{/* If you press create */}
 					{showInput && (
-						<form onSubmit={createProject}>
+						<form
+							onSubmit={e => {
+								e.preventDefault();
+								if (projectName) createProject();
+							}}
+						>
 							<p>Create Project:</p>
 							<input
 								type="text"
@@ -335,7 +339,6 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Join Project:</p>
 							<input
 								type="text"
-								value={accessCode}
 								onChange={handleCodeInputChange}
 								placeholder="Enter access code"
 							></input>
@@ -386,8 +389,14 @@ const OrganizationsPanel: React.FC = () => {
 				</div>
 			</div>
 			{(userRole === 'Owner' || userRole === 'Admin') && (
-				<div className="generateCode" id="Generate Access Code">
-					<form onSubmit={handleGenerate}>
+
+				<div className="generateCode" title="Generate Access Code">
+					<form
+						onSubmit={e => {
+							e.preventDefault();
+							handleGenerate(e);
+						}}
+
 						<input
 							type="text"
 							value={accessCode}
