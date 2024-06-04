@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import { setUser, setDatabases } from '../store';
 import { Helmet } from 'react-helmet-async';
 import githubIcon from '/client/src/assets/img/github-mark.png';
-import '/client/src/styles/LoginPage.css';
-import '../styles/NavBar.css';
+import '/client/src/styles/pages/LoginPage.css';
+import '../styles/components/NavBar.css';
 
 interface LoginFormData {
 	username: string;

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetState } from '../store';
+import '../styles/components/LogOutButton.css';
 
 const LogOut: React.FC = () => {
 	const navigate = useNavigate();

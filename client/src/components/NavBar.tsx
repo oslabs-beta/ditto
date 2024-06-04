@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import logo from '../assets/logo.webp';
-import '../styles/NavBar.css';
 import { resetState } from '../store';
+import '../styles/components/NavBar.css';
 
 interface NavLink {
 	path: string;

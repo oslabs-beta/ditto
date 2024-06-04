@@ -3,7 +3,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/logo.webp';
-import '../styles/LogoBtn.css';
+import '../styles/components/LogoBtn.css';
 
 const LogoBtn = () => {
   const navigate = useNavigate();

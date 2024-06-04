@@ -1,5 +1,5 @@
 import React from "react";
-import '../styles/LandingPageBtns';
+import '../styles/components/LandingPageBtns.css';
 
 const LandingPageBtns: React.FC = () => {
     return(

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import '/client/src/styles/DocumentationPage.css';
+import '/client/src/styles/pages/DocumentationPage.css';
 
 const DocumentationPage: React.FC = () => {
   return(

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Community from '../components/Community';
-import '../styles/MainPage.css';
 import DocumentationPage from './DocumentationPage';
 import { Helmet } from 'react-helmet-async'
+import '../styles/pages/MainPage.css';
 
 const MainPage: React.FC = () => {
 	return (

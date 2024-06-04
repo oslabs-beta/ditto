@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setMigrationVersions } from '../store';
-import '../styles/AddUpdateMigrations.css';
 import CodeEditor from '../components/CodeEditor';
+import '../styles/components/AddUpdateMigrations.css';
 
 interface FormData {
 	version: string;

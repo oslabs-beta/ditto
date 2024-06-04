@@ -5,8 +5,8 @@ import SidePanel from '../components/SidePanel';
 import MigrationScripts from '../components/MigrationScripts';
 import { Helmet } from 'react-helmet-async';
 import LoadingSpinner from '../components/LoadingSpinner';
-import '/client/src/styles/MigrationPage.css';
 import { setSelectedDatabase, setDatabases } from '../store';
+import '/client/src/styles/pages/MigrationPage.css';
 
 const MigrationPage: React.FC = () => {
 	const dispatch = useDispatch();

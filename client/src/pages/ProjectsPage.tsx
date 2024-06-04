@@ -1,7 +1,7 @@
 import * as React from 'react';
 import OrganizationsPanel from '../components/ProjectsPanel';
 import UsersTable from '../components/UsersTable';
-import '../styles/ProjectsPage.css';
+import '../styles/pages/ProjectsPage.css';
 
 const OrganizationsPage: React.FC = () => {
 	return (

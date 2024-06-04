@@ -8,8 +8,8 @@ import {
 	setSelectedScript,
 	setScript,
 } from '../store';
-import '../styles/AddUpdateMigrations.css';
 import CodeEditor from '../components/CodeEditor';
+import '../styles/components/AddUpdateMigrations.css';
 
 interface FormData {
 	version: string;

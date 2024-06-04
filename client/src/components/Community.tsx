@@ -3,7 +3,7 @@ import Jea from '/client/src/assets/img/teamPNG/Jea.webp';
 import Jay from '/client/src/assets/img/teamPNG/Jay.webp';
 import Jeff from '/client/src/assets/img/teamPNG/Jeff.webp';
 import Shaan from '/client/src/assets/img/teamPNG/Shaan.webp';
-import '/client/src/styles/Community.css';
+import '/client/src/styles/components/Community.css';
 
 const Community: React.FC = () => {
   const members = [
