@@ -19,8 +19,6 @@ const MainPage: React.FC = () => {
 				<Documentation />
 				{/* <Community /> */}
 			</div>
-			<button></button>
-			<button></button>
 		</div>
 	);
 };

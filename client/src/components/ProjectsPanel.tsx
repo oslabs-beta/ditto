@@ -16,11 +16,13 @@ import {
 	setMigrationVersions,
 	setSelectedDatabase,
 	setdbId,
+	setUser,
 } from '../store';
 // import addCode from '../../../server/src/models/projects';
 
 const OrganizationsPanel: React.FC = () => {
 	/* States */
+	const user = useSelector((state: any) => state.user);
 	const userRole = useSelector((state: any) => state.userRole);
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
@@ -290,6 +292,9 @@ const OrganizationsPanel: React.FC = () => {
 
 	return (
 		<div className="projectsPanel">
+			<div className="currUser">
+				<label>User: {user}</label>
+			</div>
 			<div className="chooseProject">
 				<p className="font-bold">Project</p>
 				<select
