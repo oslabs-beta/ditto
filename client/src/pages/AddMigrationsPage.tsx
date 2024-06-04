@@ -84,17 +84,9 @@ const AddMigrationsPage: React.FC = () => {
 					</fieldset>
 				</div>
 				<fieldset>
-					{/* <CodeEditor initialCode={code} /> */}
 					<label>
-						{/* <textarea
-							className="code-editor"
-							value={script}
-							onChange={e => setScript(e.target.value)}
-							required
-						/> */}
 						<CodeEditor code={script} inMigration={false} />
 					</label>
-
 					<legend>Script</legend>
 				</fieldset>
 				<button type="submit">Save</button>

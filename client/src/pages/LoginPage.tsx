@@ -60,7 +60,7 @@ const LoginPage: React.FC = () => {
 
 				// get user's saved databases and update state
 
-				navigate('/migration');
+				navigate('/projects');
 			} else {
 				console.error('Login failed:', await response.json());
 			}
@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
 					content="Log in to Ditto to access and manage your PostgreSQL database migrations."
 				/>
 			</Helmet>
-			<h1 className="login">Log In</h1>
+			<h1 className="login">Sign In</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<input
 					type="text"

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import OrganizationsPanel from '../components/ProjectsPanel';
+import ProjectsPanel from '../components/ProjectsPanel';
 import UsersTable from '../components/UsersTable';
 import '../styles/pages/ProjectsPage.css';
 
 const OrganizationsPage: React.FC = () => {
 	return (
 		<div className="projectsPage">
-			<OrganizationsPanel />
+			<ProjectsPanel />
 			<UsersTable />
 		</div>
 	);

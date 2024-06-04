@@ -62,38 +62,43 @@ const SignUpPage: React.FC = () => {
 		<div className="signuppagecontainer">
 			<Helmet>
 				<title>Sign Up for Ditto</title>
-				<meta name="description" content="Sign up for Ditto to start managing and tracking your PostgreSQL database migrations."/>
+				<meta
+					name="description"
+					content="Sign up for Ditto to start managing and tracking your PostgreSQL database migrations."
+				/>
 			</Helmet>
-			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit} className="form">
-				<input
-					type="text"
-					name="username"
-					value={formData.username}
-					onChange={handleInputChange}
-					placeholder="Username"
-					className="input"
-				/>
-				<input
-					type="password"
-					name="password"
-					value={formData.password}
-					onChange={handleInputChange}
-					placeholder="Password"
-					className="input"
-				/>
-				<input
-					type="password"
-					name="confirmPassword"
-					value={formData.confirmPassword}
-					onChange={handleInputChange}
-					placeholder="Confirm Password"
-					className="input confirm-password"
-				/>
-				<button type="submit" className="loginbutton">
-					Sign Up
-				</button>
-			</form>
+			<div className="formContainer">
+				<h1>Sign Up</h1>
+				<form onSubmit={handleSubmit} className="form">
+					<input
+						type="text"
+						name="username"
+						value={formData.username}
+						onChange={handleInputChange}
+						placeholder="Username"
+						className="input"
+					/>
+					<input
+						type="password"
+						name="password"
+						value={formData.password}
+						onChange={handleInputChange}
+						placeholder="Password"
+						className="input"
+					/>
+					<input
+						type="password"
+						name="confirmPassword"
+						value={formData.confirmPassword}
+						onChange={handleInputChange}
+						placeholder="Confirm Password"
+						className="input confirm-password"
+					/>
+					<button type="submit" className="loginbutton">
+						Sign Up
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };

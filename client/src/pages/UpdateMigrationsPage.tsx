@@ -74,7 +74,6 @@ const UpdateMigrationsPage: React.FC = () => {
 
 	return (
 		<div className="addUpdateMigrationsPage">
-			<h1>Update Migrations</h1>
 			<form onSubmit={handleSubmit}>
 				<div className="versionDescription">
 					<fieldset className="version">
