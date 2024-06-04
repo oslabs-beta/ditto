@@ -244,34 +244,18 @@ const MigrationScripts: React.FC = () => {
 								>
 									{migration.status}
 								</td>
-								<tbody className="dateMigratedColumn">
-									<td
-										className="executedat"
-										style={{
-											backgroundColor:
-												selectedMigration === migration.migration_id
-													? '#b592f1'
-													: 'transparent',
-										}}
-									>
-										{migration.executed_at}
-									</td>
 
-									<button
-										className="purplebtn"
-										type="button"
-										onClick={handleUpdateSubmit}
-									>
-										<FontAwesomeIcon icon={faEdit} />
-									</button>
-									<button
-										className="whitebtn"
-										type="button"
-										onClick={handleDeleteSubmit}
-									>
-										<FontAwesomeIcon icon={faTrashCan} />
-									</button>
-								</tbody>
+								<td
+									className="executedat"
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+								>
+									{migration.executed_at}
+								</td>
 							</tr>
 						</tbody>
 					))}
@@ -286,6 +270,18 @@ const MigrationScripts: React.FC = () => {
 						<legend>Script</legend>
 					</fieldset>
 				</div>
+			</div>
+			<div className="scriptBtns">
+				<button
+					className="purplebtn"
+					type="button"
+					onClick={handleUpdateSubmit}
+				>
+					<FontAwesomeIcon icon={faEdit} />
+				</button>
+				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
+					<FontAwesomeIcon icon={faTrashCan} />
+				</button>
 			</div>
 		</div>
 	);

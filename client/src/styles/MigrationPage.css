@@ -1,7 +1,7 @@
 .migrationPage {
 	display: flex;
 	height: 100%;
-	padding: 30px 0px 0 0px;
+	padding: 60px 0px 0 0px;
 
 	.font-bold {
 		font-weight: bold;
@@ -21,6 +21,11 @@
 		font-weight: bold;
 	}
 
+	button:hover {
+		background-color: #9561f0;
+		border-color: #9561f0;
+	}
+
 	p {
 		margin: 0.5em 0;
 	}
@@ -34,6 +39,21 @@
 		max-width: 40%;
 		height: 88vh;
 		overflow-x: auto;
+
+		.currProject {
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			width: 90%;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			font-size: 16px;
+			font-family: Arial, sans-serif;
+			font-weight: bold;
+			padding: 0 10px;
+			color: #333;
+			background-color: #dacbf3;
+			margin-bottom: 20px;
+			padding: 7px 10px 7px 4px;
+		}
 
 		select {
 			width: 90%;
@@ -159,6 +179,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			margin-bottom: 30px;
 		}
 		.migrationsTable {
 			border: 1px solid #ddd;
@@ -166,6 +187,7 @@
 			height: 35vh;
 			max-width: 100%;
 			overflow-x: auto;
+			margin-bottom: 30px;
 
 			table {
 				width: 98%;
@@ -205,9 +227,9 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 
-				dateMigratedColumn {
-					display: flex;
-					justify-content: space-between;
+				button {
+					padding: 10px 15px 10px 15px;
+					margin: 0px 5px 0px 5px;
 				}
 			}
 
@@ -226,6 +248,15 @@
 			height: 35px;
 			margin: 10px 10px 10px 0px;
 		}
+	}
+}
+
+.scriptBtns {
+	display: flex;
+	gap: 15px;
+	margin: 10px 0px 10px 0px;
+	button {
+		padding: 0px 15px 0px 15px;
 	}
 }
 

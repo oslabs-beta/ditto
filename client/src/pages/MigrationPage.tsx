@@ -46,7 +46,7 @@ const MigrationPage: React.FC = () => {
 	}
 
 	return (
-		<div className="migrationPage">
+		<div>
 			<Helmet>
 				<title>Migrations - Ditto</title>
 				<meta

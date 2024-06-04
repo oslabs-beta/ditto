@@ -204,8 +204,9 @@ const SidePanel: React.FC = () => {
 
 	return (
 		<div className="sidePanel">
-			{/* database */}
-			<p className="font-bold">{selectedProject}</p>
+			<div className="currProject">
+				<label>Project: {selectedProject}</label>
+			</div>
 			<div id="dbdropdown">
 				<p className="font-bold">Database</p>
 				<div className="selectdb">
