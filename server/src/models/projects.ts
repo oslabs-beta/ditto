@@ -140,3 +140,17 @@ export const selectProject = async (project_id: number): Promise<Project> => {
 	const result = await db.query(queryString, [project_id]);
 	return result[0] as Project;
 };
+
+export const updateRole = async (
+	project_id: number,
+	role: string,
+	userId: number
+): Promise<void> => {
+	const queryString = `
+  UPDATE user_projects
+  SET role = $2
+  WHERE project_id = $1 AND user_id = $3
+  `;
+
+	await db.query(queryString, [project_id, role, userId]);
+};

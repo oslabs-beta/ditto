@@ -43,6 +43,7 @@ const MigrationScripts: React.FC = () => {
 				dispatch(setSelectedScript(''));
 			}
 			const token = sessionStorage.getItem('token');
+
 			try {
 				const response = await fetch(`/migrationlog/all/${dbId}`, {
 					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId

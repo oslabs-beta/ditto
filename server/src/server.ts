@@ -42,8 +42,8 @@ app.use('/migrationlog', migrationLogRoutes);
 
 app.use('/auth', authRoutes);
 
-// app.use('/db', newDbRoutes);
-app.use('/db', dbRoutes);
+app.use('/db', newDbRoutes);
+// app.use('/db', dbRoutes);
 
 app.use('/github', githubAuthRoutes);
 
