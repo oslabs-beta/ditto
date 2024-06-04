@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserMinus } from '@fortawesome/free-solid-svg-icons';
+import { setUserRole } from '../store';
 
 interface Users {
 	user_id: string;
 	username: string;
 	role: string;
+	date_joined: string;
 }
 
 const UsersTable: React.FC = () => {
 	const userRole = useSelector((state: any) => state.userRole);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
 	const projectId = useSelector((state: any) => state.projectId);
+	const currentUser = useSelector((state: { userId: number }) => state.userId);
 	const [users, setUsers] = useState<Users[]>([]);
 	const token = sessionStorage.getItem('token');
 	const roles = ['Owner', 'Admin', 'User'];
@@ -70,6 +73,7 @@ const UsersTable: React.FC = () => {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			const result = await response.json();
+			if (currentUser === Number(userId)) dispatch(setUserRole(role));
 			setUsers(result);
 		} catch (error) {
 			console.error('Error updating user role:', error);
@@ -106,7 +110,25 @@ const UsersTable: React.FC = () => {
 		}
 	};
 
-	const mappedUsersTable = users.map(user => (
+	const roleOrder: Record<string, number> = {
+		Owner: 0,
+		Admin: 1,
+		User: 2,
+	};
+
+	const usersCopy: Users[] = JSON.parse(JSON.stringify(users));
+	const sortedUsers: Users[] = usersCopy.sort((a: Users, b: Users) => {
+		const roleComparison = roleOrder[a.role] - roleOrder[b.role];
+		if (roleComparison !== 0) {
+			return roleComparison;
+		}
+		// if roles are same, compare date joined
+		return (
+			new Date(a.date_joined).getTime() - new Date(b.date_joined).getTime()
+		);
+	});
+
+	const mappedUsersTable = sortedUsers.map(user => (
 		<tr key={user.user_id}>
 			<td>{user.username}</td>
 			<td>
@@ -114,6 +136,7 @@ const UsersTable: React.FC = () => {
 					<select
 						value={user.role}
 						onChange={e => handleRoleChange(user.user_id, e.target.value)}
+						disabled={userRole === 'User' ? true : false}
 					>
 						{mapRoles}
 					</select>
@@ -131,13 +154,13 @@ const UsersTable: React.FC = () => {
 			<div className="usersHeader">
 				<fieldset>
 					<label>
-						<input value={selectedProject} />
+						<input value={selectedProject} readOnly={true} />
 					</label>
 					<legend>Project</legend>
 				</fieldset>
 				<fieldset>
 					<label>
-						<input value={userRole} />
+						<input value={userRole} readOnly={true} />
 					</label>
 					<legend>Role</legend>
 				</fieldset>

@@ -23,6 +23,7 @@ const SET_SELECTED_ACTION = 'SET_SELECTED_ACTION';
 const SET_SELECTED_SCRIPT = 'SET_SELECTED_SCRIPT';
 const SET_SCRIPT = 'SET_SCRIPT';
 const RESET_STATE = 'RESET_STATE';
+const SET_USER_ID = 'SET_USER_ID';
 
 const SET_CURRENT_PROJECT = 'SET_CURRENT_PROJECT';
 
@@ -136,6 +137,11 @@ export const setUserRole = (role: string | undefined) => ({
 	payload: role,
 });
 
+export const setUserId = (userId: string | number) => ({
+	type: SET_USER_ID,
+	payload: userId,
+});
+
 // Define initial state
 const initialState = {
 	user: '',
@@ -162,6 +168,7 @@ const initialState = {
 	selectedScript: '',
 	userRole: '',
 	currentProject: '',
+	userId: '',
 };
 
 const rootReducer = (state = initialState, action: any) => {
@@ -208,6 +215,8 @@ const rootReducer = (state = initialState, action: any) => {
 			return { ...state, currentProject: action.payload };
 		case SET_USER_ROLE:
 			return { ...state, userRole: action.payload };
+		case SET_USER_ID:
+			return { ...state, userId: action.payload };
 		case RESET_STATE:
 			console.log('in reset state', initialState);
 			return initialState;

@@ -175,7 +175,7 @@ const MigrationScripts: React.FC = () => {
 			<div className="scriptsheader">
 				<fieldset>
 					<label>
-						<input value={selectedDatabase} />
+						<input value={selectedDatabase} readOnly={true} />
 					</label>
 					<legend>Database</legend>
 				</fieldset>
