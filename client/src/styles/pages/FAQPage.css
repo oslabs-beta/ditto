@@ -1,41 +1,37 @@
-.FAQ {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+/* Global.css */
+/* Global styles can remain unchanged */
+
+/* FAQPage.css */
+.faq-page {
+  /* styles for the FAQ page container */
 }
 
-.FAQBox {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.faq-container {
+  /* styles for the main FAQ container */
 }
 
-.faqTitle {
-  text-align: center;
-  margin-bottom: 20px;
+.faq-title {
+  /* styles for the FAQ title */
 }
 
-.FAQul {
+.faq-list {
+  /* styles for the FAQ list */
   list-style-type: none;
   padding: 0;
 }
 
-.FAQli {
+.faq-item {
+  /* styles for each FAQ item */
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
 }
 
-.FAQli strong {
-  color: #007bff;
-}
-
-.FAQli em {
-  font-style: normal;
+.question {
+  /* styles for the question text */
   font-weight: bold;
+  font-style: italic;
+}
+
+.answer {
+  /* styles for the answer text */
+  margin-top: 5px;
 }
