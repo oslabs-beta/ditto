@@ -7,16 +7,13 @@ const Documentation: React.FC = () => {
 			<div className="docTxt">
 				<div className="text-container">
 					<p className="scrolling-text">
-						<strong>DITTO</strong> (
-						<em>Data Integration and Transfer Tool for Organizations</em>) is a
-						desktop application for managing SQL migration scripts tailored for
-						Postgres databases on AWS. This is achieved through meticulous
-						implementation of:
+						<strong>DITTO</strong>
 					</p>
-					<ol>
-						<li>Consistent database schema applications.</li>
-						<li>Intuitive UI for accurate tracking and version control.</li>
-					</ol>
+					<p>
+						A consistent database schema application made easy for collaboration
+						with your team, with Intuitive UI for accurate tracking and version
+						control.
+					</p>
 				</div>
 			</div>
 		</div>
