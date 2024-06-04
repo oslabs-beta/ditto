@@ -54,9 +54,7 @@ const OrganizationsPanel: React.FC = () => {
 					throw new Error(`HTTP error! status: ${response.status}`);
 				}
 				const result = await response.json();
-				console.log(result);
 				dispatch(setProjects(result));
-				console.log('projects:', projects);
 			} catch (error) {
 				console.error('Error fetching projects:', error);
 			}
@@ -150,7 +148,7 @@ const OrganizationsPanel: React.FC = () => {
 	const leaveProject = async () => {
 		if (selectedProject) {
 			try {
-				const response = await fetch('', {
+				const response = await fetch(`/project/leave/${selectedProjectId}`, {
 					method: 'DELETE',
 					headers: {
 						'Content-Type': 'application/json',
@@ -179,7 +177,6 @@ const OrganizationsPanel: React.FC = () => {
 				!e.target.value ? '' : e.target.selectedOptions[0].dataset.projectId
 			)
 		);
-		console.log('projectiD: ', selectedProjectId);
 		dispatch(setSelectedProject(e.target.value));
 		dispatch(setUserRole(selectedOption));
 	};
@@ -261,7 +258,7 @@ const OrganizationsPanel: React.FC = () => {
 		setIsOpen(false);
 	};
 
-	const handleLeave = () => {
+	const handleLeave = async () => {
 		setIsOpen(false);
 		setShowInput(false);
 		setJoinInput(false);
@@ -361,7 +358,14 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Leave Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={handlePopperYes}>Yes</button>
+								<button
+									onClick={() => {
+										handlePopperYes();
+										leaveProject();
+									}}
+								>
+									Yes
+								</button>
 								<button
 									onClick={() => {
 										setPromptLeave(false);
