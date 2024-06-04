@@ -1,13 +1,11 @@
 // SidePanel.tsx
 import React, { useState, useRef } from 'react';
-import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faTrashCan,
 	faDatabase,
 	faScroll,
-	faSquarePlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -23,17 +21,13 @@ import {
 	setSelectedScript,
 	setMigrationVersions,
 } from '../store';
-// import '../styles/SidePanel.css';
 
 const SidePanel: React.FC = () => {
 	const dispatch = useDispatch();
 	const selectedTable = useSelector((state: any) => state.selectedTable);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 
-	const selectedMigration = useSelector(
-		(state: any) => state.selectedMigration
-	);
-	const showInput = useSelector((state: any) => state.showInput); // we can probably get rid of this, since its only used in SidePanel
+	const showInput = useSelector((state: any) => state.showInput);
 
 	const dbName = useSelector((state: any) => state.dbName);
 	const connectionString = useSelector((state: any) => state.connectionString);
@@ -109,11 +103,8 @@ const SidePanel: React.FC = () => {
 					if (!response.ok) {
 						throw new Error(`HTTP error! status: ${response.status}`);
 					}
-
-					console.log('result:', response);
 					const result = await response.json();
 					if (Array.isArray(result)) {
-						console.log(result);
 						dispatch(setMigrationVersions(result));
 					} else {
 						console.error('Expected array but got:', result);
@@ -138,7 +129,6 @@ const SidePanel: React.FC = () => {
 		dispatch(setDbName(e.target.value));
 	};
 
-	/* For Adding Database */
 	const handleFormSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		try {
@@ -171,7 +161,6 @@ const SidePanel: React.FC = () => {
 		}
 	};
 
-	/* Dropdown Logic */
 	const handleChooseDatabase = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		dispatch(
 			setdbId(!e.target.value ? '' : e.target.selectedOptions[0].dataset.dbId)
@@ -189,7 +178,6 @@ const SidePanel: React.FC = () => {
 		)
 	);
 
-	/* Button Logic */
 	const handleTrashButton = () => {
 		if (selectedDatabase && !isOpen) setIsOpen(true);
 		else if (selectedDatabase && isOpen) setIsOpen(false);

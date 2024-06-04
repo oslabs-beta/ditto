@@ -5,9 +5,7 @@ import CodeEditor from './CodeEditor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {
-	setdbId,
 	setSelectedMigration,
-	setMigrationVersions,
 	setSelectedScript,
 	setScript,
 } from '../store';
@@ -19,7 +17,6 @@ interface Migration {
 	executed_at: string;
 	script: string;
 	status: string;
-	// execution_time: string; (query is giving me an object)
 }
 
 const MigrationScripts: React.FC = () => {
@@ -27,8 +24,9 @@ const MigrationScripts: React.FC = () => {
 	const navigate = useNavigate();
 	const dbId = useSelector((state: any) => state.dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
+
 	const username = useSelector((state: any) => state.user); // user
-	// const [migrations, setMigrationVersions] = useState<Migration[]>([]);
+
 	const selectedMigration = useSelector(
 		(state: { selectedMigration: string }) => state.selectedMigration
 	);
@@ -51,11 +49,10 @@ const MigrationScripts: React.FC = () => {
 
 			try {
 				const response = await fetch(`/migrationlog/all/${dbId}`, {
-					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`, // Replace with your JWT token logic
+						Authorization: `Bearer ${token}`, 
 					},
 				});
 
@@ -68,7 +65,6 @@ const MigrationScripts: React.FC = () => {
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
 				);
-				console.log('sortedMigrations: ', sortedMigrations);
 				dispatch(setMigrationVersions(sortedMigrations));
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
@@ -82,28 +78,19 @@ const MigrationScripts: React.FC = () => {
 		}
 	}, [selectedDatabase, selectedMigration]);
 
-	/* Add Migrations Button */
 	const handleSubmit = () => {
 		dispatch(setScript(''));
 		navigate('/addMigrations');
 	};
 
-	/* Handles Update Button */
 	const handleUpdateSubmit = () => {
-		// we are setting state on click of the table row
-		// and only redirecting if selectedMigration state has been set
 		if (selectedMigration !== '') {
 			navigate('/updateMigrations');
 		}
 	};
 
-	/* Handles Delete Button */
 	const handleDeleteSubmit = async () => {
 		try {
-			// might want to add an are you sure prompt
-
-			// We need to dispatch state here so we know which version we're working on
-
 			const token = sessionStorage.getItem('token');
 			const response = await fetch(`/migrationlog/${selectedMigration}`, {
 				method: 'DELETE',
@@ -136,7 +123,6 @@ const MigrationScripts: React.FC = () => {
 		e.preventDefault;
 
 		try {
-			console.log('Entered handleRunScript');
 			const token = sessionStorage.getItem('token');
 			const response = await fetch('/migration', {
 				method: 'POST',
@@ -152,7 +138,6 @@ const MigrationScripts: React.FC = () => {
 			}
 
 			const result = await response.json();
-			console.log('result:', result);
 			if (Array.isArray(result)) {
 				console.log(result);
 				dispatch(setMigrationVersions(result));
@@ -160,13 +145,11 @@ const MigrationScripts: React.FC = () => {
 				console.error('Expected array but got:', result);
 				dispatch(setMigrationVersions([]));
 			}
-			console.log(result);
 		} catch (error) {
 			console.error('Error running migrations:', error);
 			navigate('/migration');
 		}
 	};
-	/* Code Editor */
 
 	const handleHighlight = (id: string, script: string) => {
 		dispatch(setSelectedMigration(id === selectedMigration ? '' : id));

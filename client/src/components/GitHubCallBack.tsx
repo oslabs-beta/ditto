@@ -24,9 +24,9 @@ const GitHubCallback: React.FC = () => {
 			sessionStorage.setItem('token', token);
 			dispatch(setToken(token));
 
-			const payload = JSON.parse(atob(token.split('.')[1])); //decode the JWT payload. Header. Payload. Signature. [1] gives us payload
+			const payload = JSON.parse(atob(token.split('.')[1])); //decode the JWT payload. 
 			console.log('payload:', payload);
-			dispatch(setUser(payload.username)); //dispatch users username from JWT payload
+			dispatch(setUser(payload.username)); //dispatch user's username from JWT payload
 			dispatch(setUserId(payload.id));
 
 			navigate('/projects');
@@ -39,32 +39,3 @@ const GitHubCallback: React.FC = () => {
 };
 
 export default GitHubCallback;
-
-// const Callback: React.FC = () => {
-// 	const location = useLocation();
-// 	const navigate = useNavigate();
-
-// 	useEffect(() => {
-// 		const fetchUserData = async () => {
-// 			console.log('effect is triggered');
-// 			const code = new URLSearchParams(location.search).get('code');
-// 			if (code) {
-// 				try {
-// 					const response = await axios.get(
-// 						`http://localhost:3000/auth/callback?code=${code}`
-// 					);
-// 					console.log('User data:', response.data);
-// 					navigate('/migration');
-// 				} catch (error) {
-// 					console.error('Error fetching user data:', error);
-// 				}
-// 			}
-// 		};
-
-// 		fetchUserData();
-// 	}, [location]);
-
-// 	return <div>Loading...</div>;
-// };
-
-// export default Callback;

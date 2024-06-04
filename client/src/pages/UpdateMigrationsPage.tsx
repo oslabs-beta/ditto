@@ -1,10 +1,7 @@
-// popup foir migration, it will include version, description and the script.
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
-	setdbId,
-	setSelectedMigration,
 	setSelectedScript,
 	setScript,
 } from '../store';
@@ -14,7 +11,6 @@ import CodeEditor from '../components/CodeEditor';
 interface FormData {
 	version: string;
 	description: string;
-	// executed_At: string;
 	script: string;
 }
 
@@ -25,10 +21,6 @@ const UpdateMigrationsPage: React.FC = () => {
 	const [description, setDescription] = useState('');
 	const script = useSelector((state: any) => state.script);
 	const migrationId = useSelector((state: any) => state.selectedMigration);
-	const selectedScript = useSelector(
-		(state: { selectedScript: string }) => state.selectedScript
-	);
-	// const script = useSelector((state: any) => state.script);
 
 	useEffect(() => {
 		const getMigrationLog = async () => {
@@ -41,7 +33,6 @@ const UpdateMigrationsPage: React.FC = () => {
 				},
 			});
 			const log = await response.json();
-			console.log('log', log);
 			setVersion(log.version);
 			setDescription(log.description);
 			setScript(log.script);
@@ -100,7 +91,6 @@ const UpdateMigrationsPage: React.FC = () => {
 					</fieldset>
 				</div>
 				<fieldset>
-					{/* <CodeEditor initialCode={code} /> */}
 					<label>
 						<CodeEditor code={script} inMigration={false} />
 					</label>

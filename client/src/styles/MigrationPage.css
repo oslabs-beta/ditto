@@ -260,7 +260,6 @@
 	}
 }
 
-/* Code Editor */
 .codeEditorContainer {
 	display: flex;
 	flex-direction: column;

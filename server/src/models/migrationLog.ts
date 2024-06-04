@@ -18,7 +18,6 @@ export const createMigrationLogQuery = async (
 	dbId: number,
 	version: number,
 	script: string,
-	// executedAt: string,
 	checksum: string,
 	description?: string
 ): Promise<migrationLog> => {
@@ -32,7 +31,6 @@ export const createMigrationLogQuery = async (
 		dbId,
 		version,
 		script,
-		// executedAt,
 		description || '',
 		checksum,
 	]);
