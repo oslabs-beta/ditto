@@ -255,10 +255,16 @@ const MigrationScripts: React.FC = () => {
 					className="purplebtn"
 					type="button"
 					onClick={handleUpdateSubmit}
+					title="Update migration log"
 				>
 					<FontAwesomeIcon icon={faEdit} />
 				</button>
-				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
+				<button
+					className="whitebtn"
+					type="button"
+					onClick={handleDeleteSubmit}
+					title="Remove migration log"
+				>
 					<FontAwesomeIcon icon={faTrashCan} />
 				</button>
 			</div>
