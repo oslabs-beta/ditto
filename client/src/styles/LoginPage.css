@@ -105,3 +105,25 @@ button {
 	display: flex;
 	justify-content: center;
 }
+
+/* Sign Up */
+
+.signuppagecontainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	font-size: small;
+	text-align: center;
+}
+
+.signuppagecontainer h1 {
+	font-size: large;
+	margin: 0;
+}
+
+.button {
+	padding: 10px 20px;
+}
+

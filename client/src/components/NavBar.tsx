@@ -17,11 +17,11 @@ const NavBar: React.FC<NavBarProps> = ({ logo }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const navLinks: NavLink[] = [
-		{ path: '/projects', label: 'Projects' },
+		
 	];
 
 	if (sessionStorage.getItem('token')) {
-		navLinks.push({ path: '/migration', label: 'Migration' });
+		navLinks.push({ path: '/projects', label: 'Projects' },{ path: '/migration', label: 'Migration' });
 	}
 
 	function handleLogging() {

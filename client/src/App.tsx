@@ -19,6 +19,7 @@ const UpdateMigrationsPage = lazy(() => import('./pages/UpdateMigrationsPage'));
 
 import logo from './assets/logo.webp';
 
+
 const App: React.FC = () => {
 	return (
 		<Provider store={store}>
@@ -26,11 +27,10 @@ const App: React.FC = () => {
 				<HelmetProvider>
 					<Router>
 						<NavBar logo={logo} />
-
 						<Suspense fallback={<LoadingSpinner />}>
 							<Routes>
-								<Route path="/projects" element={<ProjectsPage />} />
 								<Route path="/" element={<MainPage />} />
+								<Route path="/projects" element={<ProjectsPage />} />
 								<Route path="/login" element={<LoginPage />} />
 								<Route
 									path="/updateMigrations"
