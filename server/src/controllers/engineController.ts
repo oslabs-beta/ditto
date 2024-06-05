@@ -53,9 +53,10 @@ export const executeMigration = async (
 
 	try {
 		const connectionStrings = await getDBConnectionByProjectId(projectId);
+		console.log(connectionStrings);
 		const connectionString = connectionStrings.find(
 			db => db.db_id === dbId
-		)?.connection_string; 
+		)?.connection_string;
 		if (!connectionString) {
 			return next({
 				status: 404,
@@ -67,7 +68,7 @@ export const executeMigration = async (
 		const pendingMigrations = await getPendingMigrations(userId, dbId);
 
 		for (const migration of pendingMigrations) {
-			// uncomment once checksum is implemented 
+			// uncomment once checksum is implemented
 			// const validChecksum = await validateChecksum(
 			// 	migration.migration_id,
 			// 	migration.checksum
@@ -80,8 +81,8 @@ export const executeMigration = async (
 			// }
 
 			try {
-				await migrationScript(migration.script, pool); 
-				await updateMigrationStatus(migration.migration_id, 'Success'); 
+				await migrationScript(migration.script, pool);
+				await updateMigrationStatus(migration.migration_id, 'Success');
 			} catch (error) {
 				await updateMigrationStatus(migration.migration_id, 'Failed'); // update status to failed if execution is not successful
 			}
@@ -94,6 +95,7 @@ export const executeMigration = async (
 		`,
 			[userId, dbId] // an example of preventing SQL injection
 		);
+		console.log('all migrations: ', allMigrations);
 		res.status(201).json(allMigrations); //this makes sure our state is the same as it was
 	} catch (error) {
 		return next({

@@ -21,6 +21,7 @@ export const createMigrationLog = async (
 	if (!userId) {
 		return res.sendStatus(401);
 	}
+	console.log('description in controller: ', description);
 	try {
 		// const checksum = generateChecksum(script);
 		const result = await createMigrationLogQuery(
@@ -28,8 +29,8 @@ export const createMigrationLog = async (
 			parseInt(dbId),
 			version,
 			script,
+			description
 			// checksum,
-			description ? description : ''
 		);
 		await addDBMigration(parseInt(dbId), result.migration_id);
 		res.locals.migrationLog = result;
@@ -121,7 +122,7 @@ export const deleteMigrationLog = async (
 
 	try {
 		const dbId = await deleteMigrationLogQuery(parseInt(migrationId));
-		await removeDBMigration(dbId, parseInt(migrationId)); 
+		await removeDBMigration(dbId, parseInt(migrationId));
 		const migrationsArr = await getMigrationLogQueryAll(dbId);
 		res.locals.migrationsArr = migrationsArr;
 		return next();

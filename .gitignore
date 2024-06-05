@@ -230,3 +230,4 @@ yarn.lock
 # Ignore misc files
 Thumbs.db
 .DS_Store
+notes.md

@@ -1,4 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import storageSession from 'redux-persist/lib/storage/session';
+import { combineReducers } from 'redux';
 
 const SET_USER = 'SET_USER';
 const SET_PROJECTS = 'SET_PROJECTS';
@@ -139,7 +143,6 @@ export const setUserId = (userId: string | number) => ({
 	payload: userId,
 });
 
-
 const initialState = {
 	user: '',
 	token: '',
@@ -218,8 +221,18 @@ const rootReducer = (state = initialState, action: any) => {
 	}
 };
 
+const persistConfig = {
+	key: 'root',
+	storage: storageSession, // if you watn to use session storage
+	// storage // (uncomment if you watn to use local storage and comment above)
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-	reducer: rootReducer,
+	reducer: persistedReducer,
 });
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };
