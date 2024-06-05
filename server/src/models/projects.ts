@@ -69,7 +69,6 @@ export const deleteProject = async (project_id: number, owner: number) => {
 	return result[0] as string;
 };
 
-
 export const addCode = async (
 	code: string,
 	project_id: number,
@@ -81,6 +80,16 @@ export const addCode = async (
   WHERE project_id = $2 AND owner = $3
   `;
 	await db.query(queryString, [code, project_id, owner]);
+	return;
+};
+
+export const removeCode = async (): Promise<void> => {
+	const queryString = `
+  UPDATE projects 
+	SET code = NULL, code_timestamp = NULL 
+	WHERE code_timestamp < NOW() - INTERVAL '1 hour';
+  `;
+	await db.query(queryString);
 	return;
 };
 
