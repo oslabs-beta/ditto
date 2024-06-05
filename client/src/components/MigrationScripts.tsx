@@ -8,6 +8,7 @@ import {
 	setSelectedMigration,
 	setSelectedScript,
 	setScript,
+	setMigrationVersions,
 } from '../store';
 
 interface Migration {
@@ -52,7 +53,7 @@ const MigrationScripts: React.FC = () => {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`, 
+						Authorization: `Bearer ${token}`,
 					},
 				});
 
@@ -188,34 +189,52 @@ const MigrationScripts: React.FC = () => {
 								onClick={() =>
 									handleHighlight(migration.migration_id, migration.script)
 								}
-								style={{
-									backgroundColor:
-										selectedMigration === migration.migration_id
-											? '#b592f1'
-											: 'transparent',
-								}}
 							>
-								<td className="version">{migration.version}</td>
-								<td className="desc">{migration.description}</td>
-								<td className="status">{migration.status}</td>
-								<div className="dateMigratedColumn">
-									<td className="executedat">{migration.executed_at}</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="version"
+								>
+									{migration.version}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="desc"
+								>
+									{migration.description}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="status"
+								>
+									{migration.status}
+								</td>
 
-									<button
-										className="purplebtn"
-										type="button"
-										onClick={handleUpdateSubmit}
-									>
-										<FontAwesomeIcon icon={faEdit} />
-									</button>
-									<button
-										className="whitebtn"
-										type="button"
-										onClick={handleDeleteSubmit}
-									>
-										<FontAwesomeIcon icon={faTrashCan} />
-									</button>
-								</div>
+								<td
+									className="executedat"
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+								>
+									{migration.executed_at}
+								</td>
 							</tr>
 						</tbody>
 					))}
@@ -230,6 +249,18 @@ const MigrationScripts: React.FC = () => {
 						<legend>Script</legend>
 					</fieldset>
 				</div>
+			</div>
+			<div className="scriptBtns">
+				<button
+					className="purplebtn"
+					type="button"
+					onClick={handleUpdateSubmit}
+				>
+					<FontAwesomeIcon icon={faEdit} />
+				</button>
+				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
+					<FontAwesomeIcon icon={faTrashCan} />
+				</button>
 			</div>
 		</div>
 	);

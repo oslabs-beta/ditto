@@ -27,7 +27,7 @@ const SidePanel: React.FC = () => {
 	const selectedTable = useSelector((state: any) => state.selectedTable);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
 
-	const showInput = useSelector((state: any) => state.showInput); 
+	const showInput = useSelector((state: any) => state.showInput);
 
 	const dbName = useSelector((state: any) => state.dbName);
 	const connectionString = useSelector((state: any) => state.connectionString);
@@ -191,8 +191,10 @@ const SidePanel: React.FC = () => {
 	};
 
 	return (
-		<div className="sidecontainer">
-			<p className="font-bold">{selectedProject}</p>
+		<div className="sidePanel">
+			<div className="currProject">
+				<label>Project: {selectedProject}</label>
+			</div>
 			<div id="dbdropdown">
 				<p className="font-bold">Database</p>
 				<div className="selectdb">

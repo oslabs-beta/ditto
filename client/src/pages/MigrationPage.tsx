@@ -46,7 +46,7 @@ const MigrationPage: React.FC = () => {
 	}
 
 	return (
-		<div className="migrationPage">
+		<div>
 			<Helmet>
 				<title>Migrations - Ditto</title>
 				<meta
@@ -54,10 +54,8 @@ const MigrationPage: React.FC = () => {
 					content="Manage and track your database migration scripts using Ditto."
 				/>
 			</Helmet>
-			<div className="sidePanel">
+			<div className="migrationPage">
 				<SidePanel />
-			</div>
-			<div className="content">
 				<MigrationScripts />
 			</div>
 		</div>

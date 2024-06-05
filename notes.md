@@ -122,3 +122,13 @@
 # SidePanel.tsx
 
 - short circuiting in javascript (https://www.freecodecamp.org/news/short-circuiting-in-javascript/)
+
+# Redux-Persit
+
+- Persistance: process of storinge state from redux into the local storage
+- Rehydration: the inverse of this
+- PersitGate: keeps UI from being rendered until rehdration is complete.
+- configureStore: A function from Redux Toolkit that simplifies store creation and includes good defaults.
+- persistStore: A function from redux-persist that creates a persistor, which handles the persistence logic.
+- persistReducer: A function from redux-persist that wraps your root reducer to enable state persistence.
+- storage: The default storage engine from redux-persist, which uses localStorage.

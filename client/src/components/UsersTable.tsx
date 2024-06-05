@@ -22,7 +22,6 @@ const UsersTable: React.FC = () => {
 	const selectedProjectId = useSelector(
 		(state: { projectId: string }) => state.projectId
 	);
-	const projects = useSelector((state: any) => state.projects);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -130,8 +129,8 @@ const UsersTable: React.FC = () => {
 	const mappedUsersTable = sortedUsers.map(user => (
 		<tr key={user.user_id}>
 			<td>{user.username}</td>
-			<div id="roleColumn">
-				<td>
+			<td>
+				<div id="roleColumn">
 					<select
 						value={user.role}
 						onChange={e => handleRoleChange(user.user_id, e.target.value)}
@@ -143,8 +142,8 @@ const UsersTable: React.FC = () => {
 						{' '}
 						<FontAwesomeIcon icon={faUserMinus} />
 					</button>
-				</td>
-			</div>
+				</div>
+			</td>
 		</tr>
 	));
 

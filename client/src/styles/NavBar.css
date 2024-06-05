@@ -119,6 +119,7 @@ select:focus {
 		}
 	}
 }
+
 body::before {
 	content: '';
 	position: absolute;

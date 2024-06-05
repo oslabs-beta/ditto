@@ -16,9 +16,12 @@ import {
 	setMigrationVersions,
 	setSelectedDatabase,
 	setdbId,
+	setUser,
 } from '../store';
 
 const OrganizationsPanel: React.FC = () => {
+	/* States */
+	const user = useSelector((state: any) => state.user);
 	const userRole = useSelector((state: any) => state.userRole);
 	const projects = useSelector((state: any) => state.projects);
 	const selectedProject = useSelector((state: any) => state.selectedProject);
@@ -273,6 +276,9 @@ const OrganizationsPanel: React.FC = () => {
 
 	return (
 		<div className="projectsPanel">
+			<div className="currUser">
+				<label>User: {user}</label>
+			</div>
 			<div className="chooseProject">
 				<p className="font-bold">Project</p>
 				<select
@@ -321,7 +327,7 @@ const OrganizationsPanel: React.FC = () => {
 						</form>
 					)}
 					{joinInput && (
-						<form onSubmit={joinProject}>
+						<form onSubmit={joinProject} title="Join Project">
 							<p>Join Project:</p>
 							<input
 								type="text"
@@ -336,8 +342,11 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Delete Project:</p>
 							<p>Are you sure?</p>
 							<div>
-								<button onClick={e => handlePopperYes()}>Yes</button>
+								<button title="Accept Popper" onClick={e => handlePopperYes()}>
+									Yes
+								</button>
 								<button
+									title="Decline Popper"
 									onClick={() => {
 										setIsOpen(false);
 									}}
@@ -353,6 +362,7 @@ const OrganizationsPanel: React.FC = () => {
 							<p>Are you sure?</p>
 							<div>
 								<button
+									title="Accept"
 									onClick={() => {
 										handlePopperYes();
 										leaveProject();
@@ -361,6 +371,7 @@ const OrganizationsPanel: React.FC = () => {
 									Yes
 								</button>
 								<button
+									title="Decline"
 									onClick={() => {
 										setPromptLeave(false);
 									}}
@@ -384,9 +395,9 @@ const OrganizationsPanel: React.FC = () => {
 							type="text"
 							value={accessCode}
 							onChange={handleCodeInputChange}
-							placeholder="access code"
+							placeholder="Access Code"
 						/>
-						<button>Generate Code</button>
+						<button title="Generate Access Code">Generate</button>
 					</form>
 				</div>
 			)}
