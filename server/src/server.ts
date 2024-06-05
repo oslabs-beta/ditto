@@ -8,12 +8,13 @@ import projectRoutes from './routes/projectRoutes';
 import cors from 'cors';
 import path from 'path';
 import dotenv from 'dotenv';
+import { removeCode } from './models/projects';
 dotenv.config();
 
 const app: Express = express();
 const port: number = 3001;
 
-app.use(cors()); 
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -63,6 +64,8 @@ if (require.main === module) {
 	app.listen(port, () => {
 		console.log(`Express server listening on port ${port}`);
 	});
+
+	setInterval(removeCode, 900000);
 }
 
 export default app;
