@@ -138,7 +138,7 @@ const UsersTable: React.FC = () => {
 					>
 						{mapRoles}
 					</select>
-					<button onClick={() => handleKick(user.user_id)}>
+					<button onClick={() => handleKick(user.user_id)} title="Kick user">
 						{' '}
 						<FontAwesomeIcon icon={faUserMinus} />
 					</button>
