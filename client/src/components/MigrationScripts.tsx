@@ -263,7 +263,6 @@ const MigrationScripts: React.FC = () => {
 				</div>
 			</div>
 			<div className="scriptBtns">
-
 			</div>
 		</div>
 	);

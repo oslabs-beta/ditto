@@ -212,10 +212,10 @@ const SidePanel: React.FC = () => {
 								className="purplebtn btn"
 								aria-label="add database"
 								onClick={e => handleButtonClick('adddb')}
+								title="Add database"
 							>
 								<FontAwesomeIcon icon={faDatabase} />{' '}
 							</button>
-							<p id="textbox">Add database</p>
 						</div>
 
 						{userRole === 'Admin' || userRole === 'Owner' ? (
@@ -225,10 +225,10 @@ const SidePanel: React.FC = () => {
 									aria-label="remove database"
 									ref={referenceElement}
 									onClick={handleTrashButton}
+									title="Remove database"
 								>
 									<FontAwesomeIcon icon={faTrashCan} />
 								</button>
-								{isOpen ? null : <p id="textbox">Remove database</p>}
 								{selectedDatabase && isOpen && (
 									<div className="popper" ref={popperElement}>
 										<p>Are you sure?</p>
@@ -290,6 +290,7 @@ const SidePanel: React.FC = () => {
 					<button
 						className="purplebtn"
 						onClick={() => handleExecute(selectedAction)}
+						title="Execute action"
 					>
 						<FontAwesomeIcon icon={faScroll} />
 					</button>

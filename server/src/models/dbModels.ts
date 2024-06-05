@@ -62,9 +62,9 @@ export const getDBConnectionByProjectId = async (
 ): Promise<DBbyProjectId[]> => {
 	const queryString = `
     SELECT databases.connection_string, project_db.db_name, databases.db_id
-	FROM databases
-	JOIN project_db ON databases.db_id = project_db.db_id
-	WHERE project_db.project_id = $1;
+		FROM databases
+		JOIN project_db ON databases.db_id = project_db.db_id
+		WHERE project_db.project_id = $1;
     `;
 	const result = await db.query(queryString, [projectId]);
 	console.log('query:', result);
@@ -76,10 +76,10 @@ export const getDBsByProjectId = async (
 	projectId: number
 ): Promise<DBbyProjectId[]> => {
 	const queryString = `
-  SELECT project_db.db_name, databases.db_id
-	FROM databases
-	JOIN project_db ON databases.db_id = project_db.db_id
-	WHERE project_db.project_id = $1;
+		SELECT project_db.db_name, databases.db_id
+		FROM databases
+		JOIN project_db ON databases.db_id = project_db.db_id
+		WHERE project_db.project_id = $1;
     `;
 	const result = await db.query(queryString, [projectId]);
 	console.log('query:', result);
