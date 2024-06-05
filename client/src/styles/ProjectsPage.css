@@ -42,7 +42,8 @@
 			font-weight: bold;
 			padding: 0 10px;
 			color: #333;
-			background-color: #dacbf3;
+			/* background-color: #dacbf3; */
+			background-image: linear-gradient(135deg, #f6e3ffb9, #c8a4eb);
 			margin-bottom: 20px;
 			padding: 7px 10px 7px 4px;
 		}
@@ -74,7 +75,8 @@
 
 			table {
 				width: 98%;
-				border-collapse: collapse;
+				border-collapse: separate;
+				border-spacing: 10px 5px;
 				margin: 10px 5px 10px 10px;
 				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 				font-size: 16px;
@@ -95,7 +97,7 @@
 			}
 
 			th {
-				background-color: #dacbf3;
+				background-image: linear-gradient(135deg, #f6e3ffb9, #c8a4eb);
 				color: #333;
 				font-weight: bold;
 				border-bottom: 2px solid #ddd;

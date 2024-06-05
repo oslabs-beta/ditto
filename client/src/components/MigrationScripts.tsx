@@ -233,7 +233,19 @@ const MigrationScripts: React.FC = () => {
 												: 'transparent',
 									}}
 								>
+									<div className="executeAndButtons">
 									{migration.executed_at}
+									<div>
+									<button
+					className="purplebtn"
+					type="button"
+					onClick={handleUpdateSubmit}
+				>
+					<FontAwesomeIcon icon={faEdit} />
+				</button>
+									<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
+					<FontAwesomeIcon icon={faTrashCan} />
+				</button></div></div>
 								</td>
 							</tr>
 						</tbody>
@@ -251,16 +263,7 @@ const MigrationScripts: React.FC = () => {
 				</div>
 			</div>
 			<div className="scriptBtns">
-				<button
-					className="purplebtn"
-					type="button"
-					onClick={handleUpdateSubmit}
-				>
-					<FontAwesomeIcon icon={faEdit} />
-				</button>
-				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
-					<FontAwesomeIcon icon={faTrashCan} />
-				</button>
+
 			</div>
 		</div>
 	);

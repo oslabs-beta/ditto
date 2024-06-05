@@ -8,15 +8,19 @@
 .content-container img {
 	margin-right: 20px; /* Add some space between the gif and the Community component */
 }
-
+/* 
 h1 {
-	font-family: Brush Script, cursive;
+	font-family:
+		Brush Script,
+		cursive;
 	font-size: 45px;
 	font-weight: 250px;
-}
+} */
 
 #slogan {
-	font-family: Brush Script MT, cursive;
+	font-family:
+		Brush Script MT,
+		cursive;
 	font-weight: lighter;
 	font-size: 30px;
 }
