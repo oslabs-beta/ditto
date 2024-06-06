@@ -37,7 +37,8 @@
 		flex-direction: column;
 		width: 21%;
 		max-width: 40%;
-		height: 88vh;
+
+		padding-left: 10px;
 		overflow-x: auto;
 
 		.currProject {
@@ -240,7 +241,6 @@
 					padding: 10px 15px 10px 15px;
 					margin: 0px 5px 0px 5px;
 				}
-
 			}
 
 			tr:nth-child(even) {

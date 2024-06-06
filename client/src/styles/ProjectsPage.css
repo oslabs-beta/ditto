@@ -24,9 +24,10 @@
 		border-right: solid rgb(207, 202, 202) 1px;
 		display: flex;
 		flex-direction: column;
+		padding-left: 10px;
 		width: 16%;
 		max-width: 16%;
-		height: 88vh;
+
 		overflow-x: auto;
 		button {
 			margin: 3px 2px 10% 0%;
