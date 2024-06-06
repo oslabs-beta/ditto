@@ -111,27 +111,24 @@ Other Documentation:
 ***For Future Iterations***
 
 
-## License Information
+# License Information
 
-Open source licensing information is needed in your repository to make it easier for other people to contribute. If you have not already added this manually, Github makes it really easy. 
+MIT License
 
-1. Go to your OSP's main GitHub page and click _"Add file"_ at the top of the page and select _"create new file"_. 
+Copyright (c) 2024 Open Source Labs Beta
 
-1. Next, name the file _"LICENSE.md"_ (in all caps). 
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-1. Once you do this you will see a _"Choose a license template"_ menu pop up. Click it and select "MIT License".
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-1. Finally, commit your new licensing file to your main repo, and you are set 😼
-
-
-
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # Author Information
 
 <table>
   <tr>
     <td align="center">
-      <img src="" width="140px;" alt=""/>
+      <img src="./client/src/assets/img/teamPNG/Jea.webp" width="140px;" alt=""/>
       <br />
       <sub><b>Jea Lee</b></sub>
       <br />
@@ -139,25 +136,28 @@ Open source licensing information is needed in your repository to make it easier
       <a href="https://github.com/jealee44">🐙</a>
     </td>
     <td align="center">
-    <img src="" width="140px" alt="" />
-    <br />
-    <sub><b>Jay Cho</b></sub>
-    <br />
-    <a href="https://github.com/jayc-gh"></a>
-    <a href="https://www.linkedin.com/in/jaycho1017"></a>
+      <img src="./client/src/assets/img/teamPNG/Jay.webp" width="140px" alt="" />
+      <br />
+      <sub><b>Jay Cho</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/jaycho1017">🖇️</a>
+      <a href="https://github.com/jayc-gh">🐙</a>
     </td>
     <td align="center">
-    <img src="" width="140px" alt="" />
-    <br />
-    <sub><b>Sang Yo
-n Kim</>- Jea Lee
-🐙@jealee44
-- Jay Cho
-🐙@jayc-gh
-🖇️https://www.linkedin.com/in/jaycho1017/
-- Sang Yoon Kim
-🐙@syjeffkim
-🖇️https://www.linkedin.com/in/syoonk32/
-- Shaan Khan
-🐙@shaanmalkovich
-🖇️@shaan-m-khan
+      <img src="./client/src/assets/img/teamPNG/Jeff.webp" width="140px" alt="" />
+      <br />
+      <sub><b>Sang Yoon Kim</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/syoonk32">🖇️</a>
+      <a href="https://github.com/syjeffkim">🐙</a>
+    </td>
+    <td align="center">
+      <img src="./client/src/assets/img/teamPNG/Shaan.webp" height= "140px" width="140px" alt="" />
+      <br />
+      <sub><b>Shaan Khan</b></sub>
+      <br />
+      <a href="https://www.linkedin.com/in/shaan-m-khan">🖇️</a>
+      <a href="https://github.com/shaanmalkovich">🐙</a>
+    </td>
+  </tr>
+</table>
