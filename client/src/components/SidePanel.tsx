@@ -6,6 +6,7 @@ import {
 	faTrashCan,
 	faDatabase,
 	faScroll,
+	faSquarePlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -230,20 +231,17 @@ const SidePanel: React.FC = () => {
 									<FontAwesomeIcon icon={faTrashCan} />
 								</button>
 								{selectedDatabase && isOpen && (
-									<div className="popper" ref={popperElement}>
-										<p>Are you sure?</p>
-										<div className="popperbtns">
-											<button className="whitebtn" onClick={handlePopperYes}>
-												Yes
-											</button>
-											<button
-												className="whitebtn"
-												onClick={() => {
-													setIsOpen(false);
-												}}
-											>
-												No
-											</button>
+									<div className="popperbtns">
+										<div className="confirmCancel" onClick={handlePopperYes}>
+											Confirm?
+										</div>
+										<div
+											className="confirmCancel"
+											onClick={() => {
+												setIsOpen(false);
+											}}
+										>
+											Cancel?
 										</div>
 									</div>
 								)}
@@ -254,20 +252,26 @@ const SidePanel: React.FC = () => {
 			</div>
 			{showInput && (
 				<form onSubmit={handleFormSubmit}>
-					<input
-						type="text"
-						value={dbName}
-						onChange={handledbNameInputChange}
-						placeholder="Enter database name"
-					/>
-					<input
-						type="text"
-						value={connectionString}
-						onChange={handleConnectionStringInputChange}
-						placeholder="Enter connection string"
-					/>
-					<button className="whitebtn addbtn font-bold" type="submit">
-						+
+					<div className="input">
+						<input
+							type="text"
+							value={dbName}
+							onChange={handledbNameInputChange}
+							placeholder="Enter database name"
+						/>
+						<input
+							type="text"
+							value={connectionString}
+							onChange={handleConnectionStringInputChange}
+							placeholder="Enter connection string"
+						/>
+					</div>
+					<button
+						className="whitebtn addbtn font-bold"
+						type="submit"
+						title="add database"
+					>
+						<FontAwesomeIcon icon={faSquarePlus} />
 					</button>
 				</form>
 			)}
