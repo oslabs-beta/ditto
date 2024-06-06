@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY client .
+COPY ./client ./client
 
 RUN npm run build:client
 
@@ -14,4 +14,4 @@ RUN npm install -g serve
 
 EXPOSE 3000
 
-CMD ["server", "-s", "client/dist"]
+CMD ["serve", "-s", "client/dist"]

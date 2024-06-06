@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY server .
+COPY ./server ./server
 
 RUN npm run build:server
 

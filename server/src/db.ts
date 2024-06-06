@@ -3,14 +3,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const pool = new Pool({
-	user: process.env.RDS_USERNAME,
-	host: process.env.RDS_HOST,
-	database: process.env.NODE_ENV === 'test' ? 'test' : 'dittoDB',
-	password: process.env.RDS_PASSWORD,
+	user: process.env.NODE_ENV === 'production' ? process.env.RDS_USERNAME : process.env.DB_USERNAME,
+	host: process.env.NODE_ENV === 'production' ? process.env.RDS_HOST : process.env.DB_HOST,
+	database: process.env.NODE_ENV === 'production' ? 'dittoDB' : process.env.NODE_ENV === 'test' ? 'test' : process.env.DB_NAME,
+	password: process.env.NODE_ENV === 'production' ? process.env.RDS_PASSWORD : process.env.DB_PASSWORD,
 	port: 5432,
-	ssl: {
+	ssl: process.env.NODE_ENV === 'production' ? {
 		rejectUnauthorized: false,
-	},
+	} : false,
 });
 
 const db = {
