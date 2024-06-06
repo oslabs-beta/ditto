@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    environment:
+      - NODE_ENV=production
