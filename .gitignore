@@ -231,3 +231,8 @@ yarn.lock
 Thumbs.db
 .DS_Store
 notes.md
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
