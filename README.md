@@ -97,10 +97,17 @@ Other Documentation:
 | Maintain state throughout the app                                                                     | ✅        |
 | Code editor component with intellisense                                                                  | ✅        |
 | No connection string needed for users joining project                                                                     | ⏳        |
-| Fully integrated typescript, some types are not written yet                                                      | ⏳        |
-| Full tests for front and back end. Needs some unit, integration and end to end tests still.                                    | ⏳        |
+| Fully integrated typescript, some types are not written yet (usage of `any`)                                                     | ⏳        |
+| Increase testing coverage for front and back end. Needs some unit, integration and end to end tests still.                                    | ⏳        |
 | Give buttons a type so tool tips can explain its functionality, or hover effect like add or delete databases                                  | ⏳        |
 | Implement a css framework (like Tailwind) to improve landing page                                 | 🙏🏻        |
+| Preview table to display tables that are being affected                                | 🙏🏻        |
+| Rollback and dryrun features                                 | 🙏🏻        |
+| Audit logs/checksum to track actions of each user that can be viewed by admins/owners                                 | 🙏🏻        |
+| Logic for running different actions in addition to `Migration` (Repair, Undo, Clean, etc)                                 | 🙏🏻        |
+| Support for other databases (only supports PostgreSQL currently)                                 | 🙏🏻        |
+| Secure way to invite users to your project without of relying on temporary code that expires                                 | 🙏🏻        |
+| Live updates to components from different clients (e.g. user joins a project and it automatically updates the users table for everyone)                                 | 🙏🏻        |
 
 - ✅ = Ready to use
 - ⏳ = In progress
