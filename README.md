@@ -88,6 +88,7 @@ Other Documentation:
 - Running on dev mode: Make sure to npm build and then run the front with npm run dev and back with npm start.
 - Running tests: Using jest. Make sure to npm install and run npm test in the terminal.
 - Contribution Guidelines: You can fork from our repo (https://github.com/oslabs-beta/ditto/tree/dev), create your branch and make a pull request whenever you're ready!
+- For setting up the PSQL database to work with ditto, run the dittoDB2.sql file.
 
 
 | Feature                                                                               | Status    |
