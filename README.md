@@ -34,15 +34,15 @@ Installation
 - No installation necessary (Web Browser App)
 
 Initial Setup 
-1. Sign up for an account by clicking the "Get Started" or Log in through Github!
-2. Proceed to the the projects tab.
+1. Sign up for an account by clicking "Get Started" or log in through Github!
+2. Proceed to the Projects tab.
 
-Creating a project and connecting your databases (only owners and admins can connect databases to a project).
-1. In the left side panel on the projects page you can create a project with the buttons underneath "Choose Project".
-2. You can now select the migrations tab in the top navigation bar and press the database icon to create a new database. You will need your connection string and database name here and click the add button.
-3. Congratulations your database is good to go!
+Creating a Project and Connecting Your Databases (Only Owners and Admins Can Connect Databases to a Project)
+1. In the left side panel on the projects page, click the buttons underneath "Choose Project" to create a new project.
+2. Select the "Migrations" tab in the top navigation bar and press the database icon to create a new database. Enter your connection string and database name, then click the "Add"    button.
+3. Congratulations, your database is good to go!
 
-Adding members, removing members and updating roles for members.
+Adding Members, Removing Members and Updating Roles for Members.
 (Only Owner and Admin roles will have these functions)
 1. Adding team members:
     a. In the projects page, after selecting a project, you can click generate and an access code will be stored to that specific project. *** Only Owner and Admin roles will be          able to generate access codes ***
@@ -56,7 +56,7 @@ Adding members, removing members and updating roles for members.
 3. Updating project member roles:
     a. Select your project, then use the drop-down menu to assign roles to the corresponding users.
 
-Adding, updating and deleting migration scripts.
+Adding, Updating and Deleting Migration Scripts.
 1. Adding:
     a. On your migrations page, click the "Add" button above the migration scripts table.
     b. On the add migrations page, enter your version, description, and script in the code editor. When you're ready, click "Add."
