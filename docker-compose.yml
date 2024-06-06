@@ -12,7 +12,6 @@ services:
       - RDS_PORT=${RDS_PORT}
       - RDS_USERNAME=${RDS_USERNAME}
       - RDS_PASSWORD=${RDS_PASSWORD}
-      - RDS_DATABASE=${RDS_DATABASE}
       - JWT_SECRET=${JWT_SECRET}
       - SESSION_SECRET=${SESSION_SECRET}
       - DB_HOST=${DB_HOST}
@@ -33,6 +32,7 @@ services:
     environment:
       - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
       - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - JWT_SECRET=${JWT_SECRET}
 
   postgres-db:
     image: postgres:13
