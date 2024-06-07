@@ -64,7 +64,6 @@ if (require.main === module) {
 	app.listen(port, () => {
 		console.log(`Express server listening on port ${port}`);
 	});
-
 	setInterval(removeCode, 900000);
 }
 
