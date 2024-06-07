@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CodeEditor from './CodeEditor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {
+	faTrashCan,
+	faEdit,
+	faSquarePlus,
+} from '@fortawesome/free-solid-svg-icons';
 import {
 	setSelectedMigration,
 	setSelectedScript,
@@ -165,10 +169,15 @@ const MigrationScripts: React.FC = () => {
 						<input value={selectedDatabase} readOnly={true} />
 					</label>
 					<legend>Database</legend>
+					<button
+						className="purplebtn"
+						id="addMigrationButton"
+						type="button"
+						onClick={handleSubmit}
+					>
+						<FontAwesomeIcon icon={faSquarePlus} />
+					</button>
 				</fieldset>
-				<button className="purplebtn" type="button" onClick={handleSubmit}>
-					Add Migration
-				</button>
 			</div>
 			<div className="migrationsTable">
 				<table>
@@ -234,18 +243,24 @@ const MigrationScripts: React.FC = () => {
 									}}
 								>
 									<div className="executeAndButtons">
-									{migration.executed_at}
-									<div>
-									<button
-					className="purplebtn"
-					type="button"
-					onClick={handleUpdateSubmit}
-				>
-					<FontAwesomeIcon icon={faEdit} />
-				</button>
-									<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
-					<FontAwesomeIcon icon={faTrashCan} />
-				</button></div></div>
+										{migration.executed_at}
+										<div>
+											<button
+												className="purplebtn"
+												type="button"
+												onClick={handleUpdateSubmit}
+											>
+												<FontAwesomeIcon icon={faEdit} />
+											</button>
+											<button
+												className="whitebtn"
+												type="button"
+												onClick={handleDeleteSubmit}
+											>
+												<FontAwesomeIcon icon={faTrashCan} />
+											</button>
+										</div>
+									</div>
 								</td>
 							</tr>
 						</tbody>
@@ -262,8 +277,7 @@ const MigrationScripts: React.FC = () => {
 					</fieldset>
 				</div>
 			</div>
-			<div className="scriptBtns">
-			</div>
+			<div className="scriptBtns"></div>
 		</div>
 	);
 };

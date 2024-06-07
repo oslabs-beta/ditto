@@ -1,7 +1,7 @@
 .migrationPage {
 	display: flex;
-	height: 100%;
-	padding: 60px 0px 0 0px;
+	height: 100vh;
+	padding: 90px 0px 0 0px;
 
 	.font-bold {
 		font-weight: bold;
@@ -19,6 +19,8 @@
 		align-self: center;
 		font-size: 12px;
 		font-weight: bold;
+		padding: 0px 15px 0px 15px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	}
 
 	button:hover {
@@ -37,7 +39,7 @@
 		flex-direction: column;
 		width: 21%;
 		max-width: 40%;
-		height: 88vh;
+		padding-left: 10px;
 		overflow-x: auto;
 
 		.currProject {
@@ -50,14 +52,10 @@
 			font-weight: bold;
 			padding: 0 10px;
 			color: #333;
-			/* background-color: #dacbf3; */
+
 			background-image: linear-gradient(135deg, #f6e3ffb9, #c8a4eb);
 			margin-bottom: 20px;
 			padding: 7px 10px 7px 4px;
-		}
-
-		select {
-			width: 90%;
 		}
 
 		.addDeleteButtons {
@@ -65,15 +63,15 @@
 			flex-direction: row;
 			width: 25%;
 		}
-		.removedb {
-			display: flex;
-			flex-direction: column;
-			align-self: flex-start;
-		}
 		.addDbBtn {
 			display: flex;
 			flex-direction: column;
 			align-self: flex-start;
+		}
+		.removedb {
+			display: flex;
+			flex-direction: row;
+			flex-grow: 1;
 		}
 
 		.purplebtn,
@@ -87,7 +85,8 @@
 			cursor: pointer;
 			height: 35px;
 			align-self: flex-start;
-			margin: 3px 2px 10% 0%;
+			margin: 5px 8px 10% 0%;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		}
 
 		.purplebtn:hover,
@@ -108,7 +107,6 @@
 		}
 
 		.addDb {
-			height: 50px;
 			display: flex;
 			flex-direction: row;
 
@@ -118,10 +116,34 @@
 			}
 		}
 
-		.actiondesc {
-			overflow: auto;
-			word-wrap: break-word;
-			font-size: x-small;
+		.input {
+			input {
+				margin-top: 10px;
+			}
+		}
+
+		.popperbtns {
+			display: flex;
+			flex: row;
+			align-self: center;
+			opacity: 0;
+			animation: fadeIn 2s forwards;
+			flex-grow: 1;
+			text-align: center;
+			font-size: xx-small;
+			gap: 5px;
+			margin-left: 10px;
+		}
+
+		.confirmCancel:hover {
+			color: rgb(255, 132, 0);
+			align-self: center;
+		}
+
+		@keyframes fadeIn {
+			to {
+				opacity: 1;
+			}
 		}
 
 		.dropAndBtn {
@@ -129,23 +151,10 @@
 			flex-direction: column;
 		}
 
-		.popper {
-			display: flex;
-			flex-direction: column;
-			background-color: #f6e3ffb9;
-			width: 120px;
-			justify-content: center;
-			align-items: center;
-			border-radius: 7px;
-			margin-top: 5px;
-			align-self: center;
-			position: absolute;
-			z-index: 999;
-			left: 325px;
-		}
-
-		.popperbtns .whitebtn {
-			margin: 5px 5px 10px 5px;
+		.actiondesc {
+			overflow: auto;
+			word-wrap: break-word;
+			font-size: x-small;
 		}
 	}
 
@@ -184,10 +193,14 @@
 
 		.scriptsheader {
 			display: flex;
-			justify-content: space-between;
 			align-items: center;
 			margin-bottom: 30px;
+
+			#addMigrationButton {
+				margin-left: 10px;
+			}
 		}
+
 		.migrationsTable {
 			border: 1px solid #ddd;
 			border-radius: 7px;
@@ -220,7 +233,6 @@
 			}
 
 			th {
-				/* background-color: #dacbf3; */
 				background-image: linear-gradient(135deg, #f6e3ffb9, #c8a4eb);
 				color: #333;
 				font-weight: bold;
@@ -241,6 +253,14 @@
 					margin: 0px 5px 0px 5px;
 				}
 
+				.desc {
+					/* Default styles for the description cells */
+				}
+
+				.desc-selected {
+					border: 2px solid #b592f1;
+					/* You can add more styling if needed */
+				}
 			}
 
 			tr:nth-child(even) {

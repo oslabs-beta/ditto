@@ -9,12 +9,13 @@
 		"build:server": "tsc --project ./server/tsconfig.json",
 		"build": "npm run build:server",
 		"dev": "webpack server --config client/webpack.config.js --mode development",
-		"start": "nodemon ./server/dist/server.js"
+		"start": "NODE_ENV=production nodemon ./server/dist/server.js"
 	},
 	"keywords": [],
 	"author": "The Dream Team",
 	"license": "ISC",
 	"dependencies": {
+		"@codemirror/basic-setup": "^0.20.0",
 		"@codemirror/lang-sql": "^6.6.4",
 		"@fortawesome/fontawesome-svg-core": "^6.5.2",
 		"@fortawesome/free-brands-svg-icons": "^6.5.2",
@@ -79,7 +80,7 @@
 		"jest-environment-jsdom": "^29.7.0",
 		"mini-css-extract-plugin": "^2.9.0",
 		"nodemon": "^3.1.0",
-		"npm": "^10.7.0",
+		"npm": "^10.8.1",
 		"postcss": "^8.4.38",
 		"postcss-loader": "^8.1.1",
 		"prettier": "^3.3.0",
