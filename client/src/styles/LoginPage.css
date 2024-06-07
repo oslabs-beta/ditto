@@ -3,6 +3,7 @@ html {
 }
 
 #root {
+	font: 'San Francisco', Helvetica, Arial, san-serif;
 	height: 90%;
 }
 
@@ -11,13 +12,19 @@ html {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding-top: 47px;
-	height: 100%;
+	height: 100vh;
+	font-size: small;
+
+	h1 {
+		font-size: large;
+		margin: 0;
+	}
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
+	text-align: center;
 	margin: 20px 20px 0px 20px;
 	width: 300px;
 }
@@ -98,3 +105,25 @@ button {
 	display: flex;
 	justify-content: center;
 }
+
+/* Sign Up */
+
+.signuppagecontainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	font-size: small;
+	text-align: center;
+}
+
+.signuppagecontainer h1 {
+	font-size: large;
+	margin: 0;
+}
+
+.button {
+	padding: 10px 20px;
+}
+

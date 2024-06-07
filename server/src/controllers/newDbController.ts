@@ -2,9 +2,10 @@ import { Request, Response, NextFunction } from 'express';
 import {
 	addDBConnection,
 	getDBConnectionByProjectId,
-	getDBConnectionById,
+	// getDBConnectionById,
 	deleteDBConnectionById,
 	addDBConnectionToProject,
+	getDBsByProjectId,
 } from '../models/dbModels';
 
 export const addDBConnectionString = async (
@@ -13,7 +14,6 @@ export const addDBConnectionString = async (
 	next: NextFunction
 ) => {
 	const { db_name, connection_string, projectId } = req.body;
-	//get user ID from req object from validateJWT middleware
 	const userId = req.user?.id;
 
 	if (!userId) {
@@ -36,7 +36,7 @@ export const addDBConnectionString = async (
 
 		const newDB = await addDBConnection(connection_string);
 		await addDBConnectionToProject(db_name, newDB.db_id, projectId);
-		res.locals.db = { connection_string, db_name, db_id: newDB.db_id };
+		res.locals.db = { db_name, db_id: newDB.db_id };
 		return next();
 	} catch (error) {
 		return next({
@@ -58,10 +58,9 @@ export const getConnectionString = async (
 		return res.sendStatus(401);
 	}
 	try {
-		const connectionStrings = await getDBConnectionByProjectId(
-			Number(projectId)
-		);
-		res.locals.connectionStrings = connectionStrings; // { connection_string, db_name }
+		const connectionStrings = await getDBsByProjectId(Number(projectId));
+		console.log('array for cStrings: ', connectionStrings);
+		res.locals.connectionStrings = connectionStrings;
 		return next();
 	} catch (error) {
 		return next({
@@ -71,36 +70,35 @@ export const getConnectionString = async (
 	}
 };
 
-export const getConnectionStringById = async (
-	req: Request,
-	res: Response,
-	next: NextFunction
-) => {
-	//get DB ID from req params
-	const { dbId } = req.params;
-	const userId = req.user?.id;
+// export const getConnectionStringById = async (
+// 	req: Request,
+// 	res: Response,
+// 	next: NextFunction
+// ) => {
+// 	const { dbId } = req.params;
+// 	const userId = req.user?.id;
 
-	if (!userId) {
-		console.log('Unauthorized');
-		return res.sendStatus(401);
-	}
-	try {
-		const connectionString = await getDBConnectionById(Number(dbId));
-		if (!connectionString) {
-			return next({
-				status: 404,
-				message: 'Connection string not found',
-			});
-		}
-		res.locals.connectionString = connectionString; // { connection_string, migration_id (array) }
-		return next();
-	} catch (error) {
-		return next({
-			status: 400,
-			message: `Error in dbController getConnectionStringbyId: ${error}`,
-		});
-	}
-};
+// 	if (!userId) {
+// 		console.log('Unauthorized');
+// 		return res.sendStatus(401);
+// 	}
+// 	try {
+// 		const connectionString = await getDBConnectionById(Number(dbId));
+// 		if (!connectionString) {
+// 			return next({
+// 				status: 404,
+// 				message: 'Connection string not found',
+// 			});
+// 		}
+// 		res.locals.connectionString = connectionString;
+// 		return next();
+// 	} catch (error) {
+// 		return next({
+// 			status: 400,
+// 			message: `Error in dbController getConnectionStringbyId: ${error}`,
+// 		});
+// 	}
+// };
 
 export const deleteConnectionStringById = async (
 	req: Request,
@@ -116,7 +114,7 @@ export const deleteConnectionStringById = async (
 	}
 	try {
 		await deleteDBConnectionById(Number(projectId), Number(dbId));
-		const projectDBs = await getDBConnectionByProjectId(Number(projectId));
+		const projectDBs = await getDBsByProjectId(Number(projectId));
 		res.locals.projectDBs = projectDBs;
 		return next();
 	} catch (error) {

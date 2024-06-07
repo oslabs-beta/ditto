@@ -3,7 +3,7 @@ import db from '../db';
 export interface DB {
 	db_id: number;
 	connection_string: string;
-	created_at: string; // does this need to match and if so double check
+	created_at: string;
 	migration_id: number | null;
 }
 
@@ -67,24 +67,42 @@ export const getDBConnectionByProjectId = async (
 		WHERE project_db.project_id = $1;
     `;
 	const result = await db.query(queryString, [projectId]);
+	console.log('query:', result);
+	console.log('projectId and dbId: ', projectId);
 	return result as DBbyProjectId[];
 };
 
-export const getDBConnectionById = async (dbId: number): Promise<DBbyDBId> => {
+export const getDBsByProjectId = async (
+	projectId: number
+): Promise<DBbyProjectId[]> => {
 	const queryString = `
-		SELECT connection_string, migration_id
-		FROM databases 
+		SELECT project_db.db_name, databases.db_id
+		FROM databases
 		JOIN project_db ON databases.db_id = project_db.db_id
-		WHERE project_db.db_id = $1;
-		`;
-	const result = await db.query(queryString, [dbId]);
-	return result[0] as DBbyDBId;
+		WHERE project_db.project_id = $1;
+    `;
+	const result = await db.query(queryString, [projectId]);
+	console.log('query:', result);
+	console.log('projectId and dbId: ', projectId);
+	return result as DBbyProjectId[];
 };
+
+// export const getDBConnectionById = async (dbId: number): Promise<DBbyDBId> => {
+// 	const queryString = `
+// 		SELECT connection_string, migration_id
+// 		FROM databases
+// 		JOIN project_db ON databases.db_id = project_db.db_id
+// 		WHERE project_db.db_id = $1;
+// 		`;
+// 	const result = await db.query(queryString, [dbId]);
+// 	return result[0] as DBbyDBId;
+// };
 
 export const deleteDBConnectionById = async (
 	projectId: number,
 	dbId: number
 ): Promise<string> => {
+	console.log(projectId, dbId);
 	const queryString = `
 		DELETE FROM project_db
 		WHERE project_id = $1 AND db_id = $2

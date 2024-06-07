@@ -2,7 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUser, setDatabases } from '../store';
+import { setUser, setUserId } from '../store';
+import { Helmet } from 'react-helmet-async';
 import githubIcon from '/client/src/assets/img/github-mark.png';
 import '/client/src/styles/LoginPage.css';
 import '../styles/NavBar.css';
@@ -13,7 +14,6 @@ interface LoginFormData {
 }
 
 const LoginPage: React.FC = () => {
-	//regular login//
 	const [formData, setFormData] = useState<LoginFormData>({
 		username: '',
 		password: '',
@@ -29,7 +29,6 @@ const LoginPage: React.FC = () => {
 		});
 	};
 
-	/* Regular Login */
 	const handleSubmit = async (
 		e: React.FormEvent<HTMLFormElement>
 	): Promise<void> => {
@@ -38,7 +37,6 @@ const LoginPage: React.FC = () => {
 			console.log('Login with:', formData);
 
 			const response = await fetch('http://localhost:3001/auth/login', {
-				// /auth/login
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -48,35 +46,12 @@ const LoginPage: React.FC = () => {
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log('data: ', data);
-				console.log('formData.username: ', formData.username);
 				dispatch(setUser(formData.username));
-				// dispatch(setToken(data.token)); //test
-				const token = data; // session storage way
-				console.log('data.token: ', token);
-				// const dbResponse = await fetch('http://localhost:3001/db/')
-				sessionStorage.setItem('token', token); // session storage way
+				dispatch(setUserId(data.userId));
+				const token = data.token; 
+				sessionStorage.setItem('token', token); 
 
-				// get user's saved databases and update state
-				try {
-					const response = await fetch('/db/connectionStrings', {
-						method: 'GET',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`, // Replace with your JWT token logic
-						},
-					});
-
-					if (!response.ok) {
-						throw new Error(`HTTP error! status: ${response.status}`);
-					}
-
-					const result = await response.json();
-					dispatch(setDatabases(result));
-				} catch (error) {
-					console.error('Error fetching databases:', error);
-				}
-				navigate('/migration');
+				navigate('/projects');
 			} else {
 				console.error('Login failed:', await response.json());
 			}
@@ -84,13 +59,11 @@ const LoginPage: React.FC = () => {
 			console.error('An error occurred during login:', error);
 		}
 	};
-	/* Regular Login */
 
 	const handleLoginWithGitHub = (): void => {
 		window.location.href = 'http://localhost:3001/github/login';
-	}; // user clicks button to invoke this and redirect to github/login
+	}; 
 
-	/* GitHub Login */
 
 	const handleSignUp = (): void => {
 		sessionStorage.clear();
@@ -99,7 +72,14 @@ const LoginPage: React.FC = () => {
 
 	return (
 		<div className="container">
-			<h1 className="login">Log In</h1>
+			<Helmet>
+				<title>Login to Ditto</title>
+				<meta
+					name="description"
+					content="Log in to Ditto to access and manage your PostgreSQL database migrations."
+				/>
+			</Helmet>
+			<h1 className="login">Sign In</h1>
 			<form onSubmit={handleSubmit} className="form">
 				<input
 					type="text"

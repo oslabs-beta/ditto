@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactEventHandler, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CodeEditor from './CodeEditor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	setdbId,
+	faTrashCan,
+	faEdit,
+	faSquarePlus,
+} from '@fortawesome/free-solid-svg-icons';
+import {
 	setSelectedMigration,
-	setMigrationVersions,
 	setSelectedScript,
 	setScript,
+	setMigrationVersions,
 } from '../store';
 
 interface Migration {
@@ -17,7 +22,6 @@ interface Migration {
 	executed_at: string;
 	script: string;
 	status: string;
-	// execution_time: string; (query is giving me an object)
 }
 
 const MigrationScripts: React.FC = () => {
@@ -25,10 +29,14 @@ const MigrationScripts: React.FC = () => {
 	const navigate = useNavigate();
 	const dbId = useSelector((state: any) => state.dbId);
 	const selectedDatabase = useSelector((state: any) => state.selectedDatabase);
+
 	const username = useSelector((state: any) => state.user); // user
-	const [migrations, setMigrations] = useState<Migration[]>([]);
+
 	const selectedMigration = useSelector(
 		(state: { selectedMigration: string }) => state.selectedMigration
+	);
+	const migrationsArray = useSelector(
+		(state: { migrationVersions: Migration[] }) => state.migrationVersions
 	);
 	const selectedScript = useSelector(
 		(state: { selectedScript: string }) => state.selectedScript
@@ -43,13 +51,13 @@ const MigrationScripts: React.FC = () => {
 				dispatch(setSelectedScript(''));
 			}
 			const token = sessionStorage.getItem('token');
+
 			try {
 				const response = await fetch(`/migrationlog/all/${dbId}`, {
-					// we'll need getDBConnectionByUserID so endpoint db/getConnectionString/:dbId
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`, // Replace with your JWT token logic
+						Authorization: `Bearer ${token}`,
 					},
 				});
 
@@ -58,15 +66,11 @@ const MigrationScripts: React.FC = () => {
 				}
 
 				const result = await response.json();
-				// result.sort(
-				// 	(a: { version: number }, b: { version: number }) =>
-				// 		a.version - b.version
-				// );
 				const sortedMigrations = result.sort(
 					(a: Migration, b: Migration) =>
 						parseInt(a.version) - parseInt(b.version)
 				);
-				setMigrations(sortedMigrations);
+				dispatch(setMigrationVersions(sortedMigrations));
 			} catch (error) {
 				console.error('Error fetching migrations:', error);
 			}
@@ -75,40 +79,24 @@ const MigrationScripts: React.FC = () => {
 		if (selectedDatabase) {
 			fetchMigrations();
 		} else {
-			setMigrations([]);
+			dispatch(setMigrationVersions([]));
 		}
-	}, [selectedDatabase, selectedMigration, migrationVersions]);
+	}, [selectedDatabase, selectedMigration]);
 
-	/* Add Migrations Button */
-	// const handleFormSubmit = (data: {
-	// 	version: string;
-	// 	description: string;
-	// 	script: string;
-	// }) => {
-	// 	console.log('Form Data:', data);
-	// };
-	/* Add Migrations Button */
 	const handleSubmit = () => {
 		dispatch(setScript(''));
 		navigate('/addMigrations');
 	};
 
-	/* Handles Update Button */
-	const handleUpdateSubmit = () => {
-		// we are setting state on click of the table row
-		// and only redirecting if selectedMigration state has been set
+	const handleUpdateSubmit = (e: React.FormEvent) => {
 		if (selectedMigration !== '') {
+			e.stopPropagation();
 			navigate('/updateMigrations');
 		}
 	};
 
-	/* Handles Delete Button */
 	const handleDeleteSubmit = async () => {
 		try {
-			// might want to add an are you sure prompt
-
-			// We need to dispatch state here so we know which version we're working on
-
 			const token = sessionStorage.getItem('token');
 			const response = await fetch(`/migrationlog/${selectedMigration}`, {
 				method: 'DELETE',
@@ -128,7 +116,8 @@ const MigrationScripts: React.FC = () => {
 					a.version - b.version
 			);
 			dispatch(setSelectedScript(''));
-			setMigrations(migrationsArr);
+			dispatch(setSelectedMigration(''));
+			dispatch(setMigrationVersions(migrationsArr));
 			// are we expecting response? we would have to json pars and confirm deletion or error
 			// dispatch migrationlog logic
 		} catch (error) {
@@ -136,15 +125,10 @@ const MigrationScripts: React.FC = () => {
 		}
 	};
 
-	// const handleCodeChange = (newCode: string) => {
-	// 	setCode(newCode);
-	// };
-
 	const handleRunScript = async (e: React.FormEvent) => {
 		e.preventDefault;
 
 		try {
-			console.log('Entered handleRunScript');
 			const token = sessionStorage.getItem('token');
 			const response = await fetch('/migration', {
 				method: 'POST',
@@ -160,21 +144,18 @@ const MigrationScripts: React.FC = () => {
 			}
 
 			const result = await response.json();
-			console.log('result:', result);
 			if (Array.isArray(result)) {
 				console.log(result);
-				setMigrations(result);
+				dispatch(setMigrationVersions(result));
 			} else {
 				console.error('Expected array but got:', result);
-				setMigrations([]);
+				dispatch(setMigrationVersions([]));
 			}
-			console.log(result);
 		} catch (error) {
 			console.error('Error running migrations:', error);
 			navigate('/migration');
 		}
 	};
-	/* Code Editor */
 
 	const handleHighlight = (id: string, script: string) => {
 		dispatch(setSelectedMigration(id === selectedMigration ? '' : id));
@@ -184,16 +165,22 @@ const MigrationScripts: React.FC = () => {
 	return (
 		<div className="MigrationScriptsContainer">
 			<div className="scriptsheader">
-				{/* Add Migrations Button */}
-				<div className="selectedDB font-bold">
-					{selectedDatabase}
-					{/* <h1>{selectedDatabase}</h1> */}
-				</div>
-				<button className="purplebtn" type="button" onClick={handleSubmit}>
-					Add Migration
-				</button>
+				<fieldset>
+					<label>
+						<input value={selectedDatabase} readOnly={true} />
+					</label>
+					<legend>Database</legend>
+					<button
+						className="purplebtn"
+						id="addMigrationButton"
+						type="button"
+						onClick={handleSubmit}
+					>
+						<FontAwesomeIcon icon={faSquarePlus} />
+					</button>
+				</fieldset>
 			</div>
-			<div className="migrationstable">
+			<div className="migrationsTable">
 				<table>
 					<thead>
 						<tr>
@@ -203,7 +190,8 @@ const MigrationScripts: React.FC = () => {
 							<th className="executedat">Date Migrated (ET)</th>
 						</tr>
 					</thead>
-					{migrations.map(migration => (
+
+					{migrationsArray.map(migration => (
 						<tbody key={migration.migration_id}>
 							<tr
 								id={migration.migration_id}
@@ -211,39 +199,86 @@ const MigrationScripts: React.FC = () => {
 								onClick={() =>
 									handleHighlight(migration.migration_id, migration.script)
 								}
-								style={{
-									backgroundColor:
-										selectedMigration === migration.migration_id
-											? '#b592f1'
-											: 'transparent',
-								}}
 							>
-								<td className="version">{migration.version}</td>
-								<td className="desc">{migration.description}</td>
-								<td className="status">{migration.status}</td>
-								<td className="executedat">{migration.executed_at}</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="version"
+								>
+									{migration.version}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="desc"
+								>
+									{migration.description}
+								</td>
+								<td
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+									className="status"
+								>
+									{migration.status}
+								</td>
+
+								<td
+									className="executedat"
+									style={{
+										backgroundColor:
+											selectedMigration === migration.migration_id
+												? '#b592f1'
+												: 'transparent',
+									}}
+								>
+									<div className="executeAndButtons">
+										{migration.executed_at}
+										<div>
+											<button
+												className="purplebtn"
+												type="button"
+												onClick={e => handleUpdateSubmit(e)}
+											>
+												<FontAwesomeIcon icon={faEdit} />
+											</button>
+											<button
+												className="whitebtn"
+												type="button"
+												onClick={handleDeleteSubmit}
+											>
+												<FontAwesomeIcon icon={faTrashCan} />
+											</button>
+										</div>
+									</div>
+								</td>
 							</tr>
 						</tbody>
 					))}
 				</table>
 			</div>
-			<div className="updatedeletebtn">
-				<button
-					className="purplebtn"
-					type="button"
-					onClick={handleUpdateSubmit}
-				>
-					Update
-				</button>
-				<button className="whitebtn" type="button" onClick={handleDeleteSubmit}>
-					Delete
-				</button>
-			</div>
 			<div className="codeEditorContainer">
 				<div className="codeEditor">
-					<CodeEditor code={selectedScript} inMigration={true} />
+					<fieldset>
+						<label>
+							<CodeEditor code={selectedScript} inMigration={true} />
+						</label>
+						<legend>Script</legend>
+					</fieldset>
 				</div>
 			</div>
+			<div className="scriptBtns"></div>
 		</div>
 	);
 };

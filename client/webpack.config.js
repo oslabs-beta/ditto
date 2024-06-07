@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const env = dotenv.config().parsed;
 const envKeys = Object.keys(env).reduce((prev, next) => {
@@ -12,6 +13,7 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
 module.exports = {
 	mode: 'development',
 	entry: './client/src/index.tsx', // Pointing to the entry TypeScript file
+	devtool: 'eval-source-map',
 	module: {
 		rules: [
 			{
@@ -22,12 +24,9 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: ['style-loader', 'css-loader'],
-				exclude: /node_modules/,
 			},
 			{
-				test: /\.(png|svg|jpg|jpeg|gif)$/i,
-				// use: ['file-loader'],
-				// type: 'asset/resource',
+				test: /\.(webp|png|svg|jpg|jpeg|gif)$/i,
 				type: 'asset/resource',
 				generator: {
 					filename: 'assets/images/[name][ext]', // Correct path for image files
@@ -41,6 +40,11 @@ module.exports = {
 	output: {
 		filename: 'bundle.js',
 		path: path.resolve(__dirname, 'dist'),
+		sourceMapFilename: '[file].map',
+	},
+	optimization: {
+		minimize: true,
+		minimizer: [new TerserPlugin()],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

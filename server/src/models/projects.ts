@@ -69,7 +69,6 @@ export const deleteProject = async (project_id: number, owner: number) => {
 	return result[0] as string;
 };
 
-// use this in frontend - don't need to be in middleware
 export const addCode = async (
 	code: string,
 	project_id: number,
@@ -81,6 +80,16 @@ export const addCode = async (
   WHERE project_id = $2 AND owner = $3
   `;
 	await db.query(queryString, [code, project_id, owner]);
+	return;
+};
+
+export const removeCode = async (): Promise<void> => {
+	const queryString = `
+  UPDATE projects 
+	SET code = NULL, code_timestamp = NULL 
+	WHERE code_timestamp < NOW() - INTERVAL '1 hour';
+  `;
+	await db.query(queryString);
 	return;
 };
 
@@ -122,7 +131,7 @@ export const leaveProject = async (
 
 export const getAllUsers = async (project_id: number): Promise<string[]> => {
 	const queryString = `
-  SELECT u.username, u.user_id, up.role
+  SELECT u.username, u.user_id, up.role, date_joined
   FROM user_projects AS up
   JOIN users AS u ON up.user_id = u.user_id
   WHERE up.project_id = $1;
@@ -139,4 +148,18 @@ export const selectProject = async (project_id: number): Promise<Project> => {
   `;
 	const result = await db.query(queryString, [project_id]);
 	return result[0] as Project;
+};
+
+export const updateRole = async (
+	project_id: number,
+	role: string,
+	userId: number
+): Promise<void> => {
+	const queryString = `
+  UPDATE user_projects
+  SET role = $2
+  WHERE project_id = $1 AND user_id = $3
+  `;
+
+	await db.query(queryString, [project_id, role, userId]);
 };

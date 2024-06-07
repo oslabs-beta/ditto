@@ -1,0 +1,20 @@
+.docTxt {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+}
+
+.text-container {
+	max-width: 80%; /* Adjusts the container width relative to its parent */
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+	overflow: auto; /* Ensures scrollability if content overflows */
+}
+
+.scrolling-text {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+}

@@ -28,6 +28,7 @@ const AddMigrationsPage: React.FC = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		console.log('descriptiojn: ', description);
 		try {
 			const token = sessionStorage.getItem('token');
 			const response = await fetch(`/migrationlog/${dbId}`, {
@@ -48,7 +49,6 @@ const AddMigrationsPage: React.FC = () => {
 			}
 			// const result = await response.json();
 			// dispatch(setMigrationVersions(result));
-
 			navigate('/migration');
 		} catch (error) {
 			console.error('Error posting new migration version', error);
@@ -84,17 +84,9 @@ const AddMigrationsPage: React.FC = () => {
 					</fieldset>
 				</div>
 				<fieldset>
-					{/* <CodeEditor initialCode={code} /> */}
 					<label>
-						{/* <textarea
-							className="code-editor"
-							value={script}
-							onChange={e => setScript(e.target.value)}
-							required
-						/> */}
 						<CodeEditor code={script} inMigration={false} />
 					</label>
-
 					<legend>Script</legend>
 				</fieldset>
 				<button type="submit">Save</button>

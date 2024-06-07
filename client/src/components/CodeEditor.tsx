@@ -29,6 +29,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, inMigration }) => {
 			value={script}
 			readOnly={inMigration}
 			theme="dark"
+			height="300px"
 			extensions={[sql({})]}
 			onChange={handleChange}
 			aria-label="script preview"

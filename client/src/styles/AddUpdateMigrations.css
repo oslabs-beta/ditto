@@ -1,16 +1,10 @@
 .addUpdateMigrationsPage {
-	/* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		'Helvetica Neue', Arial, sans-serif; */
 	font-family: 'Montserrat', sans-serif;
 	font-weight: bold;
 }
 
 .addUpdateMigrationsPage {
 	padding: 90px 20px 0 20px;
-	h1 {
-		border-bottom: solid rgb(207, 202, 202);
-		margin: 0px;
-	}
 }
 
 .versionDescription {
@@ -33,7 +27,6 @@
 	background-color: #dacbf3;
 	border: 1px solid #333;
 	border-radius: 5px;
-
 	resize: none;
 	box-shadow: inset 0 2px 4px rgba(63, 63, 63, 0.5);
 	outline: none;

@@ -18,13 +18,13 @@ export const createMigrationLogQuery = async (
 	dbId: number,
 	version: number,
 	script: string,
-	// executedAt: string,
-	checksum: string,
+	// checksum: string,
 	description?: string
 ): Promise<migrationLog> => {
+	console.log('description: ', description);
 	const queryString = `
-    INSERT INTO migration_logs (user_id, database_id, version, script, description, checksum, status)
-    VALUES ($1, $2, $3, $4, $5, $6, 'Pending')
+    INSERT INTO migration_logs (user_id, database_id, version, script, description, status)
+    VALUES ($1, $2, $3, $4, $5, 'Pending')
     RETURNING *;
     `;
 	const result = await db.query(queryString, [
@@ -32,9 +32,8 @@ export const createMigrationLogQuery = async (
 		dbId,
 		version,
 		script,
-		// executedAt,
 		description || '',
-		checksum,
+		// checksum,
 	]);
 	return result[0] as migrationLog;
 };
@@ -79,15 +78,15 @@ export const deleteMigrationLogQuery = async (
 };
 
 export const getMigrationLogQuery = async (
-	migrationId: string | number,
-	userId: string | number
+	migrationId: string | number
 ): Promise<migrationLog> => {
+	console.log(migrationId);
 	const queryString = `
 	SELECT *
 	FROM migration_logs
-	WHERE migration_id = $1 AND user_id = $2;
+	WHERE migration_id = $1;
 	`;
-	const result = await db.query(queryString, [migrationId, userId]);
+	const result = await db.query(queryString, [migrationId]);
 	return result[0] as migrationLog;
 };
 

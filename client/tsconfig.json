@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "es6",
+		"module": "esnext",
 		"target": "es2019",
 		"outDir": "./dist",
 		"rootDir": "./src",
@@ -9,7 +9,7 @@
 		"types": ["@testing-library/jest-dom", "@types/node"],
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true, // Add this line
+		"allowSyntheticDefaultImports": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
