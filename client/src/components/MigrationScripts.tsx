@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactEventHandler, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CodeEditor from './CodeEditor';
@@ -88,8 +88,9 @@ const MigrationScripts: React.FC = () => {
 		navigate('/addMigrations');
 	};
 
-	const handleUpdateSubmit = () => {
+	const handleUpdateSubmit = (e: React.FormEvent) => {
 		if (selectedMigration !== '') {
+			e.stopPropagation();
 			navigate('/updateMigrations');
 		}
 	};
@@ -248,7 +249,7 @@ const MigrationScripts: React.FC = () => {
 											<button
 												className="purplebtn"
 												type="button"
-												onClick={handleUpdateSubmit}
+												onClick={e => handleUpdateSubmit(e)}
 											>
 												<FontAwesomeIcon icon={faEdit} />
 											</button>
