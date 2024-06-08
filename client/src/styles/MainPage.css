@@ -1,0 +1,26 @@
+.content-container {
+	padding-top: 100px;
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Align items at the start of the container */
+}
+
+.content-container img {
+	margin-right: 20px; /* Add some space between the gif and the Community component */
+}
+/* 
+h1 {
+	font-family:
+		Brush Script,
+		cursive;
+	font-size: 45px;
+	font-weight: 250px;
+} */
+
+#slogan {
+	font-family:
+		Brush Script MT,
+		cursive;
+	font-weight: lighter;
+	font-size: 30px;
+}

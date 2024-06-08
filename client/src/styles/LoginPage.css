@@ -1,0 +1,129 @@
+html {
+	height: 90%;
+}
+
+#root {
+	font: 'San Francisco', Helvetica, Arial, san-serif;
+	height: 90%;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	font-size: small;
+
+	h1 {
+		font-size: large;
+		margin: 0;
+	}
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin: 20px 20px 0px 20px;
+	width: 300px;
+}
+
+.form > * {
+	height: 30px;
+	margin-bottom: 20px;
+	box-sizing: border-box;
+	padding: 20px;
+	border-radius: 7px;
+	border-width: 1px;
+}
+
+.loginbutton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: transparent;
+	background-color: #b592f1;
+	color: whitesmoke;
+	font-size: 16px;
+}
+
+.loginbutton:hover {
+	background-color: #9561f0;
+}
+
+.githubLoginBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	height: 25px;
+	background-color: transparent;
+	border: none;
+}
+
+button {
+	cursor: pointer;
+}
+
+.signUpImg {
+	display: flex;
+}
+
+.signup-link {
+	text-decoration: none;
+	color: inherit;
+}
+
+.githubLoginIcon {
+	width: 35px;
+}
+
+.login {
+	margin: 0;
+}
+
+.signupcontainer {
+	display: flex;
+	font-size: 16px;
+}
+
+.signupbtn {
+	background-color: transparent;
+	border: none;
+	color: #b592f1;
+	font-weight: bold;
+}
+
+.githubcontainer {
+	display: flex;
+	flex-direction: column;
+	font-size: 16px;
+}
+
+.links {
+	display: flex;
+	justify-content: center;
+}
+
+/* Sign Up */
+
+.signuppagecontainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	font-size: small;
+	text-align: center;
+}
+
+.signuppagecontainer h1 {
+	font-size: large;
+	margin: 0;
+}
+
+.button {
+	padding: 10px 20px;
+}
+

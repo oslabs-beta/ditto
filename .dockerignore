@@ -1,0 +1,7 @@
+node_modules/
+.git/
+.env
+.github/
+dist/
+dittoDB2.sql
+docker-compose.dev.yml

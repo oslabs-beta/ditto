@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"module": "esnext",
+		"target": "es2019",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"strict": true,
+		"jsx": "react-jsx",
+		"types": ["@testing-library/jest-dom", "@types/node"],
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"include": ["src/**/*", "types/custom.d.ts"]
+}

@@ -1,0 +1,304 @@
+.migrationPage {
+	display: flex;
+	height: 100vh;
+	padding: 90px 0px 0 0px;
+
+	.font-bold {
+		font-weight: bold;
+		margin-top: 5px;
+	}
+
+	button {
+		background-color: #b592f1;
+		align-items: center;
+		border: none;
+		border-radius: 7px;
+		color: whitesmoke;
+		cursor: pointer;
+		height: 35px;
+		align-self: center;
+		font-size: 12px;
+		font-weight: bold;
+		padding: 0px 15px 0px 15px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	button:hover {
+		background-color: #9561f0;
+		border-color: #9561f0;
+	}
+
+	p {
+		margin: 0.5em 0;
+	}
+
+	/* Side Panel */
+	.sidePanel {
+		border-right: solid rgb(207, 202, 202) 1px;
+		display: flex;
+		flex-direction: column;
+		width: 21%;
+		max-width: 40%;
+		padding-left: 10px;
+		overflow-x: auto;
+
+		.currProject {
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			width: 90%;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			font-size: 16px;
+			font-family: Arial, sans-serif;
+			font-weight: bold;
+			padding: 0 10px;
+			color: #333;
+
+			background-image: linear-gradient(135deg, #f6e3ffb9, #c8a4eb);
+			margin-bottom: 20px;
+			padding: 7px 10px 7px 4px;
+		}
+
+		.addDeleteButtons {
+			display: flex;
+			flex-direction: row;
+			width: 25%;
+		}
+		.addDbBtn {
+			display: flex;
+			flex-direction: column;
+			align-self: flex-start;
+		}
+		.removedb {
+			display: flex;
+			flex-direction: row;
+			flex-grow: 1;
+		}
+
+		.purplebtn,
+		.whitebtn {
+			background-color: #b592f1;
+			align-items: center;
+			border: none;
+			border-radius: 7px;
+			padding: 8px 12px;
+			color: whitesmoke;
+			cursor: pointer;
+			height: 35px;
+			align-self: flex-start;
+			margin: 5px 8px 10% 0%;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.purplebtn:hover,
+		.whitebtn:hover {
+			background-color: #9561f0;
+		}
+
+		.addDb .purplebtn:hover + #textbox,
+		.removedb .whitebtn:hover + #textbox {
+			opacity: 1;
+			visibility: visible;
+			transition-delay: 0.25s;
+		}
+
+		.selectdb {
+			display: flex;
+			align-items: center;
+		}
+
+		.addDb {
+			display: flex;
+			flex-direction: row;
+
+			.addbtn {
+				font-size: 1em;
+				padding: 2px 7px;
+			}
+		}
+
+		.input {
+			input {
+				margin-top: 10px;
+			}
+		}
+
+		.popperbtns {
+			display: flex;
+			flex: row;
+			align-self: center;
+			opacity: 0;
+			animation: fadeIn 2s forwards;
+			flex-grow: 1;
+			text-align: center;
+			font-size: xx-small;
+			gap: 5px;
+			margin-left: 10px;
+		}
+
+		.confirmCancel:hover {
+			color: rgb(255, 132, 0);
+			align-self: center;
+		}
+
+		@keyframes fadeIn {
+			to {
+				opacity: 1;
+			}
+		}
+
+		.dropAndBtn {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.actiondesc {
+			overflow: auto;
+			word-wrap: break-word;
+			font-size: x-small;
+		}
+	}
+
+	/* Migration Scripts */
+	.title {
+		text-align: left;
+		margin-bottom: 10px;
+		font-size: 1.2em;
+	}
+
+	.selectedDB {
+		display: flex;
+		height: 40px;
+		border: 1px solid;
+		border-radius: 7px;
+		margin: 5px 0px;
+		width: 300px;
+		align-items: center;
+		justify-content: center;
+		font-size: 27px;
+		background-color: #dacbf3;
+	}
+
+	.executeAndButtons {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.MigrationScriptsContainer {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin-left: 15px;
+		padding: 10px;
+
+		.scriptsheader {
+			display: flex;
+			align-items: center;
+			margin-bottom: 30px;
+
+			#addMigrationButton {
+				margin-left: 10px;
+			}
+		}
+
+		.migrationsTable {
+			border: 1px solid #ddd;
+			border-radius: 7px;
+			height: 35vh;
+			max-width: 100%;
+			overflow-x: auto;
+			margin-bottom: 30px;
+
+			table {
+				width: 98%;
+				border-collapse: separate;
+				border-spacing: 10px 5px;
+				margin: 10px 5px 10px 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				font-size: 16px;
+				font-family: Arial, sans-serif;
+			}
+
+			table,
+			th,
+			td {
+				border: 1px solid #ddd;
+				border-radius: 4px;
+			}
+
+			th,
+			td {
+				padding: 12px 15px;
+				text-align: left;
+			}
+
+			th {
+				background-image: linear-gradient(135deg, #f6e3ffb9, #c8a4eb);
+				color: #333;
+				font-weight: bold;
+				border-bottom: 2px solid #ddd;
+			}
+
+			td {
+				background-color: #fff;
+				color: #666;
+				border-bottom: 1px solid #ddd;
+				max-width: 150px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+
+				button {
+					padding: 10px 15px 10px 15px;
+					margin: 0px 5px 0px 5px;
+				}
+
+				.desc {
+					/* Default styles for the description cells */
+				}
+
+				.desc-selected {
+					border: 2px solid #b592f1;
+					/* You can add more styling if needed */
+				}
+			}
+
+			tr:nth-child(even) {
+				background-color: #f9f9f9;
+			}
+		}
+
+		.updatedeletebtn {
+			display: flex;
+			margin-bottom: 15px;
+		}
+
+		.updatedeletebtn > * {
+			width: 70px;
+			height: 35px;
+			margin: 10px 10px 10px 0px;
+		}
+	}
+}
+
+.scriptBtns {
+	display: flex;
+	gap: 15px;
+	margin: 10px 0px 10px 0px;
+	button {
+		padding: 0px 15px 0px 15px;
+	}
+}
+
+.codeEditorContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.codeEditor {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
