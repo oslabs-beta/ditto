@@ -89,7 +89,7 @@ const SidePanel: React.FC = () => {
 			case 'Migrate':
 				try {
 					const token = sessionStorage.getItem('token');
-					const response = await fetch('/migration', {
+					const response = await fetch('/api/migration', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ const SidePanel: React.FC = () => {
 		try {
 			const token = sessionStorage.getItem('token');
 			if (dbName || connectionString) {
-				const response = await fetch('/db/addConnectionString', {
+				const response = await fetch('/api/db/addConnectionString', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
