@@ -3,8 +3,14 @@ import { createOAuthUser, findUser } from '../models/user';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-const clientId = process.env.GITHUB_CLIENT_ID as string;
-const clientSecret = process.env.GITHUB_CLIENT_SECRET as string;
+const clientId =
+	process.env.NODE_ENV === 'production'
+		? (process.env.GITHUB_CLIENT_ID_PRD as string)
+		: (process.env.GITHUB_CLIENT_ID_DEV as string);
+const clientSecret =
+	process.env.NODE_ENV === 'production'
+		? (process.env.GITHUB_CLIENT_SECRET_PRD as string)
+		: (process.env.GITHUB_CLIENT_SECRET_DEV as string);
 const jwtSecret = process.env.JWT_SECRET as string;
 const redirectUri =
 	process.env.NODE_ENV === 'production'
