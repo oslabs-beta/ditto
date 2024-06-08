@@ -53,7 +53,7 @@ const MigrationScripts: React.FC = () => {
 			const token = sessionStorage.getItem('token');
 
 			try {
-				const response = await fetch(`/migrationlog/all/${dbId}`, {
+				const response = await fetch(`/api/migrationlog/all/${dbId}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const MigrationScripts: React.FC = () => {
 	const handleDeleteSubmit = async () => {
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/migrationlog/${selectedMigration}`, {
+			const response = await fetch(`/api/migrationlog/${selectedMigration}`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const MigrationScripts: React.FC = () => {
 
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch('/migration', {
+			const response = await fetch('/api/migration', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

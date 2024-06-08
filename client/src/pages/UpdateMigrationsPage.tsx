@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-	setSelectedScript,
-	setScript,
-} from '../store';
+import { setSelectedScript, setScript } from '../store';
 import '../styles/AddUpdateMigrations.css';
 import CodeEditor from '../components/CodeEditor';
 
@@ -25,7 +22,7 @@ const UpdateMigrationsPage: React.FC = () => {
 	useEffect(() => {
 		const getMigrationLog = async () => {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/migrationlog/${migrationId}`, {
+			const response = await fetch(`/api/migrationlog/${migrationId}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -44,7 +41,7 @@ const UpdateMigrationsPage: React.FC = () => {
 		e.preventDefault();
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/migrationlog/${migrationId}`, {
+			const response = await fetch(`/api/migrationlog/${migrationId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
