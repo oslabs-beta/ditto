@@ -36,7 +36,7 @@ const LoginPage: React.FC = () => {
 			e.preventDefault();
 			console.log('Login with:', formData);
 
-			const response = await fetch('http://localhost:3001/auth/login', {
+			const response = await fetch('/auth/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -48,8 +48,8 @@ const LoginPage: React.FC = () => {
 				const data = await response.json();
 				dispatch(setUser(formData.username));
 				dispatch(setUserId(data.userId));
-				const token = data.token; 
-				sessionStorage.setItem('token', token); 
+				const token = data.token;
+				sessionStorage.setItem('token', token);
 
 				navigate('/projects');
 			} else {
@@ -61,9 +61,11 @@ const LoginPage: React.FC = () => {
 	};
 
 	const handleLoginWithGitHub = (): void => {
-		window.location.href = 'http://localhost:3001/github/login';
-	}; 
-
+		window.location.href =
+			process.env.NODE_ENV === 'production'
+				? 'http://3.216.47.20:3000/auth/github'
+				: 'http://localhost:3000/auth/github';
+	};
 
 	const handleSignUp = (): void => {
 		sessionStorage.clear();

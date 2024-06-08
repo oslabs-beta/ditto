@@ -50,16 +50,18 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './client/src/index.html',
 			filename: 'index.html',
-			favicon: "client/src/assets/favicon.svg"
+			favicon: 'client/src/assets/favicon.svg',
 		}),
 		new webpack.DefinePlugin({
-			process: { env: {} },
+			'process.env.NODE_ENV': JSON.stringify(
+				process.env.NODE_ENV || 'development'
+			),
 		}),
 		new webpack.DefinePlugin(envKeys),
 	],
 	devServer: {
 		compress: true,
-		port: 3000, //sets up frontend localhost:port
+		port: 8080, //sets up frontend localhost:port
 		historyApiFallback: true,
 		static: [
 			{
@@ -70,7 +72,10 @@ module.exports = {
 		proxy: [
 			{
 				context: ['/'],
-				target: 'http://localhost:3001',
+				target:
+					process.env.NODE_ENV === 'production'
+						? 'http://3.216.47.20:3000'
+						: 'http://localhost:3000',
 			},
 		],
 	},

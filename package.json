@@ -9,7 +9,7 @@
 		"build:server": "tsc --project ./server/tsconfig.json",
 		"build": "npm run build:server",
 		"dev": "webpack server --config client/webpack.config.js --mode development",
-		"start": "NODE_ENV=production nodemon ./server/dist/server.js"
+		"start": "nodemon ./server/dist/server.js"
 	},
 	"keywords": [],
 	"author": "The Dream Team",
