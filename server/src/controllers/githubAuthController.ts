@@ -6,8 +6,10 @@ import jwt from 'jsonwebtoken';
 const clientId = process.env.GITHUB_CLIENT_ID as string;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET as string;
 const jwtSecret = process.env.JWT_SECRET as string;
-const redirectUri = 'http://localhost:3001/github/callback'; // This should match the registered URL
-
+const redirectUri =
+	process.env.NODE_ENV === 'production'
+		? 'http://3.216.47.20:3000'
+		: 'http://localhost:3000'; // This should match the registered URL
 
 export const githubLogin = (req: Request, res: Response) => {
 	const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}`;
@@ -62,7 +64,10 @@ export const githubCallback = async (
 			jwtSecret as jwt.Secret,
 			{ expiresIn: '1h' }
 		);
-		const frontendUrl = `http://localhost:3000/githubauthorized?token=${token}`;
+		const frontendUrl =
+			process.env.NODE_ENV === 'production'
+				? `http://3.216.47.20:8080/githubauthorized?token=${token}`
+				: `http://localhost:8080/githubauthorized?token=${token}`;
 		res.redirect(frontendUrl);
 	} catch (error) {
 		return next({

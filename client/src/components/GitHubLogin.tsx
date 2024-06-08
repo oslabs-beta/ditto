@@ -2,7 +2,10 @@ import React from 'react';
 
 const Auth: React.FC = () => {
 	const handleLogin = () => {
-		window.location.href = 'http://localhost:3001/auth/github';
+		window.location.href =
+			process.env.NODE_ENV === 'production'
+				? 'http://3.216.47.20:3000/auth/github'
+				: 'http://localhost:3000/auth/github';
 	};
 
 	return (

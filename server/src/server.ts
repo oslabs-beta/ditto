@@ -12,7 +12,7 @@ import { removeCode } from './models/projects';
 dotenv.config();
 
 const app: Express = express();
-const port: number = 3001;
+const port: number = 3000;
 
 app.use(cors());
 
