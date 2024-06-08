@@ -22,6 +22,10 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - NODE_ENV=production
+      - GITHUB_CLIENT_ID_PRD={GITHUB_CLIENT_ID_PRD}
+      - GITHUB_CLIENT_SECRET_PRD={GITHUB_CLIENT_SECRET_PRD}
+      - GITHUB_CLIENT_ID_DEV={GITHUB_CLIENT_ID_DEV}
+      - GITHUB_CLIENT_SECRET_DEV={GITHUB_CLIENT_SECRET_DEV}
 
     volumes:
       - frontend-build:/usr/src/app/client/dist
