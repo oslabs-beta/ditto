@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import '../styles/LoginPage.css'
+import '../styles/LoginPage.css';
 import '../styles/NavBar.css';
 
 interface SignUpFormData {
@@ -37,7 +37,7 @@ const SignUpPage: React.FC = () => {
 		}
 
 		try {
-			const response = await fetch('auth/register', {
+			const response = await fetch('/apiauth/register', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
