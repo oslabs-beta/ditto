@@ -63,7 +63,7 @@ const LoginPage: React.FC = () => {
 	const handleLoginWithGitHub = (): void => {
 		window.location.href =
 			process.env.NODE_ENV === 'production'
-				? 'http://3.216.47.20:3000/auth/github'
+				? '3.216.47.20:3000/auth/github'
 				: 'http://localhost:3000/auth/github';
 	};
 
