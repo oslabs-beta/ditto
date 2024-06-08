@@ -51,6 +51,7 @@ module.exports = {
 			filename: 'index.html',
 			favicon: 'client/src/assets/favicon.svg',
 		}),
+
 		new webpack.DefinePlugin(envKeys),
 	],
 	devServer: {
@@ -66,10 +67,13 @@ module.exports = {
 		proxy: [
 			{
 				context: ['/'],
-				target:
-					process.env.NODE_ENV === 'production'
-						? '3.216.47.20:3000'
-						: 'http://localhost:3000',
+				target: 'http://localhost:3000',
+				// process.env.NODE_ENV === 'production'
+				// 	? 'http://localhost:3000'
+				// 	: '3.216.47.20:3000',
+				// process.env.NODE_ENV === 'production'
+				// 	? '3.216.47.20:3000'
+				// 	: 'http://localhost:3000',
 			},
 		],
 	},

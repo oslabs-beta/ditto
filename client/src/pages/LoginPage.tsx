@@ -34,7 +34,6 @@ const LoginPage: React.FC = () => {
 	): Promise<void> => {
 		try {
 			e.preventDefault();
-			console.log('Login with:', formData);
 
 			const response = await fetch('/auth/login', {
 				method: 'POST',
