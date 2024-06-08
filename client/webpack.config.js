@@ -11,7 +11,6 @@ const envKeys = Object.keys(env).reduce((prev, next) => {
 }, {});
 
 module.exports = {
-	mode: 'development',
 	entry: './client/src/index.tsx', // Pointing to the entry TypeScript file
 	devtool: 'eval-source-map',
 	module: {
@@ -52,11 +51,6 @@ module.exports = {
 			filename: 'index.html',
 			favicon: 'client/src/assets/favicon.svg',
 		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(
-				process.env.NODE_ENV || 'development'
-			),
-		}),
 		new webpack.DefinePlugin(envKeys),
 	],
 	devServer: {
@@ -74,7 +68,7 @@ module.exports = {
 				context: ['/'],
 				target:
 					process.env.NODE_ENV === 'production'
-						? 'http://3.216.47.20:3000'
+						? '3.216.47.20:3000'
 						: 'http://localhost:3000',
 			},
 		],

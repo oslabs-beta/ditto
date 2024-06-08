@@ -5,10 +5,11 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "jest --verbose",
-		"build:client": "webpack --config ./client/webpack.config.js",
+		"build:client": "webpack --config ./client/webpack.config.js --mode=development",
+		"build:prd": "webpack --config ./client/webpack.config.js --mode=production",
 		"build:server": "tsc --project ./server/tsconfig.json",
 		"build": "npm run build:server",
-		"dev": "webpack server --config client/webpack.config.js --mode development",
+		"dev": "webpack serve --config client/webpack.config.js --mode=development",
 		"start": "nodemon ./server/dist/server.js"
 	},
 	"keywords": [],

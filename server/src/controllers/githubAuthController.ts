@@ -14,7 +14,7 @@ const clientSecret =
 const jwtSecret = process.env.JWT_SECRET as string;
 const redirectUri =
 	process.env.NODE_ENV === 'production'
-		? 'http://3.216.47.20:3000'
+		? '3.216.47.20:3000'
 		: 'http://localhost:3000'; // This should match the registered URL
 
 export const githubLogin = (req: Request, res: Response) => {
