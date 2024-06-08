@@ -8,7 +8,7 @@
 		"build:client": "webpack --config ./client/webpack.config.js",
 		"build:server": "tsc --project ./server/tsconfig.json",
 		"build": "npm run build:server",
-		"dev": "webpack server --config client/webpack.config.js --mode development",
+		"dev": "webpack server --config client/webpack.config.js --mode production",
 		"start": "nodemon ./server/dist/server.js"
 	},
 	"keywords": [],
