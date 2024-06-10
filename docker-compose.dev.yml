@@ -1,12 +1,9 @@
 version: '3.8'
 
 services:
-  backend:
-    image: dittocs/backend
-    container_name: 'backend'
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile.backend
+  prd:
+    image: ditto-test:4.0
+    container_name: 'dev'
     ports:
       - '3000:3000'
     environment:
@@ -26,24 +23,8 @@ services:
       - GITHUB_CLIENT_SECRET_PRD={GITHUB_CLIENT_SECRET_PRD}
       - GITHUB_CLIENT_ID_DEV={GITHUB_CLIENT_ID_DEV}
       - GITHUB_CLIENT_SECRET_DEV={GITHUB_CLIENT_SECRET_DEV}
-
-    volumes:
-      - frontend-build:/usr/src/app/client/dist
     # depends_on:
     #   - postgres-db
-
-  frontend:
-    image: dittocs/frontend
-    container_name: 'frontend'
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile.frontend
-    ports:
-      - '8080:8080'
-    volumes:
-      - frontend-build:/usr/src/app/client/dist
-volumes:
-  frontend-build:
 #   postgres-db:
 #     image: postgres:13
 #     environment:

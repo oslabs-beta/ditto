@@ -35,7 +35,7 @@ const LoginPage: React.FC = () => {
 		try {
 			e.preventDefault();
 
-			const response = await fetch('/api/auth/login', {
+			const response = await fetch('/auth/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ const LoginPage: React.FC = () => {
 	const handleLoginWithGitHub = (): void => {
 		window.location.href =
 			process.env.NODE_ENV === 'production'
-				? '3.216.47.20:3000/auth/github'
+				? 'http://ditto.devtool.com/auth/github'
 				: 'http://localhost:3000/auth/github';
 	};
 

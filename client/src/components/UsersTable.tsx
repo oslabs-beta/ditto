@@ -27,7 +27,7 @@ const UsersTable: React.FC = () => {
 	useEffect(() => {
 		const fetchUsers = async () => {
 			try {
-				const response = await fetch(`/api/project/allusers/${projectId}`, {
+				const response = await fetch(`/project/allusers/${projectId}`, {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -56,20 +56,17 @@ const UsersTable: React.FC = () => {
 	const handleRoleChange = async (userId: string, role: string) => {
 		const token = sessionStorage.getItem('token');
 		try {
-			const response = await fetch(
-				`/api/project/updaterole/${selectedProjectId}`,
-				{
-					method: 'PATCH',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({
-						user: userId,
-						role: role,
-					}),
-				}
-			);
+			const response = await fetch(`/project/updaterole/${selectedProjectId}`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					user: userId,
+					role: role,
+				}),
+			});
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);

@@ -66,14 +66,8 @@ module.exports = {
 		],
 		proxy: [
 			{
-				context: ['/api'],
+				context: ['/'],
 				target: 'http://localhost:3000',
-				// process.env.NODE_ENV === 'production'
-				// 	? 'http://localhost:3000'
-				// 	: '3.216.47.20:3000',
-				// process.env.NODE_ENV === 'production'
-				// 	? '3.216.47.20:3000'
-				// 	: 'http://localhost:3000',
 			},
 		],
 	},
