@@ -22,7 +22,7 @@ const UpdateMigrationsPage: React.FC = () => {
 	useEffect(() => {
 		const getMigrationLog = async () => {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/api/migrationlog/${migrationId}`, {
+			const response = await fetch(`/migrationlog/${migrationId}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const UpdateMigrationsPage: React.FC = () => {
 		e.preventDefault();
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/api/migrationlog/${migrationId}`, {
+			const response = await fetch(`/migrationlog/${migrationId}`, {
 				method: 'PATCH',
 				headers: {
 					'Content-Type': 'application/json',
