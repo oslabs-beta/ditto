@@ -31,7 +31,7 @@ const AddMigrationsPage: React.FC = () => {
 		console.log('descriptiojn: ', description);
 		try {
 			const token = sessionStorage.getItem('token');
-			const response = await fetch(`/api/migrationlog/${dbId}`, {
+			const response = await fetch(`/migrationlog/${dbId}`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

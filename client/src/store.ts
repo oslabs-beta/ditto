@@ -214,7 +214,6 @@ const rootReducer = (state = initialState, action: any) => {
 		case SET_USER_ID:
 			return { ...state, userId: action.payload };
 		case RESET_STATE:
-			console.log('in reset state', initialState);
 			return initialState;
 		default:
 			return state;

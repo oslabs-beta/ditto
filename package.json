@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "jest --verbose",
 		"build:client": "webpack --config ./client/webpack.config.js --mode=development",
-		"build:prd": "NODE_ENV=production webpack --config ./client/webpack.config.js --mode=production",
+		"build:prd": "webpack --config ./client/webpack.config.js --mode=production",
 		"build:server": "tsc --project ./server/tsconfig.json",
 		"build": "npm run build:server",
 		"dev": "webpack serve --config client/webpack.config.js --mode=production",

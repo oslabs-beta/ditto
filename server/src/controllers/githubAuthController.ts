@@ -14,7 +14,7 @@ const clientSecret =
 const jwtSecret = process.env.JWT_SECRET as string;
 const redirectUri =
 	process.env.NODE_ENV === 'production'
-		? '3.216.47.20:3000'
+		? 'http://ditto.devtool.com'
 		: 'http://localhost:3000'; // This should match the registered URL
 
 export const githubLogin = (req: Request, res: Response) => {
@@ -53,7 +53,7 @@ export const githubCallback = async (
 			return res.status(400).json({ error: 'No access token received' });
 		}
 
-		const userResponse = await axios.get('https://api.github.com/user', {
+		const userResponse = await axios.get('https://.github.com/user', {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 			},
@@ -72,7 +72,7 @@ export const githubCallback = async (
 		);
 		const frontendUrl =
 			process.env.NODE_ENV === 'production'
-				? `http://3.216.47.20:8080/githubauthorized?token=${token}`
+				? `http://ditto.devtool.com/githubauthorized?token=${token}`
 				: `http://localhost:8080/githubauthorized?token=${token}`;
 		res.redirect(frontendUrl);
 	} catch (error) {

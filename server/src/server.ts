@@ -9,6 +9,7 @@ import cors from 'cors';
 import path from 'path';
 import dotenv from 'dotenv';
 import { removeCode } from './models/projects';
+import db from './db';
 dotenv.config();
 
 const app: Express = express();
@@ -28,9 +29,9 @@ app.use(
 	})
 );
 
-app.get('/robots.txt', (req: Request, res: Response) => {
-	res.sendFile(path.join(joinPath, 'robots.txt'));
-});
+// app.get('/robots.txt', (req: Request, res: Response) => {
+// 	res.sendFile(path.join(joinPath, 'robots.txt'));
+// });
 
 app.use('/migration', migrationRoutes);
 

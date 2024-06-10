@@ -37,7 +37,7 @@ const SignUpPage: React.FC = () => {
 		}
 
 		try {
-			const response = await fetch('/apiauth/register', {
+			const response = await fetch('/auth/register', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

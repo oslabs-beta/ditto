@@ -42,7 +42,7 @@ const OrganizationsPanel: React.FC = () => {
 	useEffect(() => {
 		const fetchProjects = async () => {
 			try {
-				const response = await fetch('/api/project/allprojects', {
+				const response = await fetch('/project/allprojects', {
 					method: 'GET',
 					headers: {
 						'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const OrganizationsPanel: React.FC = () => {
 
 	/* POST (Create) Project */
 	const createProject = async () => {
-		const response = await fetch('/api/project/create', {
+		const response = await fetch('/project/create', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const OrganizationsPanel: React.FC = () => {
 		}
 	};
 	const storeCode = async (code: string) => {
-		const response = await fetch('/apiproject/generate', {
+		const response = await fetch('/project/generate', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ const OrganizationsPanel: React.FC = () => {
 	};
 
 	const joinProject = async () => {
-		const response = await fetch('/apiproject/join', {
+		const response = await fetch('/project/join', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -120,16 +120,13 @@ const OrganizationsPanel: React.FC = () => {
 	const deleteProject = async () => {
 		if (selectedProject) {
 			try {
-				const response = await fetch(
-					`/apiproject/delete/${selectedProjectId}`,
-					{
-						method: 'DELETE',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
+				const response = await fetch(`/project/delete/${selectedProjectId}`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				});
 				setIsOpen(false);
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
@@ -145,16 +142,13 @@ const OrganizationsPanel: React.FC = () => {
 	const leaveProject = async () => {
 		if (selectedProject) {
 			try {
-				const response = await fetch(
-					`/api/project/leave/${selectedProjectId}`,
-					{
-						method: 'DELETE',
-						headers: {
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
+				const response = await fetch(`/project/leave/${selectedProjectId}`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+				});
 				setPromptLeave(false);
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
