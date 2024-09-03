@@ -15,7 +15,7 @@ const pool = new Pool({
 		process.env.NODE_ENV === 'production'
 			? 'dittoDB'
 			: process.env.NODE_ENV === 'test'
-				? 'test'
+				? 'dittotest'
 				: process.env.DB_NAME,
 	password:
 		process.env.NODE_ENV === 'production'

@@ -31,7 +31,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ code, inMigration }) => {
 			theme="dark"
 			height="300px"
 			extensions={[sql({})]}
-			onChange={handleChange}
+			// onChange={handleChange}
 			aria-label="script preview"
 		/>
 	);
